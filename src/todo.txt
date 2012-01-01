@@ -1,0 +1,107 @@
+Encapsulate name creation
+Have behaviour run even if focus isn't on the canvas
+Have a map of Krypton objects and properties so that the whole Krypton world doesn't have to be rebuilt when a property changes
+Bug: clicking into property grid fires an event and changes selection
+Fix drag drop of textures from toolbox
+Fix dragging - canvas goes blank (doesn't on original)
+
+
+ - BEFFORE ANY RELEASE
+Enable drag of shapes from assets tree
+Enable property selection from FloatAnimation
+Show behaviour properties from level explorer
+Ability to delete behaviours
+Add ability to add behaviour to level
+Add ability to add behaviour to layer
+Enable drag of behaviours from assets to tree
+Bug: when got a dirty level, then loading a level from disk (without first saving), the dirty flag remains from the first dirty level
+Finish off About box .
+Exception handling (maybe send e-mail off somewhere?)
+Disable and UI when running behaviours
+
+
+ - FOR FARSEER RELEASE
+
+ - FOR KRYPTON RELEASE
+Create plugin for Ambience or see if we can attach properties to Level
+Determine if texture hull needed
+Add right click on Convex Hull and add shapes menus
+
+
+X UI for dragging behaviours to entities
+X UI for listing behaviours
+X Serialise behaviours
+X Deserialise behaviours
+X implement align rotation, scale etc.
+X Fix: see why it asks twice to save a modified level
+X Fix selection order - first one yellow, rest different color
+X Copy Windows and create an XBox and Phone versions
+X light doesn't draw when user dragging to create one
+X increase bound detection when selecting light
+X Rebuild light after loading level
+X Show all files in Open File Dialog/Save As Dialog
+X Fix tests
+X Texture windows need to respond to new model loaded and update the root folder and refresh.
+X Background on shape toolbox images
+X Ensure menus can be added before/after other menu items
+X Proper editor for fill color in properties window (just light?)
+X Contribute back constructor to Krypton
+X Add proper icons for Krypton
+X Fix large icons in tabs
+X Fix Explorer under tab strip
+X The InPoint stuff in LightEditor needs fixing (should be same as circle)
+X Get menu back
+X Create empty plugin-ins for TextureHull, RectangleHull, CircleHull, and Light
+X Remove Texture from the Primitives pane (crashes when selected)
+
+Explicit Serialisation release
+==============================
+X Have assembly just for the native entities and the code that loads them
+X Loader for in-game
+X Bug: multi-select then copy doesn't copy all items
+X Have assembly just for the native editors
+X Bug: Duplicate layer not working
+X New names for OnTransformed/CopyIntoEditor - got rid of CopyIntoEditor and renamed OnTransformed
+X Delete Custom Property context menu item not working
+X Need to check for linked items when deleting items.
+X Need to restore linked item associations after deserialising (why?  why not reference on fly?)
+X ItemSelectorControl needs to reuse same LevelExplorer tree
+X need previewKeyDown back for panning etc.
+X item rotation & scale needs to notify model (& panning)
+X Need to handle Root selection as it's not updating the property grid
+X When adding custom property, property grid is not getting notified
+X Ensure that move/copy between layers works as in original.
+X Remove EntityTree property from IMainForm
+X Right click/delete on Explorer doesn't delete item
+X Move up/down context menu not working on item
+X Bug: Delete from Explorer deletes layer, not item
+X bug: When adding layer, needs to update tree
+X bug: When adding layer, it lets you add a case-different name (e.g. Layer_0 exists and it lets you add a layer_0)
+X bug: Root context menu (e.g. add layer) does nothing
+X When texture selected and moved, the property grid isn't being updated
+X bug: Moving item up/down doesn't refresh Explorer
+X bug: selecting and then copying multiple items just copies the first selected item
+X Import of old Gleed files (have check for version < 1.3) (move code from MainForm)
+X Change version to 2.0
+X Fix tree when loading a gleed file.
+X Cloning to use XML instead of memberwise
+X Fix texture selection issue after cloning
+========================================================================
+
+ - IN THE FUTURE
+Move the Level out into a Model namespace and have MainForm/Level/Canvas reference that instead of having Level 'own' it.
+View XML in the View menu
+Move context menu creation to items so that custom items can have custom menus
+Move resources out of MainForm and into their respective controls.
+Have custom editors be responsible	for their own controls/tabs, e.g. have the texture plugin be responsible for creating the window and file system watcher
+bug: layer_0 remains in imported level
+Move Camera from Editor to Level (and have it update the property grid)
+Draw a focus box when canvas (Editor) is focused
+Arrow keys move editors around
+Copy/Paste of items
+Dependency properties - e.g. Krypton can add a 'has light' property to other objects (e.g. rectangles, textures)
+X ** Build an editor for the Krypton components, including 'Hull' and 'Light' and possibly 'Ambient' **
+Plugins should be able to add menu items to the propert grid context menu
+Icons when drawing on the Canvas - e.g. a Hull icon for the Hulls and a Light icon for the lights
+Remove 'Position' from Layer - Position is not applicable to everything that derives from it, e.g. layer/level
+Different icon for 'CanRotate' if can't rotate an item

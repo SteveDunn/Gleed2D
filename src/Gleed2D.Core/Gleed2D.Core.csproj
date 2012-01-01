@@ -1,0 +1,350 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{D96F3152-4F83-4729-9619-5A86B0A80AB1}</ProjectGuid>
+    <ProjectTypeGuids>{6D335F3A-9D43-41b4-9D22-F6F17C4BE596};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Gleed2D.Core</RootNamespace>
+    <AssemblyName>Gleed2D.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <XnaFrameworkVersion>v4.0</XnaFrameworkVersion>
+    <XnaPlatform>Windows</XnaPlatform>
+    <XnaProfile>Reach</XnaProfile>
+    <XnaCrossPlatformGroupID>1ba109e4-ead7-4619-974c-03b338e24ee6</XnaCrossPlatformGroupID>
+    <XnaOutputType>Library</XnaOutputType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\x86\Debug</OutputPath>
+    <DefineConstants>TRACE;DEBUG;WINDOWS;JSON_PERSISTENCE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoStdLib>true</NoStdLib>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <PlatformTarget>x86</PlatformTarget>
+    <XnaCompressContent>false</XnaCompressContent>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\x86\Release</OutputPath>
+    <DefineConstants>TRACE;WINDOWS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoStdLib>true</NoStdLib>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <PlatformTarget>x86</PlatformTarget>
+    <XnaCompressContent>true</XnaCompressContent>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
+    <Reference Include="Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
+    <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
+    <Reference Include="Microsoft.Xna.Framework.GamerServices, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
+    <Reference Include="Microsoft.Xna.Framework.Net, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Xna.Framework.Storage, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Xna.Framework.Video, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Xna.Framework.Xact, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
+    <Reference Include="mscorlib" />
+    <Reference Include="Ookii.Dialogs">
+      <HintPath>..\..\lib\Ookii.Dialogs.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap">
+      <HintPath>..\packages\structuremap.2.6.2\lib\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design">
+      <HintPath>..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Drawing.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Net" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\EnumExtensions.cs">
+      <Link>EnumExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\ExtensionMethods.cs">
+      <Link>ExtensionMethods.cs</Link>
+    </Compile>
+    <Compile Include="..\Extensions.cs">
+      <Link>Extensions.cs</Link>
+    </Compile>
+    <Compile Include="..\JetBrains.Annotations.cs">
+      <Link>JetBrains.Annotations.cs</Link>
+    </Compile>
+    <Compile Include="..\Level.cs">
+      <Link>Level.cs</Link>
+    </Compile>
+    <Compile Include="..\XmlExtensions.cs">
+      <Link>XmlExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\XmlExtensions2.cs">
+      <Link>XmlExtensions2.cs</Link>
+    </Compile>
+    <Compile Include="BehaviourPropertiesWrapper.cs" />
+    <Compile Include="Behaviour\BehaviourCollection.cs" />
+    <Compile Include="Behaviour\IBehaviour.cs" />
+    <Compile Include="Behaviour\TweenEndHandler.cs" />
+    <Compile Include="Behaviour\TweeningFunction.cs" />
+    <Compile Include="Camera.cs" />
+    <Compile Include="Controls\AssetsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\AssetsControl.Designer.cs">
+      <DependentUpon>AssetsControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\HandleDraggingOfAssets.cs" />
+    <Compile Include="CustomUITypeEditors\PathToFileConverter.cs" />
+    <Compile Include="CustomUITypeEditors\PathToFileUiTypeEditor.cs" />
+    <Compile Include="CustomUITypeEditors\PathToFolderConverter.cs" />
+    <Compile Include="Disk.cs" />
+    <Compile Include="DiskEntity.cs" />
+    <Compile Include="DragEventType.cs" />
+    <Compile Include="DraggingTextureEventArgs.cs" />
+    <Compile Include="EdgePosition.cs" />
+    <Compile Include="IBehaviourPlugin.cs" />
+    <Compile Include="ICanBePersisted.cs" />
+    <Compile Include="IDisk.cs" />
+    <Compile Include="IMenuItems.cs" />
+    <Compile Include="IPlugin.cs" />
+    <Compile Include="IPluginGroup.cs" />
+    <Compile Include="IShapeProvider.cs" />
+    <Compile Include="ItemsToRender.cs" />
+    <Compile Include="CustomPropertyDescriptor.cs" />
+    <Compile Include="LinkedItemTypeConverter.cs" />
+    <Compile Include="Controls\PluginDescriptionControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="PathToFile.cs" />
+    <Compile Include="PropertyCustomisation.cs" />
+    <Compile Include="EntityChosenEventArgs.cs" />
+    <Compile Include="Triangulator2D.cs" />
+    <Compile Include="Command.cs" />
+    <Compile Include="Controls\GlyphService.cs" />
+    <Compile Include="Controls\ICategoryTabPage.cs" />
+    <Compile Include="Controls\CustomPropertiesGridControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\CustomPropertiesGridControl.Designer.cs">
+      <DependentUpon>CustomPropertiesGridControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\DefaultCategoryTabPage.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\SimpleSite.cs" />
+    <Compile Include="Controls\TexturePickedEventArgs.cs" />
+    <Compile Include="Controls\TexturePickerControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\TexturePickerControl.Designer.cs">
+      <DependentUpon>TexturePickerControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TextureTabPage.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ConvertOldFileFormats.cs" />
+    <Compile Include="EntityCreation.cs" />
+    <Compile Include="Gdi.cs" />
+    <Compile Include="GleedRenderer.cs" />
+    <Compile Include="IGleedRenderer.cs" />
+    <Compile Include="IRenderer.cs" />
+    <Compile Include="LegacyEditorInfo.cs" />
+    <Compile Include="Legacy\LegacyModel.cs" />
+    <Compile Include="RendererParams.cs" />
+    <Compile Include="Resource1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource1.resx</DependentUpon>
+    </Compile>
+    <Compile Include="SnapPoint.cs" />
+    <Compile Include="UserActionInEditor.cs" />
+    <Compile Include="UserActions\AddEditorToSelectionAction.cs" />
+    <Compile Include="UserActions\AttachBehaviourAction.cs" />
+    <Compile Include="UserActions\CopySelectedEditorsToLayerAction.cs" />
+    <Compile Include="UserActions\DeleteSelectedEditorsAction.cs" />
+    <Compile Include="UserActions\MoveSelectedEditorsToLayerAction.cs" />
+    <Compile Include="UserActions\SelectEditorAction.cs" />
+    <Compile Include="UserActions\SelectLayerAction.cs" />
+    <Compile Include="UserActions\SelectLevelAction.cs" />
+    <Compile Include="ValidationError.cs" />
+    <Compile Include="CommandEndedArgs.cs" />
+    <Compile Include="CommandType.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="Controls\LevelExplorerControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\LevelExplorerControl.Designer.cs">
+      <DependentUpon>LevelExplorerControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ItemSelectorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ItemSelectorControl.Designer.cs">
+      <DependentUpon>ItemSelectorControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomUITypeEditors\LinkedItemUiTypeEditor.cs" />
+    <Compile Include="EntityCreationProperties.cs" />
+    <Compile Include="CustomUITypeEditors\PathToFolderUiTypeEditor.cs" />
+    <Compile Include="CustomUITypeEditors\Vector2EditorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomUITypeEditors\Vector2UITypeEditor.cs" />
+    <Compile Include="CustomUITypeEditors\XNAColorUITypeEditors.cs" />
+    <Compile Include="DictionaryPropertyDescriptor.cs" />
+    <Compile Include="EntityEditedEventArgs.cs" />
+    <Compile Include="Forms\AddCustomPropertyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AddCustomPropertyForm.Designer.cs">
+      <DependentUpon>AddCustomPropertyForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AddLayerDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AddLayerDialog.Designer.cs">
+      <DependentUpon>AddLayerDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GetAssemblyInformation.cs" />
+    <Compile Include="HandleKeyboardCommands.cs" />
+    <Compile Include="HandleUserActions.cs" />
+    <Compile Include="Helper.cs" />
+    <Compile Include="IGetAssemblyInformation.cs" />
+    <Compile Include="IHandleKeyboardCommands.cs" />
+    <Compile Include="IMemento.cs" />
+    <Compile Include="IModel.cs" />
+    <Compile Include="Mememto.cs" />
+    <Compile Include="Model.cs" />
+    <Compile Include="ModelChangedEventArgs.cs" />
+    <Compile Include="ModelUnloadingEventArgs.cs" />
+    <Compile Include="SelectedEditors.cs" />
+    <Compile Include="UserActions\AddCustomPropertyAction.cs" />
+    <Compile Include="UserActions\CenterViewAction.cs" />
+    <Compile Include="UserActions\DeleteActiveLayerAction.cs" />
+    <Compile Include="UserActions\DuplicateLayerAction.cs" />
+    <Compile Include="IHandleUserActions.cs" />
+    <Compile Include="ImageProperties.cs" />
+    <Compile Include="ITreeItem.cs" />
+    <Compile Include="LoadImages.cs" />
+    <Compile Include="IImageRepository.cs" />
+    <Compile Include="ILoadImages.cs" />
+    <Compile Include="ImageRepository.cs" />
+    <Compile Include="Images.cs" />
+    <Compile Include="ItemEditorMode.cs" />
+    <Compile Include="KeyboardStatus.cs" />
+    <Compile Include="MouseStatus.cs" />
+    <Compile Include="IConstants.cs" />
+    <Compile Include="IEditor.cs" />
+    <Compile Include="IExtensibility.cs" />
+    <Compile Include="IGame.cs" />
+    <Compile Include="IMainForm.cs" />
+    <Compile Include="ItemPropertiesWrapper.ICustomTypeDescriptor.cs" />
+    <Compile Include="IDrawing.cs" />
+    <Compile Include="IEditorPlugin.cs" />
+    <Compile Include="ItemEditor.cs" />
+    <Compile Include="ITextureStore.cs" />
+    <Compile Include="Layer.cs" />
+    <Compile Include="Logger.cs" />
+    <Compile Include="Drawing.cs" />
+    <Compile Include="PrimitiveType.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="InternalPoint.cs" />
+    <Compile Include="TextureStore.cs" />
+    <Compile Include="IoC.cs" />
+    <Compile Include="UserActions\IUserAction.cs" />
+    <Compile Include="UserActions\MoveItemDownAction.cs" />
+    <Compile Include="UserActions\MoveItemUpAction.cs" />
+    <Compile Include="UserActions\AddNewLayerAction.cs" />
+    <Compile Include="UserActions\RenameInPlaceAction.cs" />
+    <Compile Include="Vertices.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Controls\AssetsControl.resx">
+      <DependentUpon>AssetsControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\CustomPropertiesGridControl.resx">
+      <DependentUpon>CustomPropertiesGridControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\LevelExplorerControl.resx">
+      <DependentUpon>LevelExplorerControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ItemSelectorControl.resx">
+      <DependentUpon>ItemSelectorControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TexturePickerControl.resx">
+      <DependentUpon>TexturePickerControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomUITypeEditors\Vector2UITypeEditor.resx">
+      <DependentUpon>Vector2UITypeEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AddCustomPropertyForm.resx">
+      <DependentUpon>AddCustomPropertyForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AddLayerDialog.resx">
+      <DependentUpon>AddLayerDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource1.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\icon_layer_nonactive.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\icon_level.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\icon_layer_active.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Plugins\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\folder2.png.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\folder2.png.png_" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Gleed2D.InGame.Windows\Gleed2D.InGame.Windows.csproj">
+      <Project>{E132044B-5983-4544-9A8A-1DEBC331DAAA}</Project>
+      <Name>Gleed2D.InGame.Windows</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
+  <!--
+      To modify your build process, add your task inside one of the targets below and uncomment it. 
+      Other similar extension points exist, see Microsoft.Common.targets.
+      <Target Name="BeforeBuild">
+      </Target>
+      <Target Name="AfterBuild">
+      </Target>
+    -->
+</Project>

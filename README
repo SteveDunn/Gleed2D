@@ -1,0 +1,3 @@
+This repository is a reworking of the original tool of the same name (at http://gleed2d.codeplex.com/)
+
+This version is plug-in based.  All the shapes you see are plug-ins.  The behaviours and lighting are also plug-ins.

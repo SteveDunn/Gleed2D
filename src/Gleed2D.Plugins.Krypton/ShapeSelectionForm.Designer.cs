@@ -123,7 +123,9 @@
 		private System.Windows.Forms.Button uiCancelButton;
 		private System.Windows.Forms.ListView uiShapeList;
 		private System.Windows.Forms.SplitContainer splitContainer1;
+#pragma warning disable 169
 		private System.Windows.Forms.PropertyGrid GridSite;
+#pragma warning restore 169
 		private System.Windows.Forms.PropertyGrid uiShapePropertyGrid;
 	}
 }

@@ -46,7 +46,6 @@ namespace Gleed2D.Core.Controls
 
 		void handlePickerDragEvent( object sender, DraggingTextureEventArgs e )
 		{
-			int n = 1 ;
 		}
 
 		void pathToFolderChanging( object sender, PathToFolderChangedEventArgs e )

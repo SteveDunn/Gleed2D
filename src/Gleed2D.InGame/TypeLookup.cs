@@ -45,7 +45,7 @@ namespace Gleed2D.InGame
 			xml.Descendants(@"Editor").ForEach( 
 				node => new[ ]
 					{
-						@"Type", @"PropertiesType"
+						@"ClrTypeOfEditor", @"ClrTypeOfProperties"
 					}.ForEach(
 						attName =>
 							{
@@ -84,40 +84,6 @@ namespace Gleed2D.InGame
 
 						element.Value = typeLookup[ typeName ].ToString( ) ;
 					} ) ;
-
-			var typeMapElement = new XElement(
-				@"TypeMap",
-				typeLookup.Select(
-					p =>
-						new XElement(
-							@"Type",
-							new XAttribute( "Name", p.Key ),
-							new XAttribute( @"Index", p.Value ) ) ) ) ;
-			xml.Add( typeMapElement ) ;
-		}
-
-		public static void Compress_old(XElement xml)
-		{
-			var typeLookup = new Dictionary<string, int>( ) ;
-
-			int found = 0 ;
-
-			xml.Descendants( @"Editor" ).ForEach(
-				node => new[ ]
-					{
-						@"Type", @"PropertiesType"
-					}.ForEach(
-						attName =>
-							{
-								var attribute = node.CertainAttribute( attName ) ;
-								string typeName = attribute.Value ;
-								if( !typeLookup.ContainsKey( typeName ) )
-								{
-									typeLookup[ typeName ] = found++ ;
-								}
-
-								attribute.Value = typeLookup[ typeName ].ToString( ) ;
-							} ) ) ;
 
 			var typeMapElement = new XElement(
 				@"TypeMap",

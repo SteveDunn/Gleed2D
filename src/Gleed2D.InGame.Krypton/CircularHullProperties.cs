@@ -1,7 +1,7 @@
 using System ;
 using Microsoft.Xna.Framework ;
 
-namespace Gleed2D.InGame.KryptonProperties.Windows
+namespace Gleed2D.InGame.Krypton
 {
 	public class CircularHullProperties : ItemProperties
 	{

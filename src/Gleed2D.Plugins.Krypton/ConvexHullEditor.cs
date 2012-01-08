@@ -7,7 +7,7 @@ using System.Windows.Forms ;
 using System.Xml.Linq ;
 using Gleed2D.Core ;
 using Gleed2D.InGame ;
-using Gleed2D.InGame.KryptonProperties.Windows ;
+using Gleed2D.InGame.Krypton ;
 using Microsoft.Xna.Framework ;
 using Microsoft.Xna.Framework.Graphics ;
 using StructureMap ;

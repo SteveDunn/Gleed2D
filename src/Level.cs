@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel ;
+using System.IO ;
 using System.Linq ;
+using System.Windows.Forms ;
 using System.Xml.Linq ;
 using Gleed2D.Core.Behaviour ;
 using Gleed2D.InGame ;
@@ -40,6 +42,28 @@ namespace Gleed2D.Core
 			TypeLookup.Rehydrate( xml );
 			
 			_properties = xml.Element( @"LevelProperties" ).DeserializedAs<LevelProperties>( ) ;
+
+			if( !Directory.Exists( _properties.ContentRootFolder.AbsolutePath ) )
+			{
+				string message = @"The level file has a content root folder that does not exist.
+
+It say the content root is at ""{0}"". Images specified in this level file are relative to this folder so you should change it in order to load this level file correctly.
+
+Would you like to change it?".FormatWith( _properties.ContentRootFolder.AbsolutePath ) ;
+
+				if(MessageBox.Show( message, @"Content root folder not found.", MessageBoxButtons.YesNo, MessageBoxIcon.Question )==DialogResult.Yes)
+				{
+					var folderBrowserDialog = new Ookii.Dialogs.VistaFolderBrowserDialog( ) ;
+
+					DialogResult dialogResult = folderBrowserDialog.ShowDialog( ) ;
+					
+					if( dialogResult == DialogResult.OK )
+					{
+						_properties.ContentRootFolder.AbsolutePath=folderBrowserDialog.SelectedPath ;
+					}
+				}
+			}
+
 			Behaviours = new BehaviourCollection( _properties, xml );
 
 			Layers = new List<Layer>( xml.CertainElement( @"Layers" ).Elements( @"Layer" ).Select( x => Layer.FromXml( this, x ) ) ) ;

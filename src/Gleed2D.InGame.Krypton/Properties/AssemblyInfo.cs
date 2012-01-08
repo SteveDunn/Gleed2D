@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Gleed2D.InGame.KryptonProperties.Windows")]
-[assembly: AssemblyProduct("Gleed2D.InGame.KryptonProperties.Windows")]
+[assembly: AssemblyTitle("Gleed2D.InGame.Krypton")]
+[assembly: AssemblyProduct("Gleed2D.InGame.Krypton")]
 [assembly: AssemblyDescription("")]
-[assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2011")]
+[assembly: AssemblyCompany("Backroom Software")]
+[assembly: AssemblyCopyright("Copyright © Backroom Software 2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

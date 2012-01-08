@@ -2,7 +2,7 @@ using System ;
 using System.ComponentModel.Composition ;
 using System.Linq ;
 using Gleed2D.Core ;
-using Gleed2D.InGame.KryptonProperties.Windows ;
+using Gleed2D.InGame.Krypton ;
 using Krypton ;
 using Krypton.Lights ;
 using Microsoft.Xna.Framework ;

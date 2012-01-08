@@ -10,7 +10,7 @@ namespace Gleed2D.InGame
 
 		public LayerItem( XElement xml )
 		{
-			string propertiesTypeAsText = xml.CertainAttribute( @"PropertiesType" ).Value ;
+			string propertiesTypeAsText = xml.CertainAttribute( @"ClrTypeOfProperties" ).Value ;
 			Type typeOfProperties = Type.GetType( propertiesTypeAsText ) ;
 			string justTheName = typeOfProperties.Name ;
 

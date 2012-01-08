@@ -2,7 +2,7 @@ using System ;
 using System.IO ;
 using Microsoft.Xna.Framework ;
 
-namespace Gleed2D.InGame.KryptonProperties.Windows
+namespace Gleed2D.InGame.Krypton
 {
 	public class TexturedHullProperties : ItemProperties
 	{

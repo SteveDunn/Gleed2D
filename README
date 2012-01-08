@@ -1,3 +1,8 @@
 This repository is a reworking of the original tool of the same name (at http://gleed2d.codeplex.com/)
 
 This version is plug-in based.  All the shapes you see are plug-ins.  The behaviours and lighting are also plug-ins.
+
+Apart from the plug-ins, the other major differences are:
+
+* Loading of levels is now done by including the Gleed2D.InGame assembly (there's versions for Windows, XBox, and Windows Phone), and creating a `LevelLoader` object.
+* When a Level is loaded, nothing is drawn.  The previous version drew textures, but this one doesn't. Create your own in-game objects to do the drawing.

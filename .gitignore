@@ -11,3 +11,7 @@
 /src/Gleed2D.InGame.Windows/obj
 /src/Gleed2D.Plugins.Krypton/obj
 /src/Gleed2D.Plugins/obj
+/src/Gleed2D.InGame/bin
+/src/Gleed2D.InGame/obj
+/src/Gleed2D.InGame.Krypton/obj
+/src/Gleed2D.InGame.Krypton/bin

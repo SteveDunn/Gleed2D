@@ -133,6 +133,17 @@
         <Types>
          <Type Name="EnumerationExtensions">
           <Members>
+           <Member Name="#Has`1(System.Enum,!!0)">
+            <Messages>
+             <Message Id="result" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue>
+               <Item>'EnumerationExtensions.Has&lt;T&gt;(this Enum, T)'</Item>
+               <Item>'result'</Item>
+               <Item>'object'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="#Include`1(System.Enum,!!0)">
             <Messages>
              <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2011-10-22 08:35:06Z">
@@ -356,11 +367,66 @@
         <Types>
          <Type Name="Calculator">
           <Members>
+           <Member Name="#ACos(System.Single)">
+            <Messages>
+             <Message Id="ACos" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>ACos</Item>
+               <Item>'Calculator.ACos(float)'</Item>
+               <Item>Acos</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#ATan2(System.Single,System.Single)">
+            <Messages>
+             <Message Id="ATan" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>ATan</Item>
+               <Item>'Calculator.ATan2(float, float)'</Item>
+               <Item>Atan</Item>
+              </Issue>
+             </Message>
+             <Message Id="x" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="MemberParameterMoreMeaningfulName">
+               <Item>'Calculator.ATan2(float, float)'</Item>
+               <Item>'x'</Item>
+              </Issue>
+             </Message>
+             <Message Id="y" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="MemberParameterMoreMeaningfulName">
+               <Item>'Calculator.ATan2(float, float)'</Item>
+               <Item>'y'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#BiLerp(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <Messages>
+             <Message Id="Bi" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="Member">
+               <Item>Bi</Item>
+               <Item>'Calculator.BiLerp(Vector2, Vector2, Vector2, float, float, float, float, float, float)'</Item>
+               <Item>BI</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="#Cross(Microsoft.Xna.Framework.Vector2&amp;,Microsoft.Xna.Framework.Vector2&amp;,System.Single&amp;)">
             <Messages>
              <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2011-10-22 09:37:13Z">
               <Issue>
                <Item>'ret'</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Certainty="50">
+               <Item>'value1'</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Certainty="50">
+               <Item>'value2'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -372,6 +438,16 @@
                <Item>'ret'</Item>
               </Issue>
              </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Certainty="50">
+               <Item>'value1'</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Certainty="50">
+               <Item>'value2'</Item>
+              </Issue>
+             </Message>
             </Messages>
            </Member>
            <Member Name="#Cross(System.Single&amp;,Microsoft.Xna.Framework.Vector2&amp;,Microsoft.Xna.Framework.Vector2&amp;)">
@@ -381,6 +457,136 @@
                <Item>'ret'</Item>
               </Issue>
              </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Certainty="50">
+               <Item>'value2'</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Certainty="50">
+               <Item>'value1'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#CubicBezierCurve(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,System.Single)">
+            <Messages>
+             <Message Id="t" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="MemberParameterMoreMeaningfulName">
+               <Item>'Calculator.CubicBezierCurve(Vector2, Vector2, Vector2, Vector2, float)'</Item>
+               <Item>'t'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#CubicBezierCurve(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,System.Single,System.Single&amp;)">
+            <Messages>
+             <Message Id="5#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Certainty="50">
+               <Item>'radians'</Item>
+              </Issue>
+             </Message>
+             <Message Id="t" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="MemberParameterMoreMeaningfulName">
+               <Item>'Calculator.CubicBezierCurve(Vector2, Vector2, Vector2, Vector2, float, ref float)'</Item>
+               <Item>'t'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#CubicBezierCurve2(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,System.Single)">
+            <Messages>
+             <Message Id="endPoints" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="MemberParameterShouldBeDiscreteTerm">
+               <Item>'Calculator.CubicBezierCurve2(Vector2, Vector2, Vector2, Vector2, float)'</Item>
+               <Item>endPoints</Item>
+               <Item>'endPointsTo'</Item>
+               <Item>endpoints</Item>
+              </Issue>
+             </Message>
+             <Message Id="t" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="MemberParameterMoreMeaningfulName">
+               <Item>'Calculator.CubicBezierCurve2(Vector2, Vector2, Vector2, Vector2, float)'</Item>
+               <Item>'t'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#CubicBezierCurve2(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,System.Single,System.Single&amp;)">
+            <Messages>
+             <Message Id="endPoints" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="MemberParameterShouldBeDiscreteTerm">
+               <Item>'Calculator.CubicBezierCurve2(Vector2, Vector2, Vector2, Vector2, float, ref float)'</Item>
+               <Item>endPoints</Item>
+               <Item>'endPointsTo'</Item>
+               <Item>endpoints</Item>
+              </Issue>
+             </Message>
+             <Message Id="5#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Certainty="50">
+               <Item>'radians'</Item>
+              </Issue>
+             </Message>
+             <Message Id="t" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="MemberParameterMoreMeaningfulName">
+               <Item>'Calculator.CubicBezierCurve2(Vector2, Vector2, Vector2, Vector2, float, ref float)'</Item>
+               <Item>'t'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#CubicBezierCurve2(Microsoft.Xna.Framework.Vector2,System.Single,System.Single,Microsoft.Xna.Framework.Vector2,System.Single,System.Single,System.Single,System.Single&amp;)">
+            <Messages>
+             <Message Id="7#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Certainty="50">
+               <Item>'radians'</Item>
+              </Issue>
+             </Message>
+             <Message Id="t" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="MemberParameterMoreMeaningfulName">
+               <Item>'Calculator.CubicBezierCurve2(Vector2, float, float, Vector2, float, float, float, ref float)'</Item>
+               <Item>'t'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#DistanceBetweenPointAndPoint(Microsoft.Xna.Framework.Vector2&amp;,Microsoft.Xna.Framework.Vector2&amp;)">
+            <Messages>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Certainty="50">
+               <Item>'point1'</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Certainty="50">
+               <Item>'point2'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#InterpolateNormal(Microsoft.Xna.Framework.Vector2&amp;,Microsoft.Xna.Framework.Vector2,System.Single)">
+            <Messages>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Certainty="50">
+               <Item>'vector1'</Item>
+              </Issue>
+             </Message>
+             <Message Id="t" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="MemberParameterMoreMeaningfulName">
+               <Item>'Calculator.InterpolateNormal(ref Vector2, Vector2, float)'</Item>
+               <Item>'t'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#InterpolateNormal(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,System.Single)">
+            <Messages>
+             <Message Id="t" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="MemberParameterMoreMeaningfulName">
+               <Item>'Calculator.InterpolateNormal(Vector2, Vector2, float)'</Item>
+               <Item>'t'</Item>
+              </Issue>
+             </Message>
             </Messages>
            </Member>
            <Member Name="#InterpolateNormal(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,System.Single,Microsoft.Xna.Framework.Vector2&amp;)">
@@ -388,6 +594,44 @@
              <Message Id="3#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2011-10-22 09:37:13Z">
               <Issue>
                <Item>'vector'</Item>
+              </Issue>
+             </Message>
+             <Message Id="t" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="MemberParameterMoreMeaningfulName">
+               <Item>'Calculator.InterpolateNormal(Vector2, Vector2, float, out Vector2)'</Item>
+               <Item>'t'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#InterpolateRotation(System.Single,System.Single,System.Single)">
+            <Messages>
+             <Message Id="t" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="MemberParameterMoreMeaningfulName">
+               <Item>'Calculator.InterpolateRotation(float, float, float)'</Item>
+               <Item>'t'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#LinearBezierCurve(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,System.Single)">
+            <Messages>
+             <Message Id="t" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="MemberParameterMoreMeaningfulName">
+               <Item>'Calculator.LinearBezierCurve(Vector2, Vector2, float)'</Item>
+               <Item>'t'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Project(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2)">
+            <Messages>
+             <Message Id="onTo" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="MemberParameterShouldBeDiscreteTerm">
+               <Item>'Calculator.Project(Vector2, Vector2)'</Item>
+               <Item>onTo</Item>
+               <Item>'onToVector'</Item>
+               <Item>onto</Item>
               </Issue>
              </Message>
             </Messages>
@@ -404,6 +648,59 @@
                <Item>'max'</Item>
               </Issue>
              </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Level="CriticalWarning">
+               <Item>'points'</Item>
+              </Issue>
+             </Message>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Certainty="50">
+               <Item>'axis'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#QuadraticBezierCurve(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,System.Single)">
+            <Messages>
+             <Message Id="t" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="MemberParameterMoreMeaningfulName">
+               <Item>'Calculator.QuadraticBezierCurve(Vector2, Vector2, Vector2, float)'</Item>
+               <Item>'t'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#QuadraticBezierCurve(Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,System.Single,System.Single&amp;)">
+            <Messages>
+             <Message Id="4#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Certainty="50">
+               <Item>'radians'</Item>
+              </Issue>
+             </Message>
+             <Message Id="t" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="MemberParameterMoreMeaningfulName">
+               <Item>'Calculator.QuadraticBezierCurve(Vector2, Vector2, Vector2, float, ref float)'</Item>
+               <Item>'t'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#RadiansToVector(System.Single,Microsoft.Xna.Framework.Vector2&amp;)">
+            <Messages>
+             <Message Id="1#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Certainty="50">
+               <Item>'vector'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#RotateVector(Microsoft.Xna.Framework.Vector2&amp;,System.Single)">
+            <Messages>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Certainty="50">
+               <Item>'vector'</Item>
+              </Issue>
+             </Message>
             </Messages>
            </Member>
            <Member Name="#Truncate(Microsoft.Xna.Framework.Vector2&amp;,System.Single,Microsoft.Xna.Framework.Vector2&amp;)">
@@ -411,6 +708,11 @@
              <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2011-10-22 09:37:13Z">
               <Issue>
                <Item>'truncatedVector'</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Certainty="50">
+               <Item>'vector'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -532,6 +834,72 @@
            </Member>
           </Members>
          </Type>
+         <Type Name="PolygonCreationAssistance">
+          <Members>
+           <Member Name="#Data">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue>
+               <Item>'PolygonCreationAssistance.Data'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Finalize()">
+            <Messages>
+             <Message TypeName="RemoveEmptyFinalizers" Category="Microsoft.Performance" CheckId="CA1821" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue>
+               <Item>'PolygonCreationAssistance'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#InBounds(Microsoft.Xna.Framework.Vector2)">
+            <Messages>
+             <Message Id="InBounds" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>InBounds</Item>
+               <Item>'PolygonCreationAssistance.InBounds(Vector2)'</Item>
+               <Item>Inbounds</Item>
+              </Issue>
+             </Message>
+             <Message Id="coord" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="MemberParameter">
+               <Item>'PolygonCreationAssistance.InBounds(Vector2)'</Item>
+               <Item>coord</Item>
+               <Item>'coord'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#IsSolid(System.Int32,System.Int32)">
+            <Messages>
+             <Message Id="x" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="MemberParameterMoreMeaningfulName">
+               <Item>'PolygonCreationAssistance.IsSolid(int, int)'</Item>
+               <Item>'x'</Item>
+              </Issue>
+             </Message>
+             <Message Id="y" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="MemberParameterMoreMeaningfulName">
+               <Item>'PolygonCreationAssistance.IsSolid(int, int)'</Item>
+               <Item>'y'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="RendererParams">
+          <Messages>
+           <Message Id="Params" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-01-08 13:59:41Z">
+            <Issue Name="Type">
+             <Item>Params</Item>
+             <Item>'RendererParams'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
          <Type Name="Triangle">
           <Members>
            <Member Name="#.ctor(Gleed2D.Core.Triangle)">
@@ -564,12 +932,286 @@
           </Members>
          </Type>
          <Type Name="Vertices">
+          <Messages>
+           <Message TypeName="IdentifiersShouldHaveCorrectSuffix" Category="Microsoft.Naming" CheckId="CA1710" Status="Excluded" Created="2012-01-08 13:59:41Z">
+            <Issue>
+             <Item>'Vertices'</Item>
+             <Item>Collection</Item>
+            </Issue>
+           </Message>
+          </Messages>
           <Members>
+           <Member Name="#.ctor(Gleed2D.Core.Vertices)">
+            <Messages>
+             <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue>
+               <Item>'Vertices'</Item>
+               <Item>'Vertices.Vertices(Vertices)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#_closePixels">
+            <Messages>
+             <Message Id="Member" TypeName="PreferJaggedArraysOverMultidimensional" Category="Microsoft.Performance" CheckId="CA1814" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue>
+               <Item>'Vertices._closePixels'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#CreateCapsule(System.Single,System.Single,System.Int32)">
+            <Messages>
+             <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue>
+               <Item>'Vertices'</Item>
+               <Item>'Vertices.CreateCapsule(float, float, int)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#CreateCapsule(System.Single,System.Single,System.Int32,System.Single,System.Int32)">
+            <Messages>
+             <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue>
+               <Item>'Vertices'</Item>
+               <Item>'Vertices.CreateCapsule(float, float, int, float, int)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#CreateCircle(System.Single,System.Int32)">
+            <Messages>
+             <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue>
+               <Item>'Vertices'</Item>
+               <Item>'Vertices.CreateCircle(float, int)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#CreateEllipse(System.Single,System.Single,System.Int32)">
+            <Messages>
+             <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue>
+               <Item>'Vertices'</Item>
+               <Item>'Vertices.CreateEllipse(float, float, int)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="x" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="MemberParameter">
+               <Item>'Vertices.CreateEllipse(float, float, int)'</Item>
+               <Item>x</Item>
+               <Item>'xRadius'</Item>
+              </Issue>
+             </Message>
+             <Message Id="y" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="MemberParameter">
+               <Item>'Vertices.CreateEllipse(float, float, int)'</Item>
+               <Item>y</Item>
+               <Item>'yRadius'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#CreateGear(System.Single,System.Int32,System.Single,System.Single)">
+            <Messages>
+             <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue>
+               <Item>'Vertices'</Item>
+               <Item>'Vertices.CreateGear(float, int, float, float)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#CreatePolygon(Gleed2D.Core.PolygonCreationAssistance&amp;)">
+            <Messages>
+             <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue>
+               <Item>'List&lt;Vertices&gt;'</Item>
+               <Item>'Vertices.CreatePolygon(ref PolygonCreationAssistance)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Level="CriticalWarning">
+               <Item>'pca'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="DoNotRaiseReservedExceptionTypes" Category="Microsoft.Usage" CheckId="CA2201" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="TooGeneric">
+               <Item>'Vertices.CreatePolygon(ref PolygonCreationAssistance)'</Item>
+               <Item>'Exception'</Item>
+              </Issue>
+             </Message>
+             <Message Id="pca" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="MemberParameter">
+               <Item>'Vertices.CreatePolygon(ref PolygonCreationAssistance)'</Item>
+               <Item>pca</Item>
+               <Item>'pca'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#CreatePolygon(System.UInt32[],System.Int32,System.Int32)">
+            <Messages>
+             <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue>
+               <Item>'Vertices'</Item>
+               <Item>'Vertices.CreatePolygon(uint[], int, int)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#CreatePolygon(System.UInt32[],System.Int32,System.Int32,System.Single,System.Byte,System.Boolean,System.Boolean)">
+            <Messages>
+             <Message Id="multiPart" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="MemberParameterShouldBeDiscreteTerm">
+               <Item>'Vertices.CreatePolygon(uint[], int, int, float, byte, bool, bool)'</Item>
+               <Item>multiPart</Item>
+               <Item>'multiPartDetection'</Item>
+               <Item>multipart</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue>
+               <Item>'List&lt;Vertices&gt;'</Item>
+               <Item>'Vertices.CreatePolygon(uint[], int, int, float, byte, bool, bool)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="multi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="MemberParameter">
+               <Item>'Vertices.CreatePolygon(uint[], int, int, float, byte, bool, bool)'</Item>
+               <Item>multi</Item>
+               <Item>'multiPartDetection'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#CreateRectangle(System.Single,System.Single)">
+            <Messages>
+             <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue>
+               <Item>'Vertices'</Item>
+               <Item>'Vertices.CreateRectangle(float, float)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#CreateSimpleRectangle(System.Single,System.Single)">
+            <Messages>
+             <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue>
+               <Item>'Vertices'</Item>
+               <Item>'Vertices.CreateSimpleRectangle(float, float)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#CutHoleInShape(Microsoft.Xna.Framework.Vector2[],Microsoft.Xna.Framework.Vector2[])">
+            <Messages>
+             <Message Id="Verts" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="MemberParameter">
+               <Item>'Vertices.CutHoleInShape(Vector2[], Vector2[])'</Item>
+               <Item>Verts</Item>
+               <Item>'holeVerts'</Item>
+              </Issue>
+              <Issue Name="MemberParameter">
+               <Item>'Vertices.CutHoleInShape(Vector2[], Vector2[])'</Item>
+               <Item>Verts</Item>
+               <Item>'shapeVerts'</Item>
+              </Issue>
+             </Message>
+             <Message Id="System.String.Format(System.String,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="IFormatProviderAlternateString">
+               <Item>'string.Format(string, object)'</Item>
+               <Item>'Vertices.CutHoleInShape(Vector2[], Vector2[])'</Item>
+               <Item>'string.Format(IFormatProvider, string, params object[])'</Item>
+               <Item>'CultureInfo.CurrentCulture'</Item>
+               <Item>'CultureInfo.InvariantCulture'</Item>
+              </Issue>
+              <Issue Name="IFormatProviderAlternateString">
+               <Item>'string.Format(string, object)'</Item>
+               <Item>'Vertices.CutHoleInShape(Vector2[], Vector2[])'</Item>
+               <Item>'string.Format(IFormatProvider, string, params object[])'</Item>
+               <Item>'CultureInfo.CurrentCulture'</Item>
+               <Item>'CultureInfo.InvariantCulture'</Item>
+              </Issue>
+              <Issue Name="IFormatProviderAlternateString">
+               <Item>'string.Format(string, object)'</Item>
+               <Item>'Vertices.CutHoleInShape(Vector2[], Vector2[])'</Item>
+               <Item>'string.Format(IFormatProvider, string, params object[])'</Item>
+               <Item>'CultureInfo.CurrentCulture'</Item>
+               <Item>'CultureInfo.InvariantCulture'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#ForceCounterClockWiseOrder()">
+            <Messages>
+             <Message Id="ClockWise" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>ClockWise</Item>
+               <Item>'Vertices.ForceCounterClockWiseOrder()'</Item>
+               <Item>Clockwise</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetArea()">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Certainty="50">
+               <Item>'Vertices.GetArea()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetCentroid()">
+            <Messages>
+             <Message Id="Centroid" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="Member">
+               <Item>Centroid</Item>
+               <Item>'Vertices.GetCentroid()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetCentroid(System.Single)">
+            <Messages>
+             <Message Id="Centroid" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="Member">
+               <Item>Centroid</Item>
+               <Item>'Vertices.GetCentroid(float)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetCrossingEdges(Gleed2D.Core.Vertices&amp;,Gleed2D.Core.EdgeAlignment,System.Int32)">
+            <Messages>
+             <Message TypeName="DoNotRaiseReservedExceptionTypes" Category="Microsoft.Usage" CheckId="CA2201" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="TooGeneric">
+               <Item>'Vertices.GetCrossingEdges(ref Vertices, EdgeAlignment, int)'</Item>
+               <Item>'Exception'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
            <Member Name="#GetEdge(System.Int32,Microsoft.Xna.Framework.Vector2&amp;)">
             <Messages>
              <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2011-10-22 09:37:13Z">
               <Issue>
                <Item>'edge'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetEdgeMidPoint(System.Int32)">
+            <Messages>
+             <Message Id="MidPoint" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>MidPoint</Item>
+               <Item>'Vertices.GetEdgeMidPoint(int)'</Item>
+               <Item>Midpoint</Item>
               </Issue>
              </Message>
             </Messages>
@@ -581,6 +1223,21 @@
                <Item>'midPoint'</Item>
               </Issue>
              </Message>
+             <Message Id="MidPoint" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>MidPoint</Item>
+               <Item>'Vertices.GetEdgeMidPoint(int, out Vector2)'</Item>
+               <Item>Midpoint</Item>
+              </Issue>
+             </Message>
+             <Message Id="midPoint" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="MemberParameterShouldBeDiscreteTerm">
+               <Item>'Vertices.GetEdgeMidPoint(int, out Vector2)'</Item>
+               <Item>midPoint</Item>
+               <Item>'midPoint'</Item>
+               <Item>midpoint</Item>
+              </Issue>
+             </Message>
             </Messages>
            </Member>
            <Member Name="#GetEdgeNormal(System.Int32,Microsoft.Xna.Framework.Vector2&amp;)">
@@ -588,6 +1245,24 @@
              <Message Id="1#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2011-10-22 09:37:13Z">
               <Issue>
                <Item>'edgeNormal'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetMomentOfInertia()">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Certainty="50">
+               <Item>'Vertices.GetMomentOfInertia()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetShortestEdge()">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Certainty="50">
+               <Item>'Vertices.GetShortestEdge()'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -606,6 +1281,20 @@
              <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2011-10-22 09:37:13Z">
               <Issue>
                <Item>'error'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue>
+               <Item>'Vertices'</Item>
+               <Item>'Vertices.Intersect(Vertices, Vertices, out PolyUnionError)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Vertices'</Item>
+               <Item>'Vertices.Intersect(Vertices, Vertices, out PolyUnionError)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Vertices'</Item>
+               <Item>'Vertices.Intersect(Vertices, Vertices, out PolyUnionError)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -631,6 +1320,83 @@
                <Item>'max'</Item>
               </Issue>
              </Message>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Certainty="50">
+               <Item>'axis'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Round(Gleed2D.Core.Vertices)">
+            <Messages>
+             <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue>
+               <Item>'Vertices'</Item>
+               <Item>'Vertices.Round(Vertices)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Vertices'</Item>
+               <Item>'Vertices.Round(Vertices)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Scale(Microsoft.Xna.Framework.Vector2&amp;)">
+            <Messages>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Certainty="50">
+               <Item>'value'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Simplify(Gleed2D.Core.Vertices)">
+            <Messages>
+             <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue>
+               <Item>'Vertices'</Item>
+               <Item>'Vertices.Simplify(Vertices)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Vertices'</Item>
+               <Item>'Vertices.Simplify(Vertices)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Simplify(Gleed2D.Core.Vertices,System.Int32)">
+            <Messages>
+             <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue>
+               <Item>'Vertices'</Item>
+               <Item>'Vertices.Simplify(Vertices, int)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Vertices'</Item>
+               <Item>'Vertices.Simplify(Vertices, int)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#SplitPolygonEdge(Gleed2D.Core.Vertices&amp;,Gleed2D.Core.EdgeAlignment,Microsoft.Xna.Framework.Vector2,System.Int32&amp;,System.Int32&amp;)">
+            <Messages>
+             <Message TypeName="DoNotRaiseReservedExceptionTypes" Category="Microsoft.Usage" CheckId="CA2201" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="TooGeneric">
+               <Item>'Vertices.SplitPolygonEdge(ref Vertices, EdgeAlignment, Vector2, out int, out int)'</Item>
+               <Item>'Exception'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#SubDivideEdges(System.Single)">
+            <Messages>
+             <Message Id="SubDivide" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>SubDivide</Item>
+               <Item>'Vertices.SubDivideEdges(float)'</Item>
+               <Item>Subdivide</Item>
+              </Issue>
+             </Message>
             </Messages>
            </Member>
            <Member Name="#Subtract(Gleed2D.Core.Vertices,Gleed2D.Core.Vertices,Gleed2D.Core.PolyUnionError&amp;)">
@@ -638,6 +1404,29 @@
              <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2011-10-22 09:37:13Z">
               <Issue>
                <Item>'error'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue>
+               <Item>'Vertices'</Item>
+               <Item>'Vertices.Subtract(Vertices, Vertices, out PolyUnionError)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Vertices'</Item>
+               <Item>'Vertices.Subtract(Vertices, Vertices, out PolyUnionError)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Vertices'</Item>
+               <Item>'Vertices.Subtract(Vertices, Vertices, out PolyUnionError)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Translate(Microsoft.Xna.Framework.Vector2&amp;)">
+            <Messages>
+             <Message Id="0#" TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Certainty="50">
+               <Item>'vector'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -654,6 +1443,14 @@
                <Item>'indices'</Item>
               </Issue>
              </Message>
+             <Message Id="indices" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="MemberParameter">
+               <Item>'Vertices.Triangulate(Vector2[], Vertices.WindingOrder, out Vector2[], out short[])'</Item>
+               <Item>indices</Item>
+               <Item>'indices'</Item>
+               <Item>indexes</Item>
+              </Issue>
+             </Message>
             </Messages>
            </Member>
            <Member Name="#Union(Gleed2D.Core.Vertices,Gleed2D.Core.Vertices,Gleed2D.Core.PolyUnionError&amp;)">
@@ -661,6 +1458,59 @@
              <Message Id="2#" TypeName="AvoidOutParameters" Category="Microsoft.Design" CheckId="CA1021" Status="Excluded" Created="2011-10-22 09:37:13Z">
               <Issue>
                <Item>'error'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue>
+               <Item>'Vertices'</Item>
+               <Item>'Vertices.Union(Vertices, Vertices, out PolyUnionError)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Vertices'</Item>
+               <Item>'Vertices.Union(Vertices, Vertices, out PolyUnionError)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'Vertices'</Item>
+               <Item>'Vertices.Union(Vertices, Vertices, out PolyUnionError)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="Vertices+Vertex">
+          <Members>
+           <Member Name="#ToString()">
+            <Messages>
+             <Message Id="System.String.Format(System.String,System.Object,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="IFormatProviderAlternateString">
+               <Item>'string.Format(string, object, object)'</Item>
+               <Item>'Vertices.Vertex.ToString()'</Item>
+               <Item>'string.Format(IFormatProvider, string, params object[])'</Item>
+               <Item>'CultureInfo.CurrentCulture'</Item>
+               <Item>'CultureInfo.InvariantCulture'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="Vertices+WindingOrder">
+          <Messages>
+           <Message TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034" Status="Excluded" Created="2012-01-08 13:59:41Z">
+            <Issue>
+             <Item>'Vertices.WindingOrder'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#CounterClockwise">
+            <Messages>
+             <Message Id="CounterClockwise" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>CounterClockwise</Item>
+               <Item>'Vertices.WindingOrder.CounterClockwise'</Item>
+               <Item>Counterclockwise</Item>
               </Issue>
              </Message>
             </Messages>
@@ -1501,6 +2351,399 @@
          </Type>
         </Types>
        </Namespace>
+       <Namespace Name="JetBrains.Annotations">
+        <Types>
+         <Type Name="AspMvcActionAttribute">
+          <Messages>
+           <Message Id="Mvc" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-01-08 13:59:41Z">
+            <Issue Name="Type">
+             <Item>Mvc</Item>
+             <Item>'AspMvcActionAttribute'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="AspMvcAreaAttribute">
+          <Messages>
+           <Message Id="Mvc" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-01-08 13:59:41Z">
+            <Issue Name="Type">
+             <Item>Mvc</Item>
+             <Item>'AspMvcAreaAttribute'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="AspMvcControllerAttribute">
+          <Messages>
+           <Message Id="Mvc" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-01-08 13:59:41Z">
+            <Issue Name="Type">
+             <Item>Mvc</Item>
+             <Item>'AspMvcControllerAttribute'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="AspMvcMasterAttribute">
+          <Messages>
+           <Message Id="Mvc" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-01-08 13:59:41Z">
+            <Issue Name="Type">
+             <Item>Mvc</Item>
+             <Item>'AspMvcMasterAttribute'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="AspMvcModelTypeAttribute">
+          <Messages>
+           <Message Id="Mvc" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-01-08 13:59:41Z">
+            <Issue Name="Type">
+             <Item>Mvc</Item>
+             <Item>'AspMvcModelTypeAttribute'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="AspMvcPartialViewAttribute">
+          <Messages>
+           <Message Id="Mvc" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-01-08 13:59:41Z">
+            <Issue Name="Type">
+             <Item>Mvc</Item>
+             <Item>'AspMvcPartialViewAttribute'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="AspMvcSupressViewErrorAttribute">
+          <Messages>
+           <Message Id="Mvc" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-01-08 13:59:41Z">
+            <Issue Name="Type">
+             <Item>Mvc</Item>
+             <Item>'AspMvcSupressViewErrorAttribute'</Item>
+            </Issue>
+           </Message>
+           <Message Id="Supress" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-01-08 13:59:41Z">
+            <Issue Name="Type">
+             <Item>Supress</Item>
+             <Item>'AspMvcSupressViewErrorAttribute'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="AspMvcTemplateAttribute">
+          <Messages>
+           <Message Id="Mvc" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-01-08 13:59:41Z">
+            <Issue Name="Type">
+             <Item>Mvc</Item>
+             <Item>'AspMvcTemplateAttribute'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="AspMvcViewAttribute">
+          <Messages>
+           <Message Id="Mvc" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-01-08 13:59:41Z">
+            <Issue Name="Type">
+             <Item>Mvc</Item>
+             <Item>'AspMvcViewAttribute'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="AssertionConditionType">
+          <Members>
+           <Member Name="#IS_FALSE">
+            <Messages>
+             <Message Id="FALSE" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="Member">
+               <Item>FALSE</Item>
+               <Item>'AssertionConditionType.IS_FALSE'</Item>
+               <Item>False</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="Member">
+               <Item>'AssertionConditionType.IS_FALSE'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#IS_NOT_NULL">
+            <Messages>
+             <Message Id="NOT" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="Member">
+               <Item>NOT</Item>
+               <Item>'AssertionConditionType.IS_NOT_NULL'</Item>
+               <Item>Not</Item>
+              </Issue>
+             </Message>
+             <Message Id="NULL" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="Member">
+               <Item>NULL</Item>
+               <Item>'AssertionConditionType.IS_NOT_NULL'</Item>
+               <Item>Null</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="Member">
+               <Item>'AssertionConditionType.IS_NOT_NULL'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#IS_NULL">
+            <Messages>
+             <Message Id="NULL" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="Member">
+               <Item>NULL</Item>
+               <Item>'AssertionConditionType.IS_NULL'</Item>
+               <Item>Null</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="Member">
+               <Item>'AssertionConditionType.IS_NULL'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#IS_TRUE">
+            <Messages>
+             <Message Id="TRUE" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="Member">
+               <Item>TRUE</Item>
+               <Item>'AssertionConditionType.IS_TRUE'</Item>
+               <Item>True</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="Member">
+               <Item>'AssertionConditionType.IS_TRUE'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="BaseTypeRequiredAttribute">
+          <Messages>
+           <Message TypeName="DefineAccessorsForAttributeArguments" Category="Microsoft.Design" CheckId="CA1019" Status="Excluded" Created="2012-01-08 13:59:41Z">
+            <Issue>
+             <Item>'baseType'</Item>
+             <Item>'BaseTypeRequiredAttribute'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#BaseTypes">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue>
+               <Item>'BaseTypeRequiredAttribute.BaseTypes'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="ImplicitUseKindFlags">
+          <Messages>
+           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2012-01-08 13:59:41Z">
+            <Issue Name="TypeNoAlternate">
+             <Item>Flags</Item>
+             <Item>'ImplicitUseKindFlags'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="ImplicitUseTargetFlags">
+          <Messages>
+           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2012-01-08 13:59:41Z">
+            <Issue Name="TypeNoAlternate">
+             <Item>Flags</Item>
+             <Item>'ImplicitUseTargetFlags'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="LocalizationRequiredAttribute">
+          <Messages>
+           <Message TypeName="DefineAccessorsForAttributeArguments" Category="Microsoft.Design" CheckId="CA1019" Status="Excluded" Created="2012-01-08 13:59:41Z" FixCategory="Breaking">
+            <Issue Name="RemoveSetter">
+             <Item>'LocalizationRequiredAttribute.Required'</Item>
+             <Item>'required'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="MeansImplicitUseAttribute">
+          <Members>
+           <Member Name="#.ctor(JetBrains.Annotations.ImplicitUseKindFlags)">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'MeansImplicitUseAttribute.MeansImplicitUseAttribute(ImplicitUseKindFlags)'</Item>
+               <Item>Flags</Item>
+               <Item>'useKindFlags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#.ctor(JetBrains.Annotations.ImplicitUseKindFlags,JetBrains.Annotations.ImplicitUseTargetFlags)">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'MeansImplicitUseAttribute.MeansImplicitUseAttribute(ImplicitUseKindFlags, ImplicitUseTargetFlags)'</Item>
+               <Item>Flags</Item>
+               <Item>'targetFlags'</Item>
+              </Issue>
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'MeansImplicitUseAttribute.MeansImplicitUseAttribute(ImplicitUseKindFlags, ImplicitUseTargetFlags)'</Item>
+               <Item>Flags</Item>
+               <Item>'useKindFlags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#.ctor(JetBrains.Annotations.ImplicitUseTargetFlags)">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'MeansImplicitUseAttribute.MeansImplicitUseAttribute(ImplicitUseTargetFlags)'</Item>
+               <Item>Flags</Item>
+               <Item>'targetFlags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#TargetFlags">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="MemberNoAlternate">
+               <Item>Flags</Item>
+               <Item>'MeansImplicitUseAttribute.TargetFlags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#UseKindFlags">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="MemberNoAlternate">
+               <Item>Flags</Item>
+               <Item>'MeansImplicitUseAttribute.UseKindFlags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="PathReferenceAttribute">
+          <Messages>
+           <Message TypeName="AvoidUnsealedAttributes" Category="Microsoft.Performance" CheckId="CA1813" Status="Excluded" Created="2012-01-08 13:59:41Z">
+            <Issue>
+             <Item>'PathReferenceAttribute'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="PublicAPIAttribute">
+          <Messages>
+           <Message TypeName="DefineAccessorsForAttributeArguments" Category="Microsoft.Design" CheckId="CA1019" Status="Excluded" Created="2012-01-08 13:59:41Z">
+            <Issue>
+             <Item>'comment'</Item>
+             <Item>'PublicAPIAttribute'</Item>
+            </Issue>
+           </Message>
+           <Message Id="API" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2012-01-08 13:59:41Z">
+            <Issue Name="Type">
+             <Item>API</Item>
+             <Item>'PublicAPIAttribute'</Item>
+             <Item>Api</Item>
+            </Issue>
+           </Message>
+           <Message TypeName="MarkAttributesWithAttributeUsage" Category="Microsoft.Design" CheckId="CA1018" Status="Excluded" Created="2012-01-08 13:59:41Z">
+            <Issue Level="Error">
+             <Item>'PublicAPIAttribute'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#.ctor(System.String)">
+            <Messages>
+             <Message Id="comment" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Status="Excluded" Created="2012-01-08 13:59:41Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'comment'</Item>
+               <Item>'PublicAPIAttribute.PublicAPIAttribute(string)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="UsedImplicitlyAttribute">
+          <Members>
+           <Member Name="#.ctor(JetBrains.Annotations.ImplicitUseKindFlags)">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'UsedImplicitlyAttribute.UsedImplicitlyAttribute(ImplicitUseKindFlags)'</Item>
+               <Item>Flags</Item>
+               <Item>'useKindFlags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#.ctor(JetBrains.Annotations.ImplicitUseKindFlags,JetBrains.Annotations.ImplicitUseTargetFlags)">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'UsedImplicitlyAttribute.UsedImplicitlyAttribute(ImplicitUseKindFlags, ImplicitUseTargetFlags)'</Item>
+               <Item>Flags</Item>
+               <Item>'targetFlags'</Item>
+              </Issue>
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'UsedImplicitlyAttribute.UsedImplicitlyAttribute(ImplicitUseKindFlags, ImplicitUseTargetFlags)'</Item>
+               <Item>Flags</Item>
+               <Item>'useKindFlags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#.ctor(JetBrains.Annotations.ImplicitUseTargetFlags)">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'UsedImplicitlyAttribute.UsedImplicitlyAttribute(ImplicitUseTargetFlags)'</Item>
+               <Item>Flags</Item>
+               <Item>'targetFlags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#TargetFlags">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="MemberNoAlternate">
+               <Item>Flags</Item>
+               <Item>'UsedImplicitlyAttribute.TargetFlags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#UseKindFlags">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2012-01-08 13:59:41Z">
+              <Issue Name="MemberNoAlternate">
+               <Item>Flags</Item>
+               <Item>'UsedImplicitlyAttribute.UseKindFlags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
       </Namespaces>
      </Module>
     </Modules>
@@ -1521,11 +2764,18 @@
    <Rule TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812">
     <Resolution Name="Default">{0} is an internal class that is apparently never instantiated. If so, remove the code from the assembly. If this class is intended to contain only static methods, consider adding a private constructor to prevent the compiler from generating a default constructor.</Resolution>
    </Rule>
+   <Rule TypeName="AvoidUnsealedAttributes" Category="Microsoft.Performance" CheckId="CA1813">
+    <Resolution Name="Default">Seal {0}, if possible.</Resolution>
+   </Rule>
    <Rule TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702">
     <Resolution Name="MemberParameterShouldBeCompoundWord">In member {0}, the discrete term '{1}' in parameter name {2} should be expressed as a compound word, '{3}'.</Resolution>
     <Resolution Name="MemberParameterShouldBeDiscreteTerm">In member {0}, the compound word '{1}' in parameter name {2} exists as a discrete term. If your usage is intended to be single word, case it as '{3}' or strip the first token entirely if it represents any sort of Hungarian notation.</Resolution>
     <Resolution Name="MemberShouldBeCompoundWord">The discrete term '{0}' in member name {1} should be expressed as a compound word, '{2}'.</Resolution>
     <Resolution Name="MemberShouldBeDiscreteTerm">The compound word '{0}' in member name {1} exists as a discrete term. If your usage is intended to be single word, case it as '{2}' or strip the first token entirely if it represents any sort of Hungarian notation.</Resolution>
+   </Rule>
+   <Rule TypeName="DefineAccessorsForAttributeArguments" Category="Microsoft.Design" CheckId="CA1019">
+    <Resolution Name="Default">Add a public read-only property accessor for positional argument {0} of Attribute {1}.</Resolution>
+    <Resolution Name="RemoveSetter">Remove the property setter from {0} or reduce its accessibility because it corresponds to positional argument {1}.</Resolution>
    </Rule>
    <Rule TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051">
     <Resolution Name="Default">Because field {0} is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Resolution>
@@ -1533,12 +2783,17 @@
    <Rule TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002">
     <Resolution Name="Default">Change {0} in {1} to use Collection&lt;T&gt;, ReadOnlyCollection&lt;T&gt; or KeyedCollection&lt;K,V&gt;</Resolution>
    </Rule>
+   <Rule TypeName="DoNotPassTypesByReference" Category="Microsoft.Design" CheckId="CA1045">
+    <Resolution Name="Default">Consider a design that does not require that {0} be a reference parameter.</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotRaiseReservedExceptionTypes" Category="Microsoft.Usage" CheckId="CA2201">
+    <Resolution Name="TooGeneric">{0} creates an exception of type {1}, an exception type that is not sufficiently specific and should never be raised by user code. If this exception instance might be thrown, use a different exception type.</Resolution>
+   </Rule>
    <Rule TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709">
     <Resolution Name="Member">Correct the casing of '{0}' in member name {1} by changing it to '{2}'.</Resolution>
     <Resolution Name="Type">Correct the casing of '{0}' in type name {1} by changing it to '{2}'.</Resolution>
    </Rule>
    <Rule TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704">
-    <Resolution Name="Assembly">Correct the spelling of '{0}' in assembly name {1}.</Resolution>
     <Resolution Name="Member">Correct the spelling of '{0}' in member name {1} or remove it entirely if it represents any sort of Hungarian notation.</Resolution>
     <Resolution Name="MemberParameter">In method {0}, correct the spelling of '{1}' in parameter name {2} or remove it entirely if it represents any sort of Hungarian notation.</Resolution>
     <Resolution Name="MemberParameterMoreMeaningfulName">In method {0}, consider providing a more meaningful name than parameter name {1}.</Resolution>
@@ -1549,12 +2804,46 @@
    <Rule TypeName="IdentifiersShouldHaveCorrectSuffix" Category="Microsoft.Naming" CheckId="CA1710">
     <Resolution Name="Default">Rename {0} to end in '{1}'.</Resolution>
    </Rule>
+   <Rule TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707">
+    <Resolution Name="Member">Remove the underscores from member name {0}.</Resolution>
+   </Rule>
+   <Rule TypeName="MarkAttributesWithAttributeUsage" Category="Microsoft.Design" CheckId="CA1018">
+    <Resolution Name="Default">Specify AttributeUsage on {0}.</Resolution>
+   </Rule>
    <Rule TypeName="MarkISerializableTypesWithSerializable" Category="Microsoft.Usage" CheckId="CA2237">
     <Resolution Name="Default">Add [Serializable] to {0} as this type implements ISerializable.</Resolution>
+   </Rule>
+   <Rule TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034">
+    <Resolution Name="Default">Do not nest type {0}. Alternatively, change its accessibility so that it is not externally visible.</Resolution>
+   </Rule>
+   <Rule TypeName="PreferJaggedArraysOverMultidimensional" Category="Microsoft.Performance" CheckId="CA1814">
+    <Resolution Name="Default">{0} is a multidimensional array. Replace it with a jagged array if possible.</Resolution>
+   </Rule>
+   <Rule TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819">
+    <Resolution Name="Default">Change {0} to return a collection or make it a method.</Resolution>
+   </Rule>
+   <Rule TypeName="RemoveEmptyFinalizers" Category="Microsoft.Performance" CheckId="CA1821">
+    <Resolution Name="Default">{0} implements a finalizer that only calls conditionally emitted methods or the base type finalizer. Remove the finalizer or ensure that it is only conditionally compiled into the assembly. If this violation occurs against a finalizer that is entirely wrapped in a conditionally-emitted block of code, suppress this message.</Resolution>
+   </Rule>
+   <Rule TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804">
+    <Resolution Name="Default">{0} declares a variable, {1}, of type {2}, which is never used or is only assigned to. Use this variable or remove it.</Resolution>
+   </Rule>
+   <Rule TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801">
+    <Resolution Name="Default">Parameter {0} of {1} is never used. Remove the parameter or use it in the method body.</Resolution>
    </Rule>
    <Rule TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305">
     <Resolution Name="IFormatProviderAlternate">Because the behavior of {0} could vary based on the current user's locale settings, replace this call in {1} with a call to {2}. If the result of {2} will be based on input from the user, specify {3} as the 'IFormatProvider' parameter. Otherwise, if the result will based on input stored and accessed by software, such as when it is loaded from disk or from a database, specify {4}.</Resolution>
     <Resolution Name="IFormatProviderAlternateString">Because the behavior of {0} could vary based on the current user's locale settings, replace this call in {1} with a call to {2}. If the result of {2} will be displayed to the user, specify {3} as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify {4}.</Resolution>
+   </Rule>
+   <Rule TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726">
+    <Resolution Name="Member">Replace the term '{0}' in member name {1} with the preferred alternate '{2}'.</Resolution>
+    <Resolution Name="MemberNoAlternate">Replace the term '{0}' in member name {1} with an appropriate alternate or remove it entirely.</Resolution>
+    <Resolution Name="MemberParameter">In member {0}, replace the term '{1}' in parameter name {2} with the preferred alternate '{3}'.</Resolution>
+    <Resolution Name="MemberParameterNoAlternate">In member {0}, replace the term '{1}' in parameter name {2} with an appropriate alternate or remove it entirely.</Resolution>
+    <Resolution Name="TypeNoAlternate">Replace the term '{0}' in type name {1} with an appropriate alternate or remove it entirely.</Resolution>
+   </Rule>
+   <Rule TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024">
+    <Resolution Name="Default">Change {0} to a property if appropriate.</Resolution>
    </Rule>
   </Rules>
  </FxCopReport>

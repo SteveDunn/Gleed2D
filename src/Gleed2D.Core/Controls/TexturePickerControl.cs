@@ -541,8 +541,6 @@ namespace Gleed2D.Core.Controls
 			var handler = DraggingTextureEvent ;
 			if( handler != null )
 			{
-				ListViewItem focusedItem = uiItemsListView.FocusedItem ;
-
 				handler(
 					this,
 					new DraggingTextureEventArgs

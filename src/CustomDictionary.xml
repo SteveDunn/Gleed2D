@@ -36,7 +36,11 @@
       (for example 'FileName' -> 'Filename').
     -->
     <Recognized>
-        <Word>Plugin</Word>
+      <Word>Behaviour</Word>
+      <Word>Triangulator</Word>
+      <Word>Customisation</Word>
+      <Word>Gleed</Word>
+      <Word>Plugin</Word>
       <Word>accessor</Word>
       <Word>accessors</Word>
       <Word>acos</Word>

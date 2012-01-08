@@ -256,7 +256,7 @@
       <Project>{D96F3152-4F83-4729-9619-5A86B0A80AB1}</Project>
       <Name>Gleed2D.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Gleed2D.InGame.Windows\Gleed2D.InGame.Windows.csproj">
+    <ProjectReference Include="..\Gleed2D.InGame\Gleed2D.InGame.Windows.csproj">
       <Project>{E132044B-5983-4544-9A8A-1DEBC331DAAA}</Project>
       <Name>Gleed2D.InGame.Windows</Name>
     </ProjectReference>

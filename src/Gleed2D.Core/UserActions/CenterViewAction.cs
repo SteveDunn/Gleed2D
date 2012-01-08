@@ -12,7 +12,6 @@ namespace Gleed2D.Core.UserActions
 		public void Process( )
 		{
 			IEditor editor = IoC.Editor ;
-			IMainForm mainForm = IoC.MainForm ;
 
 			if (_treeItem is Level)
 			{

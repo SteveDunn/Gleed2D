@@ -406,8 +406,6 @@ namespace Gleed2D.Core.Controls
 
 			var sourceItem = (ItemEditor) sourceNode.Tag ;
 
-			IEditor editor = summonEditor( ) ;
-
 			if( destNode.Tag is ItemEditor )
 			{
 				var destItem = (ItemEditor) destNode.Tag ;

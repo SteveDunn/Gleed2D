@@ -223,9 +223,9 @@ namespace Gleed2D.Core
 
 						if( first  && rotatingOrScaling )
 						{
-							Vector2 center = Vector2.Transform( item.ItemProperties.Position, rendererParams.Camera.Matrix ) ;
-							
-							Vector2 mouse = Vector2.Transform( MouseStatus.WorldPosition, rendererParams.Camera.Matrix ) ;
+							//Vector2 center = Vector2.Transform( item.ItemProperties.Position, rendererParams.Camera.Matrix ) ;
+							//Vector2 mouse = Vector2.Transform( MouseStatus.WorldPosition, rendererParams.Camera.Matrix ) ;
+
 							//todo move the line drawing into each shape and remove the matrix parameter when drawing the frame
 							//_drawing.DrawLine( _game.SpriteBatch, item.ItemProperties.Position, MouseStatus.WorldPosition, Constants.Instance.ColorSelectionFirst, 1 ) ;
 						}

@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿using System ;
+using System.ComponentModel ;
+using System.Diagnostics;
 using Microsoft.Xna.Framework ;
 
 namespace Gleed2D.Core
@@ -13,11 +15,11 @@ namespace Gleed2D.Core
 				bool returnFlag = false ;
 
 #if DEBUG
-				if( System.ComponentModel.LicenseManager.UsageMode == System.ComponentModel.LicenseUsageMode.Designtime )
+				if( LicenseManager.UsageMode == LicenseUsageMode.Designtime )
 				{
 					returnFlag = true ;
 				}
-				else if( Process.GetCurrentProcess( ).ProcessName.ToUpper( ).Equals( @"DEVENV" ) )
+				else if( StringComparer.OrdinalIgnoreCase.Compare( Process.GetCurrentProcess( ).ProcessName, @"DEVENV" ) == 0 )
 				{
 					returnFlag = true ;
 				}

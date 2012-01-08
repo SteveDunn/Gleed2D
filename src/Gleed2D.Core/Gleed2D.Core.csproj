@@ -332,7 +332,7 @@
     <None Include="Resources\folder2.png.png_" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Gleed2D.InGame.Windows\Gleed2D.InGame.Windows.csproj">
+    <ProjectReference Include="..\Gleed2D.InGame\Gleed2D.InGame.Windows.csproj">
       <Project>{E132044B-5983-4544-9A8A-1DEBC331DAAA}</Project>
       <Name>Gleed2D.InGame.Windows</Name>
     </ProjectReference>

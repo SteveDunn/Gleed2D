@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gleed2D.InGame.WinPhone71", "Gleed2D.InGame.Windows\Gleed2D.InGame.WinPhone71.csproj", "{A0D83525-FBC6-4393-8BFB-E19FAA5748B2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gleed2D.InGame.WinPhone71", "Gleed2D.InGame\Gleed2D.InGame.WinPhone71.csproj", "{A0D83525-FBC6-4393-8BFB-E19FAA5748B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gleed2D.InGame.KryptonProperties.WinPhone71", "Gleed2D.InGame.KryptonProperties.Windows\Gleed2D.InGame.KryptonProperties.WinPhone71.csproj", "{D94A299C-5372-41BA-96CD-74E2AB35E096}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gleed2D.InGame.Krypton.WinPhone71", "Gleed2D.InGame.Krypton\Gleed2D.InGame.Krypton.WinPhone71.csproj", "{D94A299C-5372-41BA-96CD-74E2AB35E096}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

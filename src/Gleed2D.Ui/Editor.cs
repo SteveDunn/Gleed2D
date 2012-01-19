@@ -161,9 +161,10 @@ namespace GLEED2D
 			startCreatingEntity( properties, false );
 		}
 
-		public void StartCreatingEntityNow(EntityCreationProperties properties)
+		public EntityCreation StartCreatingEntityNow(EntityCreationProperties properties)
 		{
 			startCreatingEntity( properties, true );
+			return _entityCreation;
 		}
 
 		void startCreatingEntity( EntityCreationProperties properties, bool startNow )
@@ -196,7 +197,6 @@ namespace GLEED2D
 			{
 				_entityCreation.CurrentEditor = buildPrimitiveEditorReadyForDesigning( _entityCreation.CreationProperties ) ;
 			}
-
 		}
 
 		public void TrySetCameraZoom( float zoom )
@@ -530,6 +530,17 @@ namespace GLEED2D
 			newEditor.ParentLayer = _model.ActiveLayer ;
 
 			_model.AddEditor(newEditor);
+		}
+
+		public void StopCreatingEntity()
+		{
+			_userActionInEditor=UserActionInEditor.Idle;
+		}
+
+		public void CancelCreatingEntity()
+		{
+			_entityCreation.ClearCurrentEditor();
+			_userActionInEditor=UserActionInEditor.Idle;
 		}
 
 		public ItemEditor ItemUnderMouse

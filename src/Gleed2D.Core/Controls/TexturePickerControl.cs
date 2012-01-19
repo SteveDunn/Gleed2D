@@ -15,9 +15,6 @@ namespace Gleed2D.Core.Controls
 	{
     	readonly Stopwatch _stopwatch = new Stopwatch();
 
-		Cursor _dragCursor;
-
-		// public event EventHandler<TexturePickedEventArgs> TexturePicked ;
 		public event EventHandler<PathToFolderChangedEventArgs> PathToFolderChanged ;
 		public event EventHandler<DraggingTextureEventArgs> DraggingTextureEvent;
 		public event EventHandler<EntityChosenEventArgs> TextureChosen;
@@ -51,7 +48,7 @@ namespace Gleed2D.Core.Controls
 
 			uiThumbnailSizesCombo.SelectedIndex = 1 ;
 
-			Gdi.SetListViewSpacing( uiItemsListView, 128 + 8, 128 + 32 ) ;
+			Gdi.SetListViewSpacing( uiListView, 128 + 8, 128 + 32 ) ;
 
 			fileSystemWatcher.NotifyFilter =
 				NotifyFilters.LastWrite |
@@ -78,7 +75,18 @@ namespace Gleed2D.Core.Controls
 			imageList.TransparentColor = Color.Transparent;
 		}
 
-		void uiTexturesListView_ItemDrag(object sender, ItemDragEventArgs e)
+		void uiListView_DragDrop(object sender, DragEventArgs e)
+		{
+			//uiListView.Cursor = Cursors.Default ;
+			//IoC.MainForm.SetCursorForCanvas( Cursors.Default ) ;
+		}
+
+		void uiListView_DragOver(object sender, DragEventArgs e)
+		{
+			//e.Effect = DragDropEffects.Move;
+		}
+
+		void uiListView_ItemDrag(object sender, ItemDragEventArgs e)
 		{
 			var item = (ListViewItem)e.Item;
 			
@@ -89,38 +97,26 @@ namespace Gleed2D.Core.Controls
 			
 			IoC.MainForm.SetToolStripStatusLabel1( item.ToolTipText );
 			
-			var bitmap = new Bitmap(uiItemsListView.LargeImageList.Images[item.ImageKey]);
+			var bitmap = new Bitmap(uiListView.LargeImageList.Images[item.ImageKey]);
 			
-			_dragCursor = new Cursor(bitmap.GetHicon());
-			
-			uiItemsListView.DoDragDrop(e.Item, DragDropEffects.Move);
-		}
-		
-		void uiTexturesListView_DragOver(object sender, DragEventArgs e)
-		{
-			e.Effect = DragDropEffects.Move;
+			new Cursor(bitmap.GetHicon());
+
+			var creationProperties = item.Tag as EntityCreationProperties ;
+
+			var plugin = (IPlugin)Activator.CreateInstance(creationProperties.PluginType);
+
+			var handlerForPlugin = plugin.CreateDragDropHandler();
+			handlerForPlugin[@"PathToTexture"] = @"whatever";
+			handlerForPlugin[@"CreationProperties"] = creationProperties;
+
+			uiListView.DoDragDrop(new HandleDraggingOfAssets(handlerForPlugin), DragDropEffects.Move);
 		}
 
-		void uiTexturesListView_GiveFeedback(object sender, GiveFeedbackEventArgs e)
+		void uiListView_GiveFeedback(object sender, GiveFeedbackEventArgs e)
 		{
-			if( e.Effect == DragDropEffects.Move )
-			{
-				e.UseDefaultCursors = false ;
-				uiItemsListView.Cursor = _dragCursor ;
-				IoC.MainForm.SetCursorForCanvas( Cursors.Default ) ;
-			}
-			else
-			{
-				e.UseDefaultCursors = true ;
-				uiItemsListView.Cursor = Cursors.Default ;
-				IoC.MainForm.SetCursorForCanvas( Cursors.Default ) ;
-			}
-		}
-
-		void uiTexturesListView_DragDrop(object sender, DragEventArgs e)
-		{
-			uiItemsListView.Cursor = Cursors.Default ;
-			IoC.MainForm.SetCursorForCanvas( Cursors.Default ) ;
+			//e.UseDefaultCursors = false;
+			//Cursor.Current = _dragCursor;
+			//IoC.MainForm.SetCursorForCanvas(Cursors.Default);
 		}
 
 		void buttonFolderUpClick(object sender, EventArgs e)
@@ -194,24 +190,24 @@ namespace Gleed2D.Core.Controls
 			switch (uiThumbnailSizesCombo.SelectedIndex)
 			{
 				case 0:
-					uiItemsListView.LargeImageList = _imageList48;
-					Gdi.SetListViewSpacing(uiItemsListView, 48 + 8, 48 + 32);
+					uiListView.LargeImageList = _imageList48;
+					Gdi.SetListViewSpacing(uiListView, 48 + 8, 48 + 32);
 					break;
 				case 1:
-					uiItemsListView.LargeImageList = _imageList64;
-					Gdi.SetListViewSpacing(uiItemsListView, 64 + 8, 64 + 32);
+					uiListView.LargeImageList = _imageList64;
+					Gdi.SetListViewSpacing(uiListView, 64 + 8, 64 + 32);
 					break;
 				case 2:
-					uiItemsListView.LargeImageList = _imageList96;
-					Gdi.SetListViewSpacing(uiItemsListView, 96 + 8, 96 + 32);
+					uiListView.LargeImageList = _imageList96;
+					Gdi.SetListViewSpacing(uiListView, 96 + 8, 96 + 32);
 					break;
 				case 3:
-					uiItemsListView.LargeImageList = _imageList128;
-					Gdi.SetListViewSpacing(uiItemsListView, 128 + 8, 128 + 32);
+					uiListView.LargeImageList = _imageList128;
+					Gdi.SetListViewSpacing(uiListView, 128 + 8, 128 + 32);
 					break;
 				case 4:
-					uiItemsListView.LargeImageList = _imageList256;
-					Gdi.SetListViewSpacing(uiItemsListView, 256 + 8, 256 + 32);
+					uiListView.LargeImageList = _imageList256;
+					Gdi.SetListViewSpacing(uiListView, 256 + 8, 256 + 32);
 					break;
 			}
 		}
@@ -229,7 +225,7 @@ namespace Gleed2D.Core.Controls
 	
 			imageLists.ForEach( il => il.Images.Add( folderImage ) ) ;
 
-			uiItemsListView.Clear();
+			uiListView.Clear();
 
 			var directoryInfo = new DirectoryInfo(path.AbsolutePath);
 
@@ -248,7 +244,7 @@ namespace Gleed2D.Core.Controls
 						Name = eachDirectoryInfo.FullName
 					} ;
 				
-				uiItemsListView.Items.Add(listViewItem);
+				uiListView.Items.Add(listViewItem);
 			}
 
 			const string filters = "*.jpg;*.png;*.bmp;" ;
@@ -295,7 +291,7 @@ namespace Gleed2D.Core.Controls
 						ToolTipText = string.Format( @"{0} ({1} x {2})", file.Name, bmp.Width.ToString( ), bmp.Height.ToString( ) )
 					} ;
 
-				uiItemsListView.Items.Add(lvi);
+				uiListView.Items.Add(lvi);
 			}
 		}
 
@@ -305,9 +301,9 @@ namespace Gleed2D.Core.Controls
 		}
 
 		//todo: move this out into an event
-		void uiTexturesListView_MouseDoubleClick(object sender, MouseEventArgs e)
+		void uiListView_MouseDoubleClick(object sender, MouseEventArgs e)
 		{
-			ListViewItem focusedItem = uiItemsListView.FocusedItem;
+			ListViewItem focusedItem = uiListView.FocusedItem;
 
 			if( TextureChosen != null )
 			{
@@ -336,7 +332,7 @@ namespace Gleed2D.Core.Controls
 		void listView1Click(object sender, EventArgs e)
 		{
 			//todo: move
-			IoC.MainForm.SetToolStripStatusLabel1( uiItemsListView.FocusedItem.ToolTipText);
+			IoC.MainForm.SetToolStripStatusLabel1( uiListView.FocusedItem.ToolTipText);
 		}
 
 
@@ -388,9 +384,9 @@ namespace Gleed2D.Core.Controls
             _imageList128.Images.Add(fullName, getThumbnail(bitmap, 128, 128));
             _imageList256.Images.Add(fullName, getThumbnail(bitmap, 256, 256));
 
-        	uiItemsListView.Items[ fullName ].ImageKey = fullName ;
+        	uiListView.Items[ fullName ].ImageKey = fullName ;
         	
-			uiItemsListView.Items[ fullName ].ToolTipText = string.Format(
+			uiListView.Items[ fullName ].ToolTipText = string.Format(
         		"{0} ({1} x {2})", passedObject.fileinfo.Name, bitmap.Width, bitmap.Height ) ;
 
 			IoC.MainForm.SetToolStripStatusLabel1( e.ProgressPercentage.ToString( ) ) ;
@@ -429,7 +425,7 @@ namespace Gleed2D.Core.Controls
             _imageList128.Images.Clear();
             _imageList256.Images.Clear();
 
-			uiItemsListView.Clear();
+			uiListView.Clear();
             
 			var directoryInfo = new DirectoryInfo(path);
             uiFolderText.Text = directoryInfo.FullName;
@@ -456,7 +452,7 @@ namespace Gleed2D.Core.Controls
             			Name = folder.FullName
             		} ;
             	
-				uiItemsListView.Items.Add(item);
+				uiListView.Items.Add(item);
             }
 
             const string filters = @"*.jpg;*.png;*.gif;*.bmp;*.tga" ;
@@ -487,7 +483,7 @@ namespace Gleed2D.Core.Controls
             			Tag = "file"
             		} ;
             	
-				uiItemsListView.Items.Add(item);
+				uiListView.Items.Add(item);
             }
             
             _stopwatch.Start();
@@ -536,7 +532,7 @@ namespace Gleed2D.Core.Controls
 			loadFolder( contentRootFolder );
 		}
 
-		private void uiItemsListView_DragEnter(object sender, DragEventArgs e)
+		private void uiListView_DragEnter(object sender, DragEventArgs e)
 		{
 			var handler = DraggingTextureEvent ;
 			if( handler != null )

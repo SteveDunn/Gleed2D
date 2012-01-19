@@ -10,7 +10,19 @@ namespace Gleed2D.Plugins
 	[Export(typeof(IEditorPlugin))]
 	public class TextureEditorPlugin : IEditorPlugin
 	{
+		readonly TextureDragDropHandler _dragDropHandler;
 		TextureTabPage _tab ;
+
+		public TextureEditorPlugin()
+		{
+			_dragDropHandler = new TextureDragDropHandler(whenDroppedOntoEditor);
+		}
+
+		private ItemEditor whenDroppedOntoEditor(IEditor editor)
+		{
+			//return new TextureItemEditor();
+			return null;
+		}
 
 		public Type EditorType
 		{
@@ -86,17 +98,9 @@ namespace Gleed2D.Plugins
 			}
 		}
 
-		public IHandleDragDrop DragDropHandler
+		public IHandleDragDrop CreateDragDropHandler()
 		{
-			get
-			{
-				throw new NotImplementedException( ) ;
-			}
-		}
-
-		public void WhenDroppedOnto( object item )
-		{
-			throw new NotImplementedException( ) ;
+			return _dragDropHandler;
 		}
 	}
 }

@@ -10,28 +10,28 @@ namespace Gleed2D.Plugins
 	[Export(typeof(IEditorPlugin))]
 	public class PathEditorPlugin : IEditorPlugin
 	{
-		readonly DefaultDragDropHandler _dragDropHandler;
+		readonly LambdaDrivenDragDropHandler _dragDropHandler;
 
 		public PathEditorPlugin( )
 		{
-			_dragDropHandler = new DefaultDragDropHandler( 
+			_dragDropHandler = new LambdaDrivenDragDropHandler( 
 				DragDropEffects.Move,
 				whenEnteringEditor: whenEnteringEditor,
 				whenDraggingOverEditor: whenDraggingOverEditor,
 				whenDroppedOntoEditor: whenDroppedOntoEditor );
 		}
 
-		void whenEnteringEditor( DragEventArgs dragEventArgs )
+		void whenEnteringEditor( DraggingContext draggingContext )
 		{
-			dragEventArgs.Effect=DragDropEffects.Move;
+			draggingContext.DragEventArgs.Effect=DragDropEffects.Move;
 		}
 
-		void whenDraggingOverEditor( IEditor editor, DragEventArgs dragEventArgs )
+		void whenDraggingOverEditor( IEditor editor, DraggingContext draggingContext )
 		{
-			dragEventArgs.Effect=DragDropEffects.Move;
+			draggingContext.DragEventArgs.Effect=DragDropEffects.Move;
 		}
 
-		void whenDroppedOntoEditor( IEditor editor )
+		void whenDroppedOntoEditor( IEditor editor, DraggingContext draggingContext )
 		{
 			editor.StartCreatingEntityNow(
 				new EntityCreationProperties
@@ -113,12 +113,9 @@ namespace Gleed2D.Plugins
 			}
 		}
 
-		public IHandleDragDrop DragDropHandler
+		public IHandleDragDrop CreateDragDropHandler()
 		{
-			get
-			{
-				return _dragDropHandler ;
-			}
+			return _dragDropHandler;
 		}
 	}
 }

@@ -96,12 +96,9 @@ namespace Gleed2D.Plugins
 			}
 		}
 
-		public IHandleDragDrop DragDropHandler
+		public IHandleDragDrop CreateDragDropHandler()
 		{
-			get
-			{
-				return _dragDropHandler ;
-			}
+			return _dragDropHandler;
 		}
 
 		public void WhenDroppedOnto( object item )

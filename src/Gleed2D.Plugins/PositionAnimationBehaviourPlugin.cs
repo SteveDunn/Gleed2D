@@ -11,53 +11,6 @@ using Microsoft.Xna.Framework ;
 
 namespace Gleed2D.Plugins
 {
-	public class BehaviourDragDropHandler : IHandleDragDrop
-	{
-		readonly Func<ItemEditor, IBehaviour> _buildBehaviour ;
-
-		public BehaviourDragDropHandler(Func<ItemEditor, IBehaviour> buildBehaviour  )
-		{
-			_buildBehaviour = buildBehaviour ;
-		}
-
-		public void WhenDroppedOntoEditor( IEditor editor )
-		{
-			ItemEditor itemEditor = editor.ItemUnderMouse;
-
-			if (itemEditor == null)
-			{
-				return;
-			}
-
-			IoC.Model.AttachBehaviour(itemEditor, _buildBehaviour(itemEditor));
-		}
-
-		public void WhenBeingDraggedOverEditor( IEditor editor, DragEventArgs dragEventArgs )
-		{
-			ItemEditor itemEditor = editor.ItemUnderMouse;
-
-			if (itemEditor == null)
-			{
-				dragEventArgs.Effect = DragDropEffects.None;
-			}
-
-			dragEventArgs.Effect = DragDropEffects.Link;
-		}
-
-		public void WhenEnteringEditor( DragEventArgs dragEventArgs )
-		{
-		}
-
-		public void WhenLeavingEditor( DragEventArgs dragEventArgs )
-		{
-		}
-
-		public DragDropEffects DragDropEffects
-		{
-			get { return DragDropEffects.Link;}
-		}
-	}
-
 	[Export( typeof( IBehaviourPlugin ) )]
 	public class PositionAnimationBehaviourPlugin : IBehaviourPlugin
 	{
@@ -98,12 +51,9 @@ namespace Gleed2D.Plugins
 			}
 		}
 
-		public IHandleDragDrop DragDropHandler
+		public IHandleDragDrop CreateDragDropHandler()
 		{
-			get
-			{
-				return _dragDropBehaviour ;
-			}
+			return _dragDropBehaviour;
 		}
 
 		public string CategoryName

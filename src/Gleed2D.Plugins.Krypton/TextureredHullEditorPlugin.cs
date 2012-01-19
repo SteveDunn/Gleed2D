@@ -87,12 +87,9 @@ namespace Gleed2D.Plugins.Krypton
 			}
 		}
 
-		public IHandleDragDrop DragDropHandler
+		public IHandleDragDrop CreateDragDropHandler()
 		{
-			get
-			{
-				throw new NotImplementedException( ) ;
-			}
+			throw new NotImplementedException();
 		}
 
 		public void WhenDroppedOnto( object item )

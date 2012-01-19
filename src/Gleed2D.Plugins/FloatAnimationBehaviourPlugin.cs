@@ -29,12 +29,9 @@ namespace Gleed2D.Plugins
 			}
 		}
 
-		public IHandleDragDrop DragDropHandler
+		public IHandleDragDrop CreateDragDropHandler()
 		{
-			get
-			{
-				return _dragDropBehaviour ;
-			}
+			return _dragDropBehaviour;
 		}
 
 		IBehaviour buildBehaviour(ItemEditor forEditor)

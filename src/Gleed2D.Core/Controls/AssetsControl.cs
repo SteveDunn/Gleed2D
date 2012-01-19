@@ -76,10 +76,10 @@ namespace Gleed2D.Core.Controls
 			plugins.AddRange( extensibility.EditorPlugins );
 			plugins.AddRange( extensibility.BehaviourPlugins );
 
-			plugins.ForEach( p=> imageRepository.Set( p.Icon ) );
+			plugins.ForEach( p => imageRepository.Set( p.Icon ) );
 
 			plugins.GroupBy( p => p.CategoryName ).Distinct( ).ForEach(
-				c => _pluginsForCategories.Add( c.Key, new List<IPlugin>( ) ) ) ;
+				grouping => _pluginsForCategories.Add( grouping.Key, new List<IPlugin>( ) ) ) ;
 
 			plugins.ForEach( p=> _pluginsForCategories[p.CategoryName].Add( p ) );
 
@@ -111,9 +111,10 @@ namespace Gleed2D.Core.Controls
 			uiTree.Refresh( ) ; // refresh the treeview display
 		}
 
-		private void populateChildNodes(XElement oldXmlnode, TreeNode oldTreenode)
+		void populateChildNodes(XElement oldXmlnode, TreeNode oldTreenode)
 		{
 			TreeNode treenode = null ;
+		
 			var childNodeList = oldXmlnode.Elements() ;
 			// Get all children for the past node (parent)
 
@@ -126,13 +127,17 @@ namespace Gleed2D.Core.Controls
 					
 					var hash = (long) hashAttribute ;
 					var tag = oldTreenode.Tag as List<IPlugin> ;
+					
 					if( tag == null )
 					{
 						tag= new List<IPlugin>( ) ;
 						oldTreenode.Tag = tag ;
 					}
+					
 					IEnumerable<IPlugin> allPlugins = _pluginsForCategories.SelectMany( kvp=>kvp.Value ) ;
+					
 					IPlugin plugin = allPlugins.Single( p => p.GetHashCode( ) == hash ) ;
+					
 					tag.Add( plugin );
 				}
 				else
@@ -171,30 +176,29 @@ namespace Gleed2D.Core.Controls
 			uiList.EndUpdate(  );
 		}
 
-		private void uiList_GiveFeedback(object sender, GiveFeedbackEventArgs e)
-		{
-			//if( e.Effect == DragDropEffects.Move )
-			{
-				e.UseDefaultCursors = false ;
-				Cursor.Current = _dragCursor ;
-				//uiList.Cursor = _dragCursor ;
-				IoC.MainForm.SetCursorForCanvas( _dragCursor ) ;
-			}
-			//else
-			//{
-			//    e.UseDefaultCursors = true ;
-			//    uiList.Cursor = Cursors.Default ;
-			//    IoC.MainForm.SetCursorForCanvas( Cursors.Default ) ;
-			//}
-		}
-
-		private void uiList_DragDrop(object sender, DragEventArgs e)
+		void uiList_DragDrop(object sender, DragEventArgs e)
 		{
 			uiList.Cursor = Cursors.Default ;
 			IoC.MainForm.SetCursorForCanvas( Cursors.Default ) ;
 		}
 
-		private void uiList_ItemDrag(object sender, ItemDragEventArgs e)
+		void uiList_DragEnter(object sender, DragEventArgs e)
+		{
+
+		}
+
+		void uiList_DragOver(object sender, DragEventArgs e)
+		{
+		}
+
+		void uiList_GiveFeedback(object sender, GiveFeedbackEventArgs e)
+		{
+			e.UseDefaultCursors = false;
+			Cursor.Current = _dragCursor;
+			IoC.MainForm.SetCursorForCanvas(_dragCursor);
+		}
+
+		void uiList_ItemDrag(object sender, ItemDragEventArgs e)
 		{
 			var item = (ListViewItem)e.Item;
 			
@@ -206,17 +210,12 @@ namespace Gleed2D.Core.Controls
 
 			var plugin = item.Tag as IPlugin ;
 
-			var dragging = new HandleDraggingOfAssets( plugin ) ;
+			var dragging = new HandleDraggingOfAssets( plugin.CreateDragDropHandler() ) ;
 
 			uiList.DoDragDrop(dragging, dragging.DragDropEffects);
 		}
 
-		private void uiList_DragOver(object sender, DragEventArgs e)
-		{
-			//e.Effect = DragDropEffects.Move;
-		}
-
-		private void uiList_DoubleClick(object sender, EventArgs e)
+		void uiList_DoubleClick(object sender, EventArgs e)
 		{
 			ListViewItem focusedItem = uiList.FocusedItem;
 
@@ -238,11 +237,6 @@ namespace Gleed2D.Core.Controls
 							EntityCreationProperties = creationProperties
 						} ) ;
 			}
-		}
-
-		private void uiList_DragEnter(object sender, DragEventArgs e)
-		{
-
 		}
 	}
 }

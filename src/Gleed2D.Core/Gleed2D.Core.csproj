@@ -111,10 +111,12 @@
     <Compile Include="Controls\AssetsControl.Designer.cs">
       <DependentUpon>AssetsControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\DraggingContext.cs" />
     <Compile Include="Controls\HandleDraggingOfAssets.cs" />
     <Compile Include="CustomUITypeEditors\PathToFileConverter.cs" />
     <Compile Include="CustomUITypeEditors\PathToFileUiTypeEditor.cs" />
     <Compile Include="CustomUITypeEditors\PathToFolderConverter.cs" />
+    <Compile Include="LambdaDrivenDragDropHandler.cs" />
     <Compile Include="Disk.cs" />
     <Compile Include="DiskEntity.cs" />
     <Compile Include="DragEventType.cs" />
@@ -123,6 +125,7 @@
     <Compile Include="IBehaviourPlugin.cs" />
     <Compile Include="ICanBePersisted.cs" />
     <Compile Include="IDisk.cs" />
+    <Compile Include="IHandleDragDrop.cs" />
     <Compile Include="IMenuItems.cs" />
     <Compile Include="IPlugin.cs" />
     <Compile Include="IPluginGroup.cs" />
@@ -136,6 +139,8 @@
     <Compile Include="PathToFile.cs" />
     <Compile Include="PropertyCustomisation.cs" />
     <Compile Include="EntityChosenEventArgs.cs" />
+    <Compile Include="ShapeDragDropHandler.cs" />
+    <Compile Include="TextureDragDropHandler.cs" />
     <Compile Include="Triangulator2D.cs" />
     <Compile Include="Command.cs" />
     <Compile Include="Controls\GlyphService.cs" />

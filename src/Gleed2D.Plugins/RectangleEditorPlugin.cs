@@ -7,44 +7,6 @@ using Gleed2D.Core.Controls ;
 
 namespace Gleed2D.Plugins
 {
-	public class ShapeDragDropHandler : IHandleDragDrop
-	{
-		const DragDropEffects DRAG_DROP_EFFECTS = DragDropEffects.Move ;
-		
-		readonly Func<IEditor, ItemEditor> _buildEntityCreationProperties ;
-
-		public ShapeDragDropHandler( Func<IEditor, ItemEditor> buildEntityCreationProperties  )
-		{
-			_buildEntityCreationProperties = buildEntityCreationProperties ;
-		}
-
-		public void WhenDroppedOntoEditor( IEditor editor )
-		{
-			editor.AddNewItemAtMouse(_buildEntityCreationProperties(editor) ) ;
-		}
-
-		public void WhenBeingDraggedOverEditor( IEditor editor, DragEventArgs dragEventArgs )
-		{
-			dragEventArgs.Effect = DRAG_DROP_EFFECTS;
-		}
-
-		public void WhenEnteringEditor( DragEventArgs dragEventArgs )
-		{
-		}
-
-		public void WhenLeavingEditor( DragEventArgs dragEventArgs )
-		{
-		}
-
-		public DragDropEffects DragDropEffects
-		{
-			get
-			{
-				return DRAG_DROP_EFFECTS;
-			}
-		}
-	}
-
 	[Export(typeof(IEditorPlugin))]
 	public class RectangleEditorPlugin : IEditorPlugin
 	{
@@ -132,12 +94,9 @@ namespace Gleed2D.Plugins
 			}
 		}
 
-		public IHandleDragDrop DragDropHandler
+		public IHandleDragDrop CreateDragDropHandler()
 		{
-			get
-			{
-				return _dragDropHandler ;
-			}
+			return _dragDropHandler;
 		}
 	}
 }

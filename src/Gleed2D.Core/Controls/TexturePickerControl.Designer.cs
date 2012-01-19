@@ -30,7 +30,7 @@
 		{
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TexturePickerControl));
 			this.label3 = new System.Windows.Forms.Label();
-			this.uiItemsListView = new System.Windows.Forms.ListView();
+			this.uiListView = new System.Windows.Forms.ListView();
 			this.button1 = new System.Windows.Forms.Button();
 			this.button2 = new System.Windows.Forms.Button();
 			this.label4 = new System.Windows.Forms.Label();
@@ -51,27 +51,27 @@
 			this.label3.TabIndex = 10;
 			this.label3.Text = "thumbnails:";
 			// 
-			// uiItemsListView
+			// uiListView
 			// 
-			this.uiItemsListView.AllowDrop = true;
-			this.uiItemsListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.uiItemsListView.HideSelection = false;
-			this.uiItemsListView.Location = new System.Drawing.Point(3, 34);
-			this.uiItemsListView.MultiSelect = false;
-			this.uiItemsListView.Name = "uiItemsListView";
-			this.uiItemsListView.ShowItemToolTips = true;
-			this.uiItemsListView.Size = new System.Drawing.Size(697, 465);
-			this.uiItemsListView.TabIndex = 6;
-			this.uiItemsListView.UseCompatibleStateImageBehavior = false;
-			this.uiItemsListView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.uiTexturesListView_ItemDrag);
-			this.uiItemsListView.Click += new System.EventHandler(this.listView1Click);
-			this.uiItemsListView.DragDrop += new System.Windows.Forms.DragEventHandler(this.uiTexturesListView_DragDrop);
-			this.uiItemsListView.DragEnter += new System.Windows.Forms.DragEventHandler(this.uiItemsListView_DragEnter);
-			this.uiItemsListView.DragOver += new System.Windows.Forms.DragEventHandler(this.uiTexturesListView_DragOver);
-			this.uiItemsListView.GiveFeedback += new System.Windows.Forms.GiveFeedbackEventHandler(this.uiTexturesListView_GiveFeedback);
-			this.uiItemsListView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.uiTexturesListView_MouseDoubleClick);
+			this.uiListView.AllowDrop = true;
+			this.uiListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.uiListView.HideSelection = false;
+			this.uiListView.Location = new System.Drawing.Point(3, 34);
+			this.uiListView.MultiSelect = false;
+			this.uiListView.Name = "uiListView";
+			this.uiListView.ShowItemToolTips = true;
+			this.uiListView.Size = new System.Drawing.Size(697, 465);
+			this.uiListView.TabIndex = 6;
+			this.uiListView.UseCompatibleStateImageBehavior = false;
+			this.uiListView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.uiListView_ItemDrag);
+			this.uiListView.Click += new System.EventHandler(this.listView1Click);
+			this.uiListView.DragDrop += new System.Windows.Forms.DragEventHandler(this.uiListView_DragDrop);
+			this.uiListView.DragEnter += new System.Windows.Forms.DragEventHandler(this.uiListView_DragEnter);
+			this.uiListView.DragOver += new System.Windows.Forms.DragEventHandler(this.uiListView_DragOver);
+			this.uiListView.GiveFeedback += new System.Windows.Forms.GiveFeedbackEventHandler(this.uiListView_GiveFeedback);
+			this.uiListView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.uiListView_MouseDoubleClick);
 			// 
 			// button1
 			// 
@@ -117,8 +117,8 @@
 			// 
 			// uiFolderText
 			// 
-			this.uiFolderText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.uiFolderText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.uiFolderText.Location = new System.Drawing.Point(45, 8);
 			this.uiFolderText.Name = "uiFolderText";
 			this.uiFolderText.ReadOnly = true;
@@ -143,7 +143,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.label3);
-			this.Controls.Add(this.uiItemsListView);
+			this.Controls.Add(this.uiListView);
 			this.Controls.Add(this.uiFolderText);
 			this.Controls.Add(this.uiThumbnailSizesCombo);
 			this.Controls.Add(this.label4);
@@ -160,7 +160,7 @@
 		#endregion
 
 		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.ListView uiItemsListView;
+		private System.Windows.Forms.ListView uiListView;
 		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.Button button2;
 		private System.Windows.Forms.Label label4;

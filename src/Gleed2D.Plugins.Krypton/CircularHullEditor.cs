@@ -46,7 +46,7 @@ namespace Gleed2D.Plugins.Krypton
 			_properties = xml.CertainElement( @"CircularHullProperties" ).DeserializedAs<CircularHullProperties>( ) ;
 		}
 
-		public override void CreateInDesignMode( Layer parentLayer, EntityCreationProperties creationProperties )
+		public override void CreateInDesignMode(Layer parentLayer, IEntityCreationProperties creationProperties)
 		{
 			ParentLayer = parentLayer ;
 

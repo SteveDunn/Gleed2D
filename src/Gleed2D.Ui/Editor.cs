@@ -156,20 +156,45 @@ namespace GLEED2D
 			private set ;
 		}
 
-		public void StartCreatingEntityAfterNextClick(EntityCreationProperties properties)
+		public void StartCreatingEntityAfterNextClick(IEntityCreationProperties properties)
 		{
 			startCreatingEntity( properties, false );
 		}
 
-		public EntityCreation StartCreatingEntityNow(EntityCreationProperties properties)
+		public EntityCreation StartCreatingEntityNow(IEntityCreationProperties properties)
 		{
 			startCreatingEntity( properties, true );
 			return _entityCreation;
 		}
 
-		void startCreatingEntity( EntityCreationProperties properties, bool startNow )
+		public void StartCreatingEntityNow2(ItemEditor itemEditor)
 		{
+			if (_model.Level.ActiveLayer == null)
+			{
+				MessageBox.Show(Resources.No_Layer);
 
+				return;
+			}
+
+			_userActionInEditor = UserActionInEditor.AddingAnItem;
+
+			_mainForm.SetCursorForCanvas(Cursors.Cross);
+
+			_entityCreation.StartedCreating = true;
+			//_entityCreation.CreationProperties = itemEditor ;
+
+			_entityCreation.EditorInstance = itemEditor;
+
+			_entityCreation.CurrentEditor = itemEditor;// buildPrimitiveEditorReadyForDesigning(_entityCreation.CreationProperties);
+		}
+
+		public void RemoveItem(ItemEditor itemEditor)
+		{
+			_model.DeleteSelectedItems();
+		}
+
+		void startCreatingEntity( IEntityCreationProperties properties, bool startNow )
+		{
 			if( _model.Level.ActiveLayer == null )
 			{
 				MessageBox.Show( Resources.No_Layer ) ;
@@ -332,7 +357,7 @@ namespace GLEED2D
 			model.AddEditor( currentEditor );
 		}
 
-		ItemEditor buildPrimitiveEditorReadyForDesigning( EntityCreationProperties creationProperties )
+		ItemEditor buildPrimitiveEditorReadyForDesigning( IEntityCreationProperties creationProperties )
 		{
 			var extensibility = ObjectFactory.GetInstance<IExtensibility>( ) ;
 
@@ -344,6 +369,7 @@ namespace GLEED2D
 
 			return editor ;
 		}
+
 
 		//void paintPrimitiveBrush()
 		//{

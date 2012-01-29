@@ -10,19 +10,6 @@ namespace Gleed2D.Plugins
 	[Export(typeof(IEditorPlugin))]
 	public class CircleEditorPlugin : IEditorPlugin
 	{
-		readonly ShapeDragDropHandler _dragDropHandler;
-
-		public CircleEditorPlugin( )
-		{
-			_dragDropHandler = new ShapeDragDropHandler(whenDroppedOntoEditor);
-		}
-
-		ItemEditor whenDroppedOntoEditor(IEditor editor)
-		{
-			return new CircleItemEditor();
-		}
-
-
 		public Type EditorType
 		{
 			get
@@ -96,14 +83,9 @@ namespace Gleed2D.Plugins
 			}
 		}
 
-		public IHandleDragDrop CreateDragDropHandler()
+		public IHandleDragDrop CreateDragDropHandler(IEntityCreationProperties entityCreationProperties)
 		{
-			return _dragDropHandler;
-		}
-
-		public void WhenDroppedOnto( object item )
-		{
-			throw new NotImplementedException( ) ;
+			return new ShapeDragDropHandler(entityCreationProperties);
 		}
 	}
 }

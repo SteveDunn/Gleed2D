@@ -13,13 +13,6 @@ namespace Gleed2D.Plugins
 	[Export( typeof( IBehaviourPlugin ) )]
 	public class FloatAnimationBehaviourPlugin : IBehaviourPlugin
 	{
-		readonly BehaviourDragDropHandler _dragDropBehaviour ;
-
-		public FloatAnimationBehaviourPlugin( )
-		{
-			_dragDropBehaviour = new BehaviourDragDropHandler(buildBehaviour);
-		}
-
 		public ImageProperties Icon
 		{
 			get
@@ -29,9 +22,9 @@ namespace Gleed2D.Plugins
 			}
 		}
 
-		public IHandleDragDrop CreateDragDropHandler()
+		public IHandleDragDrop CreateDragDropHandler(IEntityCreationProperties entityCreationProperties)
 		{
-			return _dragDropBehaviour;
+			return new BehaviourDragDropHandler(buildBehaviour);
 		}
 
 		IBehaviour buildBehaviour(ItemEditor forEditor)

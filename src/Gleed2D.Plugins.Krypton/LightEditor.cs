@@ -37,7 +37,7 @@ namespace Gleed2D.Plugins.Krypton
 			_properties = xml.CertainElement( @"LightProperties" ).DeserializedAs<LightProperties>( ) ;
 		}
 
-		public override void CreateInDesignMode( Layer parentLayer, EntityCreationProperties creationProperties )
+		public override void CreateInDesignMode(Layer parentLayer, IEntityCreationProperties creationProperties)
 		{
 			ParentLayer = parentLayer ;
 

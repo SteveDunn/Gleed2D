@@ -225,15 +225,13 @@ namespace Gleed2D.Plugins.Krypton
 			WhenUpdatedByUi( ) ;
 		}
 
-		public override void CreateInDesignMode(
-			Layer parentLayer,
-			EntityCreationProperties creationProperties )
+		public override void CreateInDesignMode(Layer parentLayer, IEntityCreationProperties creationProperties)
 		{
 			_polygon = new Vector2[ 4 ] ;
 
 			ParentLayer = parentLayer ;
 
-			string fullPath = creationProperties.Parameters[ @"FullPath" ] ;
+			string fullPath = null;// creationProperties.Parameters[@"FullPath"];
 
 			initialiseTexture( fullPath ) ;
 

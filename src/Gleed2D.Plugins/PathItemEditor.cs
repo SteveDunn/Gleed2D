@@ -98,7 +98,7 @@ namespace Gleed2D.Plugins
 			}
 		}
 
-		public override void CreateInDesignMode( Layer parentLayer, EntityCreationProperties creationProperties )
+		public override void CreateInDesignMode(Layer parentLayer, IEntityCreationProperties creationProperties)
 		{
 			_editorMode = ItemEditorMode.Creating ;
 

@@ -79,7 +79,7 @@ namespace Gleed2D.Plugins.Krypton
 			WhenUpdatedByUi(  );
 		}
 
-		public override void CreateInDesignMode( Layer parentLayer, EntityCreationProperties creationProperties )
+		public override void CreateInDesignMode(Layer parentLayer, IEntityCreationProperties creationProperties)
 		{
 			_editorMode = ItemEditorMode.Creating ;
 

@@ -56,8 +56,8 @@ namespace Gleed2D.Core
 
 		void Draw( GameTime gameTime, GraphicsDevice graphicsDevice, SpriteBatch spriteBatch ) ;
 		void SetMousePosition( int x, int y ) ;
-		void StartCreatingEntityAfterNextClick( EntityCreationProperties creationProperties ) ;
-		EntityCreation StartCreatingEntityNow(EntityCreationProperties properties);
+		void StartCreatingEntityAfterNextClick(IEntityCreationProperties creationProperties) ;
+		EntityCreation StartCreatingEntityNow(IEntityCreationProperties properties);
 		void TrySetCameraZoom( float zoom ) ;
 		void SetViewportSize( Size size ) ;
 		void CreateSelectionRectangle( ) ;
@@ -72,5 +72,7 @@ namespace Gleed2D.Core
 		void AddNewItemAtMouse( ItemEditor newEditor ) ;
 		void StopCreatingEntity();
 		void CancelCreatingEntity();
+		void StartCreatingEntityNow2(ItemEditor itemEditor);
+		void RemoveItem(ItemEditor itemEditor);
 	}
 }

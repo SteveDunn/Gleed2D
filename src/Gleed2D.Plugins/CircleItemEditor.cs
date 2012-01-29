@@ -54,7 +54,7 @@ namespace Gleed2D.Plugins
 			_properties = xml.Element( @"CircleItemProperties" ).DeserializedAs<CircleItemProperties>( ) ;
 		}
 
-		public override void CreateInDesignMode( Layer parentLayer, EntityCreationProperties creationProperties )
+		public override void CreateInDesignMode(Layer parentLayer, IEntityCreationProperties creationProperties)
 		{
 			ParentLayer = parentLayer ;
 

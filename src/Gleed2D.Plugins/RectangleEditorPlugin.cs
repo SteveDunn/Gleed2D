@@ -10,18 +10,6 @@ namespace Gleed2D.Plugins
 	[Export(typeof(IEditorPlugin))]
 	public class RectangleEditorPlugin : IEditorPlugin
 	{
-		readonly ShapeDragDropHandler _dragDropHandler ;
-
-		public RectangleEditorPlugin(  )
-		{
-			_dragDropHandler = new ShapeDragDropHandler( whenDroppedOntoEditor ) ;
-		}
-
-		ItemEditor whenDroppedOntoEditor( IEditor editor )
-		{
-			return new RectangleItemEditor( ) ;
-		}
-
 		public Type EditorType
 		{
 			get
@@ -94,9 +82,13 @@ namespace Gleed2D.Plugins
 			}
 		}
 
-		public IHandleDragDrop CreateDragDropHandler()
+		public IHandleDragDrop CreateDragDropHandler(IEntityCreationProperties entityCreationProperties)
 		{
-			return _dragDropHandler;
+			var handler = new ShapeDragDropHandler(entityCreationProperties);
+
+			//move the 'EntityCreationProperties' into here and pass this method some context, e.g. the editor
+			//so it can get the zoom level/store the last handler settings etc.
+			return handler;
 		}
 	}
 }

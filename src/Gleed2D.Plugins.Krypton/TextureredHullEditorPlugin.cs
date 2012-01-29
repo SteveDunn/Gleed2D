@@ -1,5 +1,4 @@
 using System ;
-using System.ComponentModel.Composition ;
 using System.Reflection ;
 using System.Windows.Forms ;
 using Gleed2D.Core ;
@@ -87,14 +86,9 @@ namespace Gleed2D.Plugins.Krypton
 			}
 		}
 
-		public IHandleDragDrop CreateDragDropHandler()
+		public IHandleDragDrop CreateDragDropHandler(IEntityCreationProperties entityCreationProperties)
 		{
 			throw new NotImplementedException();
-		}
-
-		public void WhenDroppedOnto( object item )
-		{
-			throw new NotImplementedException( ) ;
 		}
 	}
 }

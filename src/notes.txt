@@ -1,3 +1,31 @@
+Drag/Drop
+Each plugin has a method named CreateDragDropHandler.  This returns an IHandleDropDrop, which has the following methods:
+		void WhenDroppedOntoEditor(IEditor editor, DraggingContext context);
+		void WhenBeingDraggedOverEditor(IEditor editor, DraggingContext draggingContext);
+		void WhenEnteringEditor( IEditor editor, DraggingContext context) ;
+		void WhenLeavingEditor( IEditor editor, DraggingContext draggingContext ) ;
+
+		DragDropEffects DragDropEffects
+		{
+			get ;
+		}
+
+		object this[string name] { get; set; }
+
+An example is when dragging textures:  The TextureEditorPlugin returns a TextureDragDropHandler.  The WhenEnteringEditor method is:
+			var entityCreationProperties = (EntityCreationProperties) _properties[@"CreationProperties"];
+			_entityCreation = IoC.Editor.StartCreatingEntityNow(entityCreationProperties);
+
+... and the WhenBeingDraggedOverEditor looks like:
+			if (_entityCreation != null)
+			{
+				_entityCreation.CurrentEditor.SetPosition(MouseStatus.WorldPosition);
+			}
+			
+			draggingContext.DragEventArgs.Effect = DRAG_DROP_EFFECTS;
+
+
+
 Nice to have:
 Each plugin specifies their own properties editor (instead of using the properties grid)
 

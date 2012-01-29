@@ -15,7 +15,5 @@ namespace Gleed2D.Core
 		{
 			get ;
 		}
-
-		object this[string name] { get; set; }
 	}
 }

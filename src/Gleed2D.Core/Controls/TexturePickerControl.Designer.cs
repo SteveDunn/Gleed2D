@@ -67,9 +67,7 @@
 			this.uiListView.UseCompatibleStateImageBehavior = false;
 			this.uiListView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.uiListView_ItemDrag);
 			this.uiListView.Click += new System.EventHandler(this.listView1Click);
-			this.uiListView.DragDrop += new System.Windows.Forms.DragEventHandler(this.uiListView_DragDrop);
 			this.uiListView.DragEnter += new System.Windows.Forms.DragEventHandler(this.uiListView_DragEnter);
-			this.uiListView.DragOver += new System.Windows.Forms.DragEventHandler(this.uiListView_DragOver);
 			this.uiListView.GiveFeedback += new System.Windows.Forms.GiveFeedbackEventHandler(this.uiListView_GiveFeedback);
 			this.uiListView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.uiListView_MouseDoubleClick);
 			// 

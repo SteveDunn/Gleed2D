@@ -184,13 +184,15 @@ namespace Gleed2D.Plugins
 
 		public override void CreateInDesignMode(
 			Layer parentLayer,
-			EntityCreationProperties creationProperties )
+			IEntityCreationProperties creationProperties )
 		{
 			_polygon = new Vector2[ 4 ] ;
 
 			ParentLayer = parentLayer ;
 
-			string fullPath = creationProperties.Parameters[ @"FullPath" ] ;
+			var tCreationProperties = (TextureCreationProperties) creationProperties;
+
+			string fullPath = tCreationProperties.PathToTexture;
 
 			initialiseTexture( fullPath ) ;
 

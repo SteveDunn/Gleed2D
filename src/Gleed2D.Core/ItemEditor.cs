@@ -46,7 +46,7 @@ namespace Gleed2D.Core
 			Behaviours.Add( behaviour ) ;
 		}
 
-		public abstract void CreateInDesignMode( Layer parentLayer, EntityCreationProperties creationProperties ) ;
+		public abstract void CreateInDesignMode(Layer parentLayer, IEntityCreationProperties creationProperties) ;
 
 		public Layer ParentLayer
 		{

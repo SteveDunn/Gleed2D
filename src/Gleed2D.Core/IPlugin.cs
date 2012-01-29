@@ -19,6 +19,6 @@ namespace Gleed2D.Core
 			get;
 		}
 
-		IHandleDragDrop CreateDragDropHandler();
+		IHandleDragDrop CreateDragDropHandler(IEntityCreationProperties entityCreationProperties);
 	}
 }

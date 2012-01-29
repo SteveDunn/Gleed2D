@@ -1,36 +1,17 @@
-using System ;
-using System.Collections.Generic ;
+using System;
 
 namespace Gleed2D.Core
 {
-	public class EntityCreationProperties
+	public class EntityCreationProperties : IEntityCreationProperties
 	{
-		public EntityCreationProperties( )
+		public EntityCreationProperties(Type pluginType)
 		{
-			Parameters = new Dictionary<string, string>( ) ;
-		}
-
-		public string Name
-		{
-			get;
-			set ;
-		}
-
-		public void AddParameter(string name, string value)
-		{
-			Parameters.Add( name, value );
-		}
-
-		public IDictionary<string, string> Parameters
-		{
-			get;
-			private set ;
+			PluginType = pluginType;
 		}
 
 		public Type PluginType
 		{
-			get;
-			set ;
+			get; set;
 		}
 	}
 }

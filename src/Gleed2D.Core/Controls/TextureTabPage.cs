@@ -81,11 +81,7 @@ namespace Gleed2D.Core.Controls
 
 		public void AddPlugin( IEditorPlugin editorPlugin )
 		{
-			_picker.CreationPropertiesForEachItem = new EntityCreationProperties
-				{
-					Name = editorPlugin.Name,
-					PluginType = editorPlugin.GetType( )
-				} ;
+			_picker.SetCreationPropertiesForEachItem(new EntityCreationProperties(editorPlugin.GetType()));
 		}
 
 		public void SetRootFolder( PathToFolder folder )

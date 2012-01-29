@@ -14,13 +14,6 @@ namespace Gleed2D.Plugins
 	[Export( typeof( IBehaviourPlugin ) )]
 	public class PositionAnimationBehaviourPlugin : IBehaviourPlugin
 	{
-		readonly BehaviourDragDropHandler _dragDropBehaviour ;
-
-		public PositionAnimationBehaviourPlugin( )
-		{
-			_dragDropBehaviour=new BehaviourDragDropHandler( buildBehaviour );
-		}
-
 		IBehaviour buildBehaviour( ItemEditor forItem )
 		{
 			ItemProperties itemProperties = forItem.ItemProperties;
@@ -51,9 +44,9 @@ namespace Gleed2D.Plugins
 			}
 		}
 
-		public IHandleDragDrop CreateDragDropHandler()
+		public IHandleDragDrop CreateDragDropHandler(IEntityCreationProperties entityCreationProperties)
 		{
-			return _dragDropBehaviour;
+			return new BehaviourDragDropHandler( buildBehaviour );
 		}
 
 		public string CategoryName

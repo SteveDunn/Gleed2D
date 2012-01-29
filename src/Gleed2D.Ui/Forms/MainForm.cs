@@ -311,7 +311,7 @@ namespace GLEED2D.Forms
 
 			var listViewItem = (ListViewItem) e.Data.GetData( typeof( ListViewItem ) ) ;
 
-			summonEditor( ).StartCreatingEntityAfterNextClick( listViewItem.Tag as EntityCreationProperties ) ;
+			summonEditor( ).StartCreatingEntityAfterNextClick( listViewItem.Tag as IEntityCreationProperties ) ;
 		}
 
 		void canvasDragOver(object sender, DragEventArgs e)

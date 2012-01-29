@@ -116,6 +116,8 @@
     <Compile Include="CustomUITypeEditors\PathToFileConverter.cs" />
     <Compile Include="CustomUITypeEditors\PathToFileUiTypeEditor.cs" />
     <Compile Include="CustomUITypeEditors\PathToFolderConverter.cs" />
+    <Compile Include="EntityCreationProperties.cs" />
+    <Compile Include="IEntityCreationProperties.cs" />
     <Compile Include="LambdaDrivenDragDropHandler.cs" />
     <Compile Include="Disk.cs" />
     <Compile Include="DiskEntity.cs" />
@@ -140,6 +142,7 @@
     <Compile Include="PropertyCustomisation.cs" />
     <Compile Include="EntityChosenEventArgs.cs" />
     <Compile Include="ShapeDragDropHandler.cs" />
+    <Compile Include="TextureCreationProperties.cs" />
     <Compile Include="TextureDragDropHandler.cs" />
     <Compile Include="Triangulator2D.cs" />
     <Compile Include="Command.cs" />
@@ -206,7 +209,6 @@
       <DependentUpon>ItemSelectorControl.cs</DependentUpon>
     </Compile>
     <Compile Include="CustomUITypeEditors\LinkedItemUiTypeEditor.cs" />
-    <Compile Include="EntityCreationProperties.cs" />
     <Compile Include="CustomUITypeEditors\PathToFolderUiTypeEditor.cs" />
     <Compile Include="CustomUITypeEditors\Vector2EditorControl.cs">
       <SubType>UserControl</SubType>

@@ -7,7 +7,7 @@ namespace Gleed2D.Core
 		readonly Action _whenEntityReadyToBeAdded ;
 		public bool StartedCreating ;
 		ItemEditor _currentEditor ;
-		public EntityCreationProperties CreationProperties ;
+		public IEntityCreationProperties CreationProperties ;
 
 		public EntityCreation( Action whenEntityReadyToBeAdded )
 		{

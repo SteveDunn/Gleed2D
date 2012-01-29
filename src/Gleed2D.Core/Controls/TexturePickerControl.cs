@@ -19,12 +19,16 @@ namespace Gleed2D.Core.Controls
 		public event EventHandler<DraggingTextureEventArgs> DraggingTextureEvent;
 		public event EventHandler<EntityChosenEventArgs> TextureChosen;
 
+		EntityCreationProperties _creationPropertiesForEachItem;
+		
 		readonly ImageList _imageList48;
 		readonly ImageList _imageList96;
 		readonly ImageList _imageList64;
 		readonly ImageList _imageList128;
 		readonly ImageList _imageList256;
 		
+		const string FOLDER_MONIKER = @"<!folder!>";
+
 		public TexturePickerControl()
 		{
 			InitializeComponent( ) ;
@@ -75,22 +79,13 @@ namespace Gleed2D.Core.Controls
 			imageList.TransparentColor = Color.Transparent;
 		}
 
-		void uiListView_DragDrop(object sender, DragEventArgs e)
-		{
-			//uiListView.Cursor = Cursors.Default ;
-			//IoC.MainForm.SetCursorForCanvas( Cursors.Default ) ;
-		}
-
-		void uiListView_DragOver(object sender, DragEventArgs e)
-		{
-			//e.Effect = DragDropEffects.Move;
-		}
-
 		void uiListView_ItemDrag(object sender, ItemDragEventArgs e)
 		{
 			var item = (ListViewItem)e.Item;
+
+			var itemPath = item.Tag as string;
 			
-			if (item.Tag.ToString() == @"folder")
+			if (itemPath == FOLDER_MONIKER)
 			{
 				return;
 			}
@@ -101,15 +96,17 @@ namespace Gleed2D.Core.Controls
 			
 			new Cursor(bitmap.GetHicon());
 
-			var creationProperties = item.Tag as EntityCreationProperties ;
+			var editor = new TextureItemEditor();
+			
+			editor.ItemProperties.Id = IoC.Model.NextItemNumber;// Guid.NewGuid().ToString();
 
-			var plugin = (IPlugin)Activator.CreateInstance(creationProperties.PluginType);
+			var dragDropHandler = new TextureDragDropHandler(new TextureCreationProperties(itemPath));
 
-			var handlerForPlugin = plugin.CreateDragDropHandler();
-			handlerForPlugin[@"PathToTexture"] = @"whatever";
-			handlerForPlugin[@"CreationProperties"] = creationProperties;
+			//var plugin = new TextureEditorPlugin (IPlugin)Activator.CreateInstance(TEP.PluginType);
 
-			uiListView.DoDragDrop(new HandleDraggingOfAssets(handlerForPlugin), DragDropEffects.Move);
+			//var handlerForPlugin = plugin.CreateDragDropHandler(creationProperties);
+
+			uiListView.DoDragDrop(new HandleDraggingOfAssets(dragDropHandler), DragDropEffects.Move);
 		}
 
 		void uiListView_GiveFeedback(object sender, GiveFeedbackEventArgs e)
@@ -274,30 +271,26 @@ namespace Gleed2D.Core.Controls
 				_imageList128.Images.Add(file.FullName, getThumbnail(bmp, 128, 128));
 				_imageList256.Images.Add(file.FullName, getThumbnail(bmp, 256, 256));
 
-				var creationProperties = new EntityCreationProperties
-					{
-					 	Name = CreationPropertiesForEachItem.Name,
-						PluginType = CreationPropertiesForEachItem.PluginType
-					} ;
+//				var creationProperties = new TextureCreationProperties(_creationPropertiesForEachItem.PluginType;
 				
-				creationProperties.AddParameter( @"FullPath" , file.FullName ) ;
+//				creationProperties.AddParameter( @"FullPath" , file.FullName ) ;
 
 				var lvi = new ListViewItem
 					{
-						Tag = creationProperties,
+						Tag = file.FullName,
 						Name = file.FullName,
 						Text = file.Name,
 						ImageKey = file.FullName,
-						ToolTipText = string.Format( @"{0} ({1} x {2})", file.Name, bmp.Width.ToString( ), bmp.Height.ToString( ) )
+						ToolTipText = @"{0} ({1} x {2})".FormatWith(file.Name, bmp.Width.ToString( ), bmp.Height.ToString( ) )
 					} ;
 
 				uiListView.Items.Add(lvi);
 			}
 		}
 
-		public EntityCreationProperties CreationPropertiesForEachItem
+		public void SetCreationPropertiesForEachItem(EntityCreationProperties value)
 		{
-			get	;set;
+			_creationPropertiesForEachItem = value;
 		}
 
 		//todo: move this out into an event
@@ -319,7 +312,7 @@ namespace Gleed2D.Core.Controls
 
 			string itemtype = focusedItem.Tag.ToString();
 		
-			if (itemtype == @"folder")
+			if (itemtype == FOLDER_MONIKER)
 			{
 				loadFolder(
 					new PathToFolder
@@ -372,11 +365,11 @@ namespace Gleed2D.Core.Controls
 
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            var passedObject = (PassedObject)e.UserState;
+            var passedObject = (passedObject)e.UserState;
 
-        	string fullName = passedObject.fileinfo.FullName ;
+        	string fullName = passedObject.FileInfo.FullName ;
         	
-			Bitmap bitmap = passedObject.bmp ;
+			Bitmap bitmap = passedObject.Bitmap ;
 
         	_imageList48.Images.Add(fullName, getThumbnail(bitmap, 48, 48));
             _imageList64.Images.Add(fullName, getThumbnail(bitmap, 64, 64));
@@ -387,7 +380,7 @@ namespace Gleed2D.Core.Controls
         	uiListView.Items[ fullName ].ImageKey = fullName ;
         	
 			uiListView.Items[ fullName ].ToolTipText = string.Format(
-        		"{0} ({1} x {2})", passedObject.fileinfo.Name, bitmap.Width, bitmap.Height ) ;
+        		"{0} ({1} x {2})", passedObject.FileInfo.Name, bitmap.Width, bitmap.Height ) ;
 
 			IoC.MainForm.SetToolStripStatusLabel1( e.ProgressPercentage.ToString( ) ) ;
         }
@@ -395,16 +388,16 @@ namespace Gleed2D.Core.Controls
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             _stopwatch.Stop();
-            
-			IoC.MainForm.SetToolStripStatusLabel1( string.Format( @"Time: {0}", _stopwatch.Elapsed.TotalSeconds.ToString() ) );
+
+        	IoC.MainForm.SetToolStripStatusLabel1(@"Time: {0}".FormatWith(_stopwatch.Elapsed.TotalSeconds));
             
 			_stopwatch.Reset();
         }
 
-		class PassedObject //for passing to background worker
+		class passedObject //for passing to background worker
         {
-            public Bitmap bmp;
-            public FileInfo fileinfo;
+            public Bitmap Bitmap;
+            public FileInfo FileInfo;
         }
 
         public void loadfolder_background(string path)
@@ -448,7 +441,7 @@ namespace Gleed2D.Core.Controls
             			Text = folderName,
             			ToolTipText = folderName,
             			ImageIndex = _imageList128.Images.IndexOfKey( folderName ),
-            			Tag = @"folder",
+            			Tag = FOLDER_MONIKER,
             			Name = folder.FullName
             		} ;
             	
@@ -502,10 +495,10 @@ namespace Gleed2D.Core.Controls
             {
                 try
                 {
-                	var po = new PassedObject
+                	var po = new passedObject
                 		{
-                			bmp = new Bitmap( file.FullName ),
-                			fileinfo = file
+                			Bitmap = new Bitmap( file.FullName ),
+                			FileInfo = file
                 		} ;
                 	
 					if (worker.CancellationPending)

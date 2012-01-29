@@ -9,7 +9,7 @@ namespace Gleed2D.Core
 		private readonly IEntityCreationProperties _entityCreationProperties;
 		const DragDropEffects DRAG_DROP_EFFECTS = DragDropEffects.Move ;
 
-		private EntityCreation _entityCreation;
+		EntityCreation _temporaryEntityOnCanvas;
 
 		public ShapeDragDropHandler( IEntityCreationProperties entityCreationProperties)
 		{
@@ -18,18 +18,19 @@ namespace Gleed2D.Core
 
 		public void WhenDroppedOntoEditor(IEditor editor, DraggingContext context)
 		{
-			editor.AddNewItemAtMouse(_entityCreation.CurrentEditor);
+			editor.AddNewItemAtMouse(_temporaryEntityOnCanvas.CurrentEditor);
 			editor.SetModeTo(UserActionInEditor.Idle);
 		}
 
 		public void WhenBeingDraggedOverEditor(IEditor editor, DraggingContext draggingContext)
 		{
+			_temporaryEntityOnCanvas.CurrentEditor.SetPosition(MouseStatus.WorldPosition);
 			draggingContext.DragEventArgs.Effect = DRAG_DROP_EFFECTS;
 		}
 
 		public void WhenEnteringEditor( IEditor editor, DraggingContext context)
 		{
-			_entityCreation = IoC.Editor.StartCreatingEntityNow(_entityCreationProperties);
+			_temporaryEntityOnCanvas = editor.StartCreatingEntityNow(_entityCreationProperties);
 		}
 
 		public void WhenLeavingEditor( IEditor editor, DraggingContext draggingContext )

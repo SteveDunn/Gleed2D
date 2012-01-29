@@ -66,6 +66,11 @@ namespace Gleed2D.Plugins
 					FillColor = Constants.Instance.ColorPrimitives 
 				} ;
 
+			if (creationProperties.TriggeredBy == UiAction.Dragging)
+			{
+				_properties.Radius = Constants.Instance.GridSpacing.X;
+			}
+
 			summonMainForm(  ).SetToolStripStatusLabel1(Resource1.Circle_Started);
 		}
 

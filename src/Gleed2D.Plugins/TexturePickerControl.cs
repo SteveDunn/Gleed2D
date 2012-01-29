@@ -1,26 +1,25 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel ;
-using System.Diagnostics ;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
-using System.IO ;
-using System.Threading ;
+using System.IO;
+using System.Threading;
 using System.Windows.Forms;
-using Gleed2D.InGame ;
-using Ookii.Dialogs ;
+using Gleed2D.Core;
+using Gleed2D.Core.Controls;
+using Gleed2D.InGame;
+using Ookii.Dialogs;
 
-namespace Gleed2D.Core.Controls
+namespace Gleed2D.Plugins
 {
 	public partial class TexturePickerControl : UserControl
 	{
     	readonly Stopwatch _stopwatch = new Stopwatch();
 
 		public event EventHandler<PathToFolderChangedEventArgs> PathToFolderChanged ;
-		public event EventHandler<DraggingTextureEventArgs> DraggingTextureEvent;
 		public event EventHandler<EntityChosenEventArgs> TextureChosen;
 
-		EntityCreationProperties _creationPropertiesForEachItem;
-		
 		readonly ImageList _imageList48;
 		readonly ImageList _imageList96;
 		readonly ImageList _imageList64;
@@ -44,11 +43,11 @@ namespace Gleed2D.Core.Controls
 			init( _imageList96, 96 ) ;
 			init( _imageList128, 128 ) ;
 
-			uiThumbnailSizesCombo.Items.Add( "48x48" ) ;
-			uiThumbnailSizesCombo.Items.Add( "64x64" ) ;
-			uiThumbnailSizesCombo.Items.Add( "96x96" ) ;
-			uiThumbnailSizesCombo.Items.Add( "128x128" ) ;
-			uiThumbnailSizesCombo.Items.Add( "256x256" ) ;
+			uiThumbnailSizesCombo.Items.Add( @"48x48" ) ;
+			uiThumbnailSizesCombo.Items.Add( @"64x64" ) ;
+			uiThumbnailSizesCombo.Items.Add( @"96x96" ) ;
+			uiThumbnailSizesCombo.Items.Add( @"128x128" ) ;
+			uiThumbnailSizesCombo.Items.Add( @"256x256" ) ;
 
 			uiThumbnailSizesCombo.SelectedIndex = 1 ;
 
@@ -96,15 +95,9 @@ namespace Gleed2D.Core.Controls
 			
 			new Cursor(bitmap.GetHicon());
 
-			var editor = new TextureItemEditor();
-			
-			editor.ItemProperties.Id = IoC.Model.NextItemNumber;// Guid.NewGuid().ToString();
+			var creationProperties = new TextureCreationProperties(itemPath, UiAction.Dragging);
 
-			var dragDropHandler = new TextureDragDropHandler(new TextureCreationProperties(itemPath));
-
-			//var plugin = new TextureEditorPlugin (IPlugin)Activator.CreateInstance(TEP.PluginType);
-
-			//var handlerForPlugin = plugin.CreateDragDropHandler(creationProperties);
+			IHandleDragDrop dragDropHandler = new TextureEditorPlugin().CreateDragDropHandler(creationProperties);
 
 			uiListView.DoDragDrop(new HandleDraggingOfAssets(dragDropHandler), DragDropEffects.Move);
 		}
@@ -288,19 +281,14 @@ namespace Gleed2D.Core.Controls
 			}
 		}
 
-		public void SetCreationPropertiesForEachItem(EntityCreationProperties value)
-		{
-			_creationPropertiesForEachItem = value;
-		}
-
 		//todo: move this out into an event
 		void uiListView_MouseDoubleClick(object sender, MouseEventArgs e)
 		{
 			ListViewItem focusedItem = uiListView.FocusedItem;
 
-			string itemType = focusedItem.Tag.ToString();
+			string pathToTexture = focusedItem.Tag.ToString();
 
-			if (itemType == @"folder")
+			if (pathToTexture == FOLDER_MONIKER)
 			{
 				loadFolder(
 					new PathToFolder
@@ -313,7 +301,7 @@ namespace Gleed2D.Core.Controls
 
 			if (TextureChosen != null)
 			{
-				var creationProperties = focusedItem.Tag as EntityCreationProperties;
+				var creationProperties=new TextureCreationProperties(pathToTexture, UiAction.DoubleClicking);
 
 				TextureChosen(
 					this,
@@ -529,17 +517,6 @@ namespace Gleed2D.Core.Controls
 
 		private void uiListView_DragEnter(object sender, DragEventArgs e)
 		{
-			var handler = DraggingTextureEvent ;
-			if( handler != null )
-			{
-				handler(
-					this,
-					new DraggingTextureEventArgs
-						{
-							DragEventType = DragEventType.DragEnter,
-							PathToTexture = string.Empty
-						} ) ;
-			}
 		}
 	}
 }

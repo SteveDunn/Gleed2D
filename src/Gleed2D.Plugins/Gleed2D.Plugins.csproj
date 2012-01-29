@@ -56,6 +56,7 @@
     <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="Microsoft.Xna.Framework.GamerServices, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="mscorlib" />
+    <Reference Include="Ookii.Dialogs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0c15020868fd6249, processorArchitecture=MSIL" />
     <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap.2.6.2\lib\StructureMap.dll</HintPath>
     </Reference>
@@ -109,8 +110,19 @@
     </Compile>
     <Compile Include="ScaleAnimationBehaviourPlugin.cs" />
     <Compile Include="ShapeFromTextureProvider.cs" />
+    <Compile Include="TextureCreationProperties.cs" />
+    <Compile Include="TextureDragDropHandler.cs" />
     <Compile Include="TextureItemEditor.cs" />
     <Compile Include="TextureEditorPlugin.cs" />
+    <Compile Include="TexturePickerControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TexturePickerControl.Designer.cs">
+      <DependentUpon>TexturePickerControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TextureTabPage.cs">
+      <SubType>Component</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -119,8 +131,12 @@
     <EmbeddedResource Include="Resource1.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\icon_circle_item.png" />
+    <EmbeddedResource Include="TexturePickerControl.resx">
+      <DependentUpon>TexturePickerControl.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\icon_path_item.png" />
@@ -161,6 +177,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\scale_animation_behaviour_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\folder2.png.png" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />

@@ -123,11 +123,18 @@
   <data name="Circle_Started" xml:space="preserve">
     <value>(Left Click) = add circle to level      (Right Click) = cancel circle</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="FolderImage" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\folder2.png.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Path_Entered" xml:space="preserve">
     <value>(Left Click) = start new path      (Right Click) = exit path draw mode</value>
   </data>
   <data name="Path_Started" xml:space="preserve">
     <value>(Left Click) = next point      (BackSpace) = delete last point      (Middle Click) = add path to level      (Right Click) = cancel path</value>
+  </data>
+  <data name="Rectangle_DragDrop" xml:space="preserve">
+    <value>Move the rectangle and release the mouse</value>
   </data>
   <data name="Rectangle_Entered" xml:space="preserve">
     <value>(Left Click) = start new rectangle      (Right Click) = exit rectangle draw mode</value>

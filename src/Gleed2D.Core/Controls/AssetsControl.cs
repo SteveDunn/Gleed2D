@@ -210,7 +210,7 @@ namespace Gleed2D.Core.Controls
 
 			var plugin = item.Tag as IPlugin ;
 
-			var dragging = new HandleDraggingOfAssets( plugin.CreateDragDropHandler(new EntityCreationProperties(plugin.GetType())) ) ;
+			var dragging = new HandleDraggingOfAssets( plugin.CreateDragDropHandler(new EntityCreationProperties(plugin.GetType(), UiAction.Dragging)) ) ;
 
 			uiList.DoDragDrop(dragging, dragging.DragDropEffects);
 		}
@@ -221,7 +221,7 @@ namespace Gleed2D.Core.Controls
 
 			if (AssetChosenByDoubleClicking != null)
 			{
-				var creationProperties = new EntityCreationProperties(focusedItem.Tag.GetType());
+				var creationProperties = new EntityCreationProperties(focusedItem.Tag.GetType(), UiAction.Dragging);
 
 				AssetChosenByDoubleClicking(
 					this,

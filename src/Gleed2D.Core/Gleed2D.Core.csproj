@@ -142,8 +142,6 @@
     <Compile Include="PropertyCustomisation.cs" />
     <Compile Include="EntityChosenEventArgs.cs" />
     <Compile Include="ShapeDragDropHandler.cs" />
-    <Compile Include="TextureCreationProperties.cs" />
-    <Compile Include="TextureDragDropHandler.cs" />
     <Compile Include="Triangulator2D.cs" />
     <Compile Include="Command.cs" />
     <Compile Include="Controls\GlyphService.cs" />
@@ -159,15 +157,6 @@
     </Compile>
     <Compile Include="Controls\SimpleSite.cs" />
     <Compile Include="Controls\TexturePickedEventArgs.cs" />
-    <Compile Include="Controls\TexturePickerControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\TexturePickerControl.Designer.cs">
-      <DependentUpon>TexturePickerControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\TextureTabPage.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="ConvertOldFileFormats.cs" />
     <Compile Include="EntityCreation.cs" />
     <Compile Include="Gdi.cs" />
@@ -183,6 +172,7 @@
       <DependentUpon>Resource1.resx</DependentUpon>
     </Compile>
     <Compile Include="SnapPoint.cs" />
+    <Compile Include="UiAction.cs" />
     <Compile Include="UserActionInEditor.cs" />
     <Compile Include="UserActions\AddEditorToSelectionAction.cs" />
     <Compile Include="UserActions\AttachBehaviourAction.cs" />
@@ -295,9 +285,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ItemSelectorControl.resx">
       <DependentUpon>ItemSelectorControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\TexturePickerControl.resx">
-      <DependentUpon>TexturePickerControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CustomUITypeEditors\Vector2UITypeEditor.resx">
       <DependentUpon>Vector2UITypeEditor.cs</DependentUpon>

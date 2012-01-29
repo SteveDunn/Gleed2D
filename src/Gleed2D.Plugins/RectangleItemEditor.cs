@@ -130,13 +130,47 @@ namespace Gleed2D.Plugins
 			ParentLayer = parentLayer ;
 			
 			_properties = fromRectangle( Rectangle.Empty ) ;
+			
+			if (creationProperties.TriggeredBy == UiAction.Dragging)
+			{
+				var size = calculateDefaultSizeOfNewlyCreatedItem();
+				_properties.Width = size.X;
+				_properties.Height = size.Y;
+			}
+			
 			_properties.Position = MouseStatus.WorldPosition ;
+
 			_properties.Visible = true ;
 			_properties.FillColor = Constants.Instance.ColorPrimitives ;
 			
 			summonMainForm(  ).SetToolStripStatusLabel1(Resource1.Rectangle_Started);
 
 			WhenUpdatedByUi();
+		}
+
+		public virtual void CreateReadyForDroppingOntoCanvas(Layer parentLayer, IEntityCreationProperties creationProperties)
+		{
+			ParentLayer = parentLayer ;
+			
+			_properties = fromRectangle( Rectangle.Empty ) ;
+
+			_properties.Position = MouseStatus.WorldPosition ;
+
+			Vector2 size = calculateDefaultSizeOfNewlyCreatedItem();
+			
+			_properties.Width = size.X;
+			_properties.Height = size.Y;
+			_properties.Visible = true ;
+			_properties.FillColor = Constants.Instance.ColorPrimitives ;
+			
+			summonMainForm(  ).SetToolStripStatusLabel1(Resource1.Rectangle_DragDrop);
+
+			WhenUpdatedByUi();
+		}
+
+		Vector2 calculateDefaultSizeOfNewlyCreatedItem()
+		{
+			return Constants.Instance.GridSpacing;
 		}
 
 		static RectangleItemProperties fromRectangle( Rectangle rectangle )
@@ -219,25 +253,23 @@ namespace Gleed2D.Plugins
 				case EdgePosition.Left:
 					setX( position.X ) ;
 					_properties.Width -= (int)delta.X;
-					WhenUpdatedByUi();
 					break;
 				case EdgePosition.Right:
 					_properties.Width = _initialWidth + (int)delta.X;
-					WhenUpdatedByUi();
 					break;
 				case EdgePosition.Top:
 					setY(position.Y);
 					_properties.Height -= (int)delta.Y;
-					WhenUpdatedByUi();
 					break;
 				case EdgePosition.Bottom:
 					_properties.Height = _initialHeight + (int)delta.Y;
-					WhenUpdatedByUi();
 					break;
 				case EdgePosition.None:
 					base.SetPosition(position);
 					break;
 			}
+
+			WhenUpdatedByUi();
 		}
 
 		public override string Name

@@ -1,3 +1,5 @@
+Renamed 'Editor' and IEditor to Canvas
+Better error trapping and continuation
 Encapsulate name creation
 Have behaviour run even if focus isn't on the canvas
 Have a map of Krypton objects and properties so that the whole Krypton world doesn't have to be rebuilt when a property changes

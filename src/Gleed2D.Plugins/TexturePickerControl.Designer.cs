@@ -1,4 +1,6 @@
-﻿namespace Gleed2D.Core.Controls
+using System;
+
+namespace Gleed2D.Plugins
 {
 	partial class TexturePickerControl
 	{

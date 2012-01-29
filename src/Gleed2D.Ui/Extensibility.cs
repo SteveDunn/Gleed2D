@@ -73,6 +73,7 @@ namespace GLEED2D
 			}
 		}
 
+		[NotNull]
 		public IEnumerable<IRenderer> Renderers
 		{
 			get
@@ -81,9 +82,17 @@ namespace GLEED2D
 			}
 		}
 
+		[NotNull]
 		public IEditorPlugin FindPluginInstanceForType( Type type )
 		{
 			return _editorPlugins.Single( s => s.GetType(  ) == type ) ;
+		}
+
+		public ItemEditor GetNewEditor(Type pluginType)
+		{
+			IEditorPlugin plugin = FindPluginInstanceForType( pluginType ) ;
+
+			return (ItemEditor) Activator.CreateInstance( plugin.EditorType ) ;
 		}
 	}
 }

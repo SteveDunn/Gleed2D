@@ -4,6 +4,7 @@ namespace Gleed2D.Core
 {
 	public interface IEntityCreationProperties
 	{
-		Type PluginType { get; set; }
+		UiAction TriggeredBy { get; }
+		Type PluginType { get; }
 	}
 }

@@ -1,31 +1,31 @@
 using System;
 using System.Windows.Forms;
+using Gleed2D.Core;
 using Gleed2D.Core.Controls;
 
-namespace Gleed2D.Core
+namespace Gleed2D.Plugins
 {
 	public class TextureDragDropHandler : IHandleDragDrop
 	{
-		private readonly ItemEditor _itemEditor;
 		private readonly TextureCreationProperties _creationProperties;
-		
+		private EntityCreation _entityCreation;
+
 		const DragDropEffects DRAG_DROP_EFFECTS = DragDropEffects.Move ;
 
-		public TextureDragDropHandler(ItemEditor itemEditor, TextureCreationProperties creationProperties)
+		public TextureDragDropHandler( TextureCreationProperties creationProperties)
 		{
-			_itemEditor = itemEditor;
 			_creationProperties = creationProperties;
 		}
 
 		public void WhenDroppedOntoEditor(IEditor editor, DraggingContext context)
 		{
-			editor.AddNewItemAtMouse(_itemEditor);
+			editor.AddNewItemAtMouse(_entityCreation.CurrentEditor);
 			editor.SetModeTo(UserActionInEditor.Idle);
 		}
 
 		public void WhenBeingDraggedOverEditor(IEditor editor, DraggingContext draggingContext)
 		{
-			_itemEditor.SetPosition(MouseStatus.WorldPosition);
+			_entityCreation.CurrentEditor.SetPosition(MouseStatus.WorldPosition);
 
 			
 			draggingContext.DragEventArgs.Effect = DRAG_DROP_EFFECTS;
@@ -33,12 +33,12 @@ namespace Gleed2D.Core
 
 		public void WhenEnteringEditor( IEditor editor, DraggingContext context)
 		{
-			editor.AddNewItemAtMouse(_itemEditor);
+			_entityCreation = editor.StartCreatingEntityNow(_creationProperties);
 		}
 
 		public void WhenLeavingEditor( IEditor editor, DraggingContext draggingContext )
 		{
-			editor.RemoveItem(_itemEditor);
+			editor.CancelCreatingEntity();
 		}
 
 		public DragDropEffects DragDropEffects

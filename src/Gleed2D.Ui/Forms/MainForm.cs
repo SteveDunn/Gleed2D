@@ -363,7 +363,6 @@ namespace GLEED2D.Forms
 			}
 		}
 
-		//MENU
 		void newLevel()
 		{
 			Application.DoEvents();
@@ -387,16 +386,19 @@ namespace GLEED2D.Forms
 			{
 				if (!File.Exists(Constants.Instance.SaveLevelApplicationToStart))
 				{
-					MessageBox.Show(string.Format( @"The file ""{0}"" doesn't exist!
+					MessageBox.Show(
+						@"The file ""{0}"" doesn't exist!
 Please provide a valid application executable in Tools -> Settings -> Save Level!
-Level was saved.", Constants.Instance.SaveLevelApplicationToStart ),
+Level was saved."
+							.FormatWith(Constants.Instance.SaveLevelApplicationToStart),
 						@"Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+					
 					return;
 				}
 
 				if (Constants.Instance.SaveLevelAppendLevelFilename)
 				{
-					Process.Start(Constants.Instance.SaveLevelApplicationToStart, "\"" + _levelFilename + "\"");
+					Process.Start(Constants.Instance.SaveLevelApplicationToStart, @"""{0}""".FormatWith(_levelFilename));
 				}
 				else
 				{

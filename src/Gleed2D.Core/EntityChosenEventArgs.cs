@@ -4,7 +4,7 @@ namespace Gleed2D.Core
 {
 	public class EntityChosenEventArgs : EventArgs
 	{
-		public EntityCreationProperties EntityCreationProperties
+		public IEntityCreationProperties EntityCreationProperties
 		{
 			get ;
 			set ;

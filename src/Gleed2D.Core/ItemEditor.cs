@@ -46,6 +46,14 @@ namespace Gleed2D.Core
 			Behaviours.Add( behaviour ) ;
 		}
 
+		/// <summary>
+		/// Called when the user starts creating something, e.g. a Rectangle will have a position but no height or width as this is
+		/// set when the user moves the pointer around.
+		/// Another example is the Path object.  This initially just has 1 point (that start point) and 
+		/// the user add points by clicking around.
+		/// </summary>
+		/// <param name="parentLayer"></param>
+		/// <param name="creationProperties"></param>
 		public abstract void CreateInDesignMode(Layer parentLayer, IEntityCreationProperties creationProperties) ;
 
 		public Layer ParentLayer

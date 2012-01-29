@@ -23,7 +23,7 @@ namespace Gleed2D.Plugins
 		void whenDroppedOntoEditor( IEditor editor, DraggingContext draggingContext )
 		{
 			editor.StartCreatingEntityNow(
-				new EntityCreationProperties(GetType()));
+				new EntityCreationProperties(GetType(), UiAction.Dragging));
 		}
 
 		public Type EditorType

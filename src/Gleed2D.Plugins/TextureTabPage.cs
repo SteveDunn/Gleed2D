@@ -1,9 +1,11 @@
-﻿using System;
-using System.Windows.Forms ;
-using Gleed2D.InGame ;
-using StructureMap ;
+using System;
+using System.Windows.Forms;
+using Gleed2D.Core;
+using Gleed2D.Core.Controls;
+using Gleed2D.InGame;
+using StructureMap;
 
-namespace Gleed2D.Core.Controls
+namespace Gleed2D.Plugins
 {
 	public class TextureTabPage  : TabPage, ICategoryTabPage
 	{
@@ -17,7 +19,6 @@ namespace Gleed2D.Core.Controls
 				} ;
 
 			_picker.PathToFolderChanged += pathToFolderChanging ;
-			_picker.DraggingTextureEvent += handlePickerDragEvent ;
 			_picker.TextureChosen += textureChosen ;
 
 			IModel model = IoC.Model ;
@@ -42,10 +43,6 @@ namespace Gleed2D.Core.Controls
 		void textureChosen(object sender, EntityChosenEventArgs e)
 		{
 			IoC.Editor.StartCreatingEntityNow( e.EntityCreationProperties ) ;
-		}
-
-		void handlePickerDragEvent( object sender, DraggingTextureEventArgs e )
-		{
 		}
 
 		void pathToFolderChanging( object sender, PathToFolderChangedEventArgs e )
@@ -81,7 +78,6 @@ namespace Gleed2D.Core.Controls
 
 		public void AddPlugin( IEditorPlugin editorPlugin )
 		{
-			_picker.SetCreationPropertiesForEachItem(new EntityCreationProperties(editorPlugin.GetType()));
 		}
 
 		public void SetRootFolder( PathToFolder folder )

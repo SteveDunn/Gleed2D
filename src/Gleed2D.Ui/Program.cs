@@ -12,82 +12,101 @@ using StructureMap ;
 
 namespace GLEED2D
 {
-	static class Program
+	internal static class Program
 	{
 		/// <summary>
 		/// The main entry point for the application.
 		/// </summary>
 		[STAThread]
-		static void Main(string[] args)
+		private static void Main(string[] args)
 		{
-			try
-			{
-				Application.EnableVisualStyles( ) ;
+				Application.EnableVisualStyles();
 
 				ObjectFactory.Configure(
 					a =>
 						{
-							a.For<IDisk>( ).Singleton( ).Use<Disk>( ) ;
-							a.For<IMenuItems>( ).Singleton( ).Use<MainFormMenuItems>( ) ;
-							a.For<IGleedRenderer>( ).Singleton( ).Use<GleedRenderer>( ) ;
-							a.For<IMemento>( ).Singleton( ).Use<Mememto>( ) ;
-							a.For<IGetAssemblyInformation>( ).Singleton( ).Use<GetAssemblyInformation>( ) ;
-							a.For<IModel>( ).Singleton( ).Use<Model>( ) ;
-							a.For<IHandleUserActions>( ).Singleton( ).Use<HandleUserActions>( ) ;
-							a.For<IHandleKeyboardCommands>( ).Singleton( ).Use<HandleKeyboardCommands>( ) ;
-							a.For<IImageRepository>( ).Singleton( ).Use<ImageRepository>( ).Named( @"iconImages" ) ;
-							a.For<IImageRepository>( ).Singleton( ).Use<ImageRepository>( ) ;
-							a.For<ILoadImages>( ).Singleton( ).Use<LoadImages>( ) ;
-							a.For<IExtensibility>( ).Singleton( ).Use<Extensibility>( ) ;
-							a.For<IGame>( ).Singleton( ).Use<XnaGame>( ) ;
-							a.For<IMainForm>( ).Singleton( ).Use<MainForm>( ) ;
-							a.For<IEditor>( ).Singleton( ).Use<Editor>( ) ;
-							a.For<ITextureStore>( ).Singleton( ).Use<TextureStore>( ) ;
-							a.For<IDrawing>( ).Singleton( ).Use<Drawing>( ) ;
-						} ) ;
+							a.For<IDisk>().Singleton().Use<Disk>();
+							a.For<IMenuItems>().Singleton().Use<MainFormMenuItems>();
+							a.For<IGleedRenderer>().Singleton().Use<GleedRenderer>();
+							a.For<IMemento>().Singleton().Use<Mememto>();
+							a.For<IGetAssemblyInformation>().Singleton().Use<GetAssemblyInformation>();
+							a.For<IModel>().Singleton().Use<Model>();
+							a.For<IHandleUserActions>().Singleton().Use<HandleUserActions>();
+							a.For<IHandleKeyboardCommands>().Singleton().Use<HandleKeyboardCommands>();
+							a.For<IImageRepository>().Singleton().Use<ImageRepository>().Named(@"iconImages");
+							a.For<IImageRepository>().Singleton().Use<ImageRepository>();
+							a.For<ILoadImages>().Singleton().Use<LoadImages>();
+							a.For<IExtensibility>().Singleton().Use<Extensibility>();
+							a.For<IGame>().Singleton().Use<XnaGame>();
+							a.For<IMainForm>().Singleton().Use<MainForm>();
+							a.For<IEditor>().Singleton().Use<Editor>();
+							a.For<ITextureStore>().Singleton().Use<TextureStore>();
+							a.For<IDrawing>().Singleton().Use<Drawing>();
+						});
 
 				TypeDescriptor.AddAttributes(
-					typeof(Color),
+					typeof (Color),
 					new EditorAttribute(
-						typeof(XnaColorUiTypeEditor),
-						typeof(UITypeEditor)));
+						typeof (XnaColorUiTypeEditor),
+						typeof (UITypeEditor)));
 
 				TypeDescriptor.AddAttributes(
-					typeof( PathToFolder ),
+					typeof (PathToFolder),
 					new EditorAttribute(
-						typeof( PathToFolderUiTypeEditor ),
-						typeof( UITypeEditor ) ) ) ;
+						typeof (PathToFolderUiTypeEditor),
+						typeof (UITypeEditor)));
 
 				TypeDescriptor.AddAttributes(
-					typeof( PathToFolder ),
+					typeof (PathToFolder),
 					new TypeConverterAttribute(
-						typeof( PathToFolderConverter ) ) ) ;
+						typeof (PathToFolderConverter)));
 
 				TypeDescriptor.AddAttributes(
-					typeof( PathToFile ),
+					typeof (PathToFile),
 					new EditorAttribute(
-						typeof( PathToFileUiTypeEditor ),
-						typeof( UITypeEditor ) ) ) ;
+						typeof (PathToFileUiTypeEditor),
+						typeof (UITypeEditor)));
 
 				TypeDescriptor.AddAttributes(
-					typeof( LinkedItem ),
+					typeof (LinkedItem),
 					new EditorAttribute(
-						typeof( LinkedItemTypeConverter ),
-						typeof( UITypeEditor ) ) ) ;
+						typeof (LinkedItemTypeConverter),
+						typeof (UITypeEditor)));
 
 				TypeDescriptor.AddAttributes(
-					typeof( PathToFile ),
+					typeof (PathToFile),
 					new TypeConverterAttribute(
-						typeof( PathToFileConverter ) ) ) ;
+						typeof (PathToFileConverter)));
 
-				var form = ObjectFactory.GetInstance<IMainForm>( ) ;
+				if (Debugger.IsAttached)
+				{
+					runInDebugger();
+				}
+				else
+				{
+					runNormally();
+				}
+			}
 
-				form.Show( ) ;
+		private static void runNormally()
+		{
+			try
+			{
+				var form = ObjectFactory.GetInstance<IMainForm>();
 
-				runForever( ) ;
+				form.Show();
+
+				var game = ObjectFactory.GetInstance<IGame>();
+
+				game.Run();
 			}
 			catch (Exception e)
 			{
+				if (Debugger.IsAttached)
+				{
+					throw;
+				}
+
 				reportError(e);
 			}
 			finally
@@ -96,24 +115,15 @@ namespace GLEED2D
 			}
 		}
 
-		static void runForever( )
+		static void runInDebugger()
 		{
-			var game = ObjectFactory.GetInstance<IGame>( ) ;
-			//while (!game.HasExited)
-			{
-				try
-				{
-					game.Run( ) ;
-				}
-				catch( Exception e )
-				{
-					reportError( e, true ) ;
-				}
-				finally
-				{
-					Logger.Instance.log( "Application ended." ) ;
-				}
-			}
+			var form = ObjectFactory.GetInstance<IMainForm>();
+
+			form.Show();
+
+			var game = ObjectFactory.GetInstance<IGame>();
+
+			game.Run();
 		}
 
 		static void reportError(Exception e)
@@ -123,27 +133,25 @@ namespace GLEED2D
 
 		static void reportError(Exception e, bool @continue)
 		{
-			Logger.Instance.log( string.Format( @"Exception caught: 
+			Logger.Instance.log(string.Format(@"Exception caught: 
 
  {0}
 
-{1}", e.Message, e.StackTrace ) ) ;
+{1}", e.Message, e.StackTrace));
 
-			if( e.InnerException != null )
+			if (e.InnerException != null)
 			{
-				Logger.Instance.log( string.Format( "Inner Exception: {0}", e.InnerException.Message ) ) ;
+				Logger.Instance.log(string.Format("Inner Exception: {0}", e.InnerException.Message));
 			}
 
-			if( !Debugger.IsAttached )
+			if (Debugger.IsAttached)
+				throw e;
+			
+			MessageBox.Show(@"An exception was caught. Application will end. Please check the file log.txt.");
+
+			if (!@continue)
 			{
-				MessageBox.Show( @"An exception was caught. Application will end. Please check the file log.txt." ) ;
-			}
-			else
-			{
-				if( !@continue )
-				{
-					throw e ;
-				}
+				throw e;
 			}
 		}
 	}

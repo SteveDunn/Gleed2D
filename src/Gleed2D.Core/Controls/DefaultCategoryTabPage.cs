@@ -44,9 +44,10 @@ namespace Gleed2D.Core.Controls
 			
 			new Cursor(bitmap.GetHicon());
 
-			var creationProperties = item.Tag as EntityCreationProperties ;
+			var type = item.Tag as Type ;
 
-			var plugin = (IPlugin)Activator.CreateInstance(creationProperties.PluginType);
+			var plugin = (IPlugin)Activator.CreateInstance(type);
+			var creationProperties = new EntityCreationProperties(type, UiAction.Dragging);
 
 			var handlerForPlugin = plugin.CreateDragDropHandler(creationProperties);
 
@@ -75,7 +76,9 @@ namespace Gleed2D.Core.Controls
 
 		void listViewMouseDoubleClick(object sender, MouseEventArgs e)
 		{
-			var creationProperties = (EntityCreationProperties) _listView.FocusedItem.Tag ;
+			var type = _listView.FocusedItem.Tag as Type;
+
+			var creationProperties = new EntityCreationProperties(type, UiAction.DoubleClicking);
 
 			IoC.Editor.StartCreatingEntityAfterNextClick( creationProperties ) ;
 		}
@@ -100,7 +103,7 @@ namespace Gleed2D.Core.Controls
 
 			ListViewItem listViewItem = _listView.Items.Add( editorPlugin.Name, editorPlugin.Name ) ;
 
-			listViewItem.Tag = new EntityCreationProperties(editorPlugin.GetType());
+			listViewItem.Tag = editorPlugin.GetType();
 		}
 	}
 }

@@ -167,32 +167,6 @@ namespace GLEED2D
 			return _entityCreation;
 		}
 
-		public void StartCreatingEntityNow2(ItemEditor itemEditor)
-		{
-			if (_model.Level.ActiveLayer == null)
-			{
-				MessageBox.Show(Resources.No_Layer);
-
-				return;
-			}
-
-			_userActionInEditor = UserActionInEditor.AddingAnItem;
-
-			_mainForm.SetCursorForCanvas(Cursors.Cross);
-
-			_entityCreation.StartedCreating = true;
-			//_entityCreation.CreationProperties = itemEditor ;
-
-			_entityCreation.EditorInstance = itemEditor;
-
-			_entityCreation.CurrentEditor = itemEditor;// buildPrimitiveEditorReadyForDesigning(_entityCreation.CreationProperties);
-		}
-
-		public void RemoveItem(ItemEditor itemEditor)
-		{
-			_model.DeleteSelectedItems();
-		}
-
 		void startCreatingEntity( IEntityCreationProperties properties, bool startNow )
 		{
 			if( _model.Level.ActiveLayer == null )
@@ -222,6 +196,17 @@ namespace GLEED2D
 			{
 				_entityCreation.CurrentEditor = buildPrimitiveEditorReadyForDesigning( _entityCreation.CreationProperties ) ;
 			}
+		}
+
+		ItemEditor buildPrimitiveEditorReadyForDesigning( IEntityCreationProperties creationProperties )
+		{
+			var extensibility = ObjectFactory.GetInstance<IExtensibility>( ) ;
+
+			var editor = extensibility.GetNewEditor(creationProperties.PluginType);
+
+			editor.CreateInDesignMode( _model.Level.ActiveLayer, creationProperties ) ;
+
+			return editor ;
 		}
 
 		public void TrySetCameraZoom( float zoom )
@@ -357,18 +342,18 @@ namespace GLEED2D
 			model.AddEditor( currentEditor );
 		}
 
-		ItemEditor buildPrimitiveEditorReadyForDesigning( IEntityCreationProperties creationProperties )
-		{
-			var extensibility = ObjectFactory.GetInstance<IExtensibility>( ) ;
+		//ItemEditor buildPrimitiveEditorReadyForDesigning( IEntityCreationProperties creationProperties )
+		//{
+		//    var extensibility = ObjectFactory.GetInstance<IExtensibility>( ) ;
 
-			var plugin = extensibility.FindPluginInstanceForType( creationProperties.PluginType ) ;
+		//    IEditorPlugin plugin = extensibility.FindPluginInstanceForType( creationProperties.PluginType ) ;
 
-			var editor = (ItemEditor) Activator.CreateInstance( plugin.EditorType ) ;
+		//    var editor = (ItemEditor) Activator.CreateInstance( plugin.EditorType ) ;
 
-			editor.CreateInDesignMode( _model.Level.ActiveLayer, creationProperties ) ;
+		//    editor.CreateInDesignMode( _model.Level.ActiveLayer, creationProperties ) ;
 
-			return editor ;
-		}
+		//    return editor ;
+		//}
 
 
 		//void paintPrimitiveBrush()
@@ -491,7 +476,6 @@ namespace GLEED2D
 			return _model.Level ;
 		}
 
-
 		public void SetMousePosition( int screenx, int screeny )
 		{
 			Vector2 maincameraposition = Camera.Position ;
@@ -525,8 +509,11 @@ namespace GLEED2D
 		public Vector2 SnapToGrid( Vector2 input )
 		{
 			Vector2 result = input ;
-			result.X = Constants.Instance.GridSpacing.X * (int) Math.Round( result.X / Constants.Instance.GridSpacing.X ) ;
-			result.Y = Constants.Instance.GridSpacing.Y * (int) Math.Round( result.Y / Constants.Instance.GridSpacing.Y ) ;
+			
+			Vector2 gridSpacing = Constants.Instance.GridSpacing;
+			
+			result.X = gridSpacing.X * (int) Math.Round( result.X / gridSpacing.X ) ;
+			result.Y = gridSpacing.Y * (int) Math.Round( result.Y / gridSpacing.Y ) ;
 
 			_snapPoint.Position = result ;
 			_snapPoint.Visible = true ;
@@ -771,8 +758,6 @@ namespace GLEED2D
 				_userActionInEditor = UserActionInEditor.Idle ;
 				_mainForm.SetCursorForCanvas( Cursors.Default ) ;
 			}
-
-			return ;
 		}
 
 		void handleInputWhenAddingAnEntity( )

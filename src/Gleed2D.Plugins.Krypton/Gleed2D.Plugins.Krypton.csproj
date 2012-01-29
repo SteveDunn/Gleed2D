@@ -110,7 +110,6 @@
       <DependentUpon>ShapeSelectionForm.cs</DependentUpon>
     </Compile>
     <Compile Include="TexturedHullEditor.cs" />
-    <Compile Include="TextureredHullEditorPlugin.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resource1.resx">

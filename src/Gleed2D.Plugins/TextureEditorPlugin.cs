@@ -88,12 +88,7 @@ namespace Gleed2D.Plugins
 
 		public IHandleDragDrop CreateDragDropHandler(IEntityCreationProperties entityCreationProperties)
 		{
-			var editor = new TextureItemEditor();
-			
-			editor.ItemProperties.Id = IoC.Model.NextItemNumber;// Guid.NewGuid().ToString();
-
-			
-			return new TextureDragDropHandler(editor, entityCreationProperties as TextureCreationProperties);
+			return new TextureDragDropHandler( entityCreationProperties as TextureCreationProperties);
 		}
 	}
 }

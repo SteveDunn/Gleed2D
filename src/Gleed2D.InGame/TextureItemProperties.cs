@@ -70,7 +70,7 @@ namespace Gleed2D.InGame
 		}
 
         /// <summary>
-        /// The <see cref="TexturePathRelativeToContentRoot"/>without extension. For using in Content.Load<Texture2D/>().
+        /// Gets the asset name. This is the <see cref="TexturePathRelativeToContentRoot"/> without the extension. For use in Content.Load<Texture2D/>().
         /// </summary>
         public string AssetName
 		{

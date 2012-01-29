@@ -213,6 +213,37 @@ namespace Gleed2D.Plugins
 			WhenUpdatedByUi( ) ;
 		}
 
+		public virtual void CreateReadyForDroppingOntoCanvas(
+			Layer parentLayer,
+			IEntityCreationProperties creationProperties )
+		{
+			_polygon = new Vector2[ 4 ] ;
+
+			ParentLayer = parentLayer ;
+
+			var tCreationProperties = (TextureCreationProperties) creationProperties;
+
+			string fullPath = tCreationProperties.PathToTexture;
+
+			initialiseTexture( fullPath ) ;
+
+// ReSharper disable UseObjectOrCollectionInitializer
+			_properties = new TextureItemProperties
+// ReSharper restore UseObjectOrCollectionInitializer
+				{
+					Position = MouseStatus.WorldPosition,
+					TexturePathRelativeToContentRoot = makeRelativePath( parentLayer.ParentLevel.ContentRootFolder, fullPath ),
+					CustomProperties = new CustomProperties( ),
+					Visible = true,
+					Scale = Vector2.One,
+					TintColor = Color.White,
+				} ;
+
+			_properties.Origin = getTextureOrigin( ) ;
+
+			WhenUpdatedByUi( ) ;
+		}
+
 		/// <summary>
 		/// Creates a relative path from one file or folder to another.
 		/// </summary>
@@ -244,7 +275,7 @@ namespace Gleed2D.Plugins
 				case InternalPoint.Middle:
 					if( _properties.CustomProperties.ContainsKey( "Animated" ) )
 					{
-						Vector2 dimensions = (Vector2) _properties.CustomProperties[ "FrameDimensions" ].Value ;
+						var dimensions = (Vector2) _properties.CustomProperties[ "FrameDimensions" ].Value ;
 
 						return new Vector2( dimensions.X / 2, dimensions.Y / 2 ) ;
 					}
@@ -292,19 +323,19 @@ namespace Gleed2D.Plugins
 
 			if( !File.Exists( absolutePath ) )
 			{
-				DialogResult dr =
+				DialogResult result =
 					MessageBox.Show(
-						string.Format(
-							@"The file ""{0}"" doesn't exist!
+						@"The file ""{0}"" doesn't exist!
 The texture path is a combination of the Level's ContentRootFolder and the TextureItem's relative path.
 Please adjust the XML file before trying to load this level again.
-For now, a dummy texture will be used. Continue loading the level?",
-							absolutePath ),
+For now, a dummy texture will be used. Continue loading the level?"
+							.FormatWith(
+								absolutePath),
 						@"Error loading texture file",
 						MessageBoxButtons.YesNo,
-						MessageBoxIcon.Question ) ;
+						MessageBoxIcon.Question);
 
-				if( dr == DialogResult.No )
+				if( result == DialogResult.No )
 				{
 					return ;
 				}
@@ -494,61 +525,43 @@ For now, a dummy texture will be used. Continue loading the level?",
 		protected override void WhenUpdatedByUi( )
 		{
 			_transform =
-				Matrix.CreateTranslation( new Vector3( -_properties.Origin.X, -_properties.Origin.Y, 0.0f ) ) *
-					Matrix.CreateScale( Scale.X, Scale.Y, 1 ) *
-						Matrix.CreateRotationZ( Rotation ) *
-							Matrix.CreateTranslation( new Vector3( _properties.Position, 0.0f ) ) ;
+				Matrix.CreateTranslation(new Vector3(-_properties.Origin.X, -_properties.Origin.Y, 0.0f))*
+				Matrix.CreateScale(Scale.X, Scale.Y, 1)*
+				Matrix.CreateRotationZ(Rotation)*
+				Matrix.CreateTranslation(new Vector3(_properties.Position, 0.0f));
 
-			Vector2 leftTop = Vector2.Zero ;
-			Vector2 leftBottom ;
-			Vector2 rightTop ;
-			Vector2 rightBottom ;
+			Vector2 leftTop = Vector2.Zero;
 
-			if( _properties.CustomProperties.ContainsKey( "Animated" ) )
-			{
-				var dimensions = (Vector2) _properties.CustomProperties[ "FrameDimensions" ].Value ;
-				leftBottom = new Vector2( 0, dimensions.X ) ;
-
-				rightTop = new Vector2( dimensions.X, 0 ) ;
-
-				rightBottom = new Vector2( dimensions.X, dimensions.Y ) ;
-
-				_column = 0 ;
-				_row = 0 ;
-				_frameIndex = 0 ;
-			}
-			else
-			{
-				leftBottom = new Vector2( 0, _texture.Height ) ;
-				rightTop = new Vector2( _texture.Width, 0 ) ;
-				rightBottom = new Vector2( _texture.Width, _texture.Height ) ;
-			}
+			var leftBottom = new Vector2(0, _texture.Height);
+			var rightTop = new Vector2(_texture.Width, 0);
+			var rightBottom = new Vector2(_texture.Width, _texture.Height);
 
 			// Transform all four corners into work space
-			Vector2.Transform( ref leftTop, ref _transform, out leftTop ) ;
-			Vector2.Transform( ref rightTop, ref _transform, out rightTop ) ;
-			Vector2.Transform( ref leftBottom, ref _transform, out leftBottom ) ;
-			Vector2.Transform( ref rightBottom, ref _transform, out rightBottom ) ;
+			Vector2.Transform(ref leftTop, ref _transform, out leftTop);
+			Vector2.Transform(ref rightTop, ref _transform, out rightTop);
+			Vector2.Transform(ref leftBottom, ref _transform, out leftBottom);
+			Vector2.Transform(ref rightBottom, ref _transform, out rightBottom);
 
-			_polygon[ 0 ] = leftTop ;
-			_polygon[ 1 ] = rightTop ;
-			_polygon[ 3 ] = leftBottom ;
-			_polygon[ 2 ] = rightBottom ;
+			_polygon[0] = leftTop;
+			_polygon[1] = rightTop;
+			_polygon[3] = leftBottom;
+			_polygon[2] = rightBottom;
 
 			// Find the minimum and maximum extents of the rectangle in world space
 			Vector2 min = Vector2.Min(
-				Vector2.Min( leftTop, rightTop ),
-				Vector2.Min( leftBottom, rightBottom ) ) ;
+				Vector2.Min(leftTop, rightTop),
+				Vector2.Min(leftBottom, rightBottom));
+			
 			Vector2 max = Vector2.Max(
-				Vector2.Max( leftTop, rightTop ),
-				Vector2.Max( leftBottom, rightBottom ) ) ;
+				Vector2.Max(leftTop, rightTop),
+				Vector2.Max(leftBottom, rightBottom));
 
 			// Return as a rectangle
 			_boundingRectangle = new Rectangle(
 				(int) min.X,
 				(int) min.Y,
-				(int) ( max.X - min.X ),
-				(int) ( max.Y - min.Y ) ) ;
+				(int) (max.X - min.X),
+				(int) (max.Y - min.Y));
 		}
 
 		public override ItemEditor Clone( )

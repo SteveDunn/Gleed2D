@@ -26,5 +26,7 @@ namespace Gleed2D.Core
 		}
 
 		IEditorPlugin FindPluginInstanceForType( Type type ) ;
+		
+		ItemEditor GetNewEditor(Type pluginType);
 	}
 }

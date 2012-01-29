@@ -1,4 +1,8 @@
-This repository is a re-write of the original GLEED2D tool (at http://gleed2d.codeplex.com/)
+Detailed information on the wiki: http://github.com/SteveDunn/Gleed2D/wiki
+
+** IF YOU'RE DOWNLOADING THE ZIP FILE OF THE SOURCE, ENSURE YOU UNBLOCK IT IN EXPLORER BEFORE YOU BUILD IT, OTHERWISE YOU'LL GET AN SGEN ERROR IN VISUAL STUDIO!! **
+
+This is a re-write of the original GLEED2D tool (at http://gleed2d.codeplex.com/)
 
 This version is plug-in based.  All the shapes you see are plug-ins.  The behaviours and lighting are also plug-ins.
 

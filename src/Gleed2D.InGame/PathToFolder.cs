@@ -1,8 +1,10 @@
 using System ;
+using System.Diagnostics;
 using System.IO ;
 
 namespace Gleed2D.InGame
 {
+	[DebuggerDisplay("AbsolutePath={AbsolutePath}, Exists={Exists}")]
 	public class PathToFolder
 	{
 		public event EventHandler<PathToFolderChangedEventArgs> PathChanging ;
@@ -29,6 +31,11 @@ namespace Gleed2D.InGame
 				if( _absolutePath == value )
 				{
 					return ;
+				}
+
+				if (!value.EndsWith(@"\"))
+				{
+					value = value + @"\";
 				}
 				
 				bool shouldCancel = false ;

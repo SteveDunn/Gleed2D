@@ -298,7 +298,20 @@ namespace Gleed2D.Core.Controls
 		{
 			ListViewItem focusedItem = uiListView.FocusedItem;
 
-			if( TextureChosen != null )
+			string itemType = focusedItem.Tag.ToString();
+
+			if (itemType == @"folder")
+			{
+				loadFolder(
+					new PathToFolder
+						{
+							AbsolutePath = focusedItem.Name
+						});
+
+				return;
+			}
+
+			if (TextureChosen != null)
 			{
 				var creationProperties = focusedItem.Tag as EntityCreationProperties;
 
@@ -307,18 +320,7 @@ namespace Gleed2D.Core.Controls
 					new EntityChosenEventArgs
 						{
 							EntityCreationProperties = creationProperties
-						} ) ;
-			}
-
-			string itemtype = focusedItem.Tag.ToString();
-		
-			if (itemtype == FOLDER_MONIKER)
-			{
-				loadFolder(
-					new PathToFolder
-						{
-							AbsolutePath = focusedItem.Name
-						} ) ;
+						});
 			}
 		}
 

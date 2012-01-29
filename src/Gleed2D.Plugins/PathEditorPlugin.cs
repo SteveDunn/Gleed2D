@@ -15,14 +15,14 @@ namespace Gleed2D.Plugins
 			draggingContext.DragEventArgs.Effect=DragDropEffects.Move;
 		}
 
-		void whenDraggingOverEditor( IEditor editor, DraggingContext draggingContext )
+		void whenDraggingOverEditor( ICanvas canvas, DraggingContext draggingContext )
 		{
 			draggingContext.DragEventArgs.Effect=DragDropEffects.Move;
 		}
 
-		void whenDroppedOntoEditor( IEditor editor, DraggingContext draggingContext )
+		void whenDroppedOntoEditor( ICanvas canvas, DraggingContext draggingContext )
 		{
-			editor.StartCreatingEntityNow(
+			canvas.StartCreatingEntityNow(
 				new EntityCreationProperties(GetType(), UiAction.Dragging));
 		}
 

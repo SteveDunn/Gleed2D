@@ -227,7 +227,7 @@ namespace Gleed2D.Core
 
 		public void DrawPolygonFilled( SpriteBatch spriteBatch, Vector2[ ] worldPoints, Color color )
 		{
-			Camera camera = IoC.Editor.Camera ;
+			Camera camera = IoC.Canvas.Camera ;
 
 			_basicEffect.World = camera.Matrix ;
 

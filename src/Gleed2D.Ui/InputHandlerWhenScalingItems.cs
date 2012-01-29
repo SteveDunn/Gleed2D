@@ -10,12 +10,12 @@ namespace GLEED2D
 {
 	internal class InputHandlerWhenScalingItems : IHandleEditorInput
 	{
-		readonly IEditor _editor ;
+		readonly ICanvas _canvas ;
 		readonly IModel _model ;
 
-		public InputHandlerWhenScalingItems(IEditor editor )
+		public InputHandlerWhenScalingItems(ICanvas canvas )
 		{
-			_editor = editor ;
+			_canvas = canvas ;
 			_model = IoC.Model ;
 		}
 
@@ -25,7 +25,7 @@ namespace GLEED2D
 			
 			Vector2 newDistance = MouseStatus.WorldPosition - allSelectedEditors.First().ItemProperties.Position ;
 			
-			float factor = newDistance.Length( ) / _editor.GrabPoint.Length( ) ;
+			float factor = newDistance.Length( ) / _canvas.GrabPoint.Length( ) ;
 			
 			int i = 0 ;
 
@@ -39,15 +39,15 @@ namespace GLEED2D
 						//    _mainForm.SetToolStripStatusLabel1("Hold down [X] or [Y] to limit scaling to the according dimension.");
 						//}
 
-						Vector2 newscale = _editor.ScalesBeforeUserInteraction[ i ] ;
+						Vector2 newscale = _canvas.ScalesBeforeUserInteraction[ i ] ;
 						if( !KeyboardStatus.IsKeyDown( Keys.Y ) )
 						{
-							newscale.X = _editor.ScalesBeforeUserInteraction[ i ].X * ( ( ( factor - 1.0f ) * 0.5f ) + 1.0f ) ;
+							newscale.X = _canvas.ScalesBeforeUserInteraction[ i ].X * ( ( ( factor - 1.0f ) * 0.5f ) + 1.0f ) ;
 						}
 
 						if( !KeyboardStatus.IsKeyDown( Keys.X ) )
 						{
-							newscale.Y = _editor.ScalesBeforeUserInteraction[ i ].Y * ( ( ( factor - 1.0f ) * 0.5f ) + 1.0f ) ;
+							newscale.Y = _canvas.ScalesBeforeUserInteraction[ i ].Y * ( ( ( factor - 1.0f ) * 0.5f ) + 1.0f ) ;
 						}
 
 						thingToScale.Scale = newscale ;
@@ -66,7 +66,7 @@ namespace GLEED2D
 
 			if( MouseStatus.IsNewRightMouseButtonRelease( ) || KeyboardStatus.IsNewKeyRelease( Keys.D3 ) )
 			{
-				_editor.SetModeToIdle(  );
+				_canvas.SetModeToIdle(  );
 
 				ObjectFactory.GetInstance<IMemento>().EndCommand( ) ;
 			}

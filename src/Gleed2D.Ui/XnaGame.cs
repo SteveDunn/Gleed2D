@@ -19,7 +19,7 @@ namespace GLEED2D
 
 		GamePadState _gamepadstate ;
 
-		IEditor _editor ;
+		ICanvas _canvas ;
 
 		public XnaGame( IMainForm mainForm )
 		{
@@ -79,14 +79,14 @@ namespace GLEED2D
 			private set ;
 		}
 
-		IEditor summonEditor( )
+		ICanvas summonEditor( )
 		{
-			if( _editor == null )
+			if( _canvas == null )
 			{
-				_editor = ObjectFactory.GetInstance<IEditor>( ) ;
+				_canvas = ObjectFactory.GetInstance<ICanvas>( ) ;
 			}
 
-			return _editor ;
+			return _canvas ;
 		}
 
 		protected override void Initialize()

@@ -42,7 +42,7 @@ namespace Gleed2D.Plugins
 		//todo: move somewhere else
 		void textureChosen(object sender, EntityChosenEventArgs e)
 		{
-			IoC.Editor.StartCreatingEntityNow( e.EntityCreationProperties ) ;
+			IoC.Canvas.StartCreatingEntityNow( e.EntityCreationProperties ) ;
 		}
 
 		void pathToFolderChanging( object sender, PathToFolderChangedEventArgs e )

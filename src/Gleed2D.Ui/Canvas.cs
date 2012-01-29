@@ -21,7 +21,7 @@ using Rectangle = Microsoft.Xna.Framework.Rectangle ;
 namespace GLEED2D
 {
 	[PublicAPI]
-	public class Editor : IEditor
+	public class Canvas : ICanvas
 	{
 		readonly Dictionary<UserActionInEditor, Action> _inputActionLookup ;
 		readonly List<Vector2> _positionsBeforeUserInteraction ; //position before user interaction
@@ -55,7 +55,7 @@ namespace GLEED2D
 
 		UserActionInEditor _userActionInEditor ;
 
-		public Editor( IMainForm mainForm, IModel model )
+		public Canvas( IMainForm mainForm, IModel model )
 		{
 			_inputHandlerForWhenEditorIdle = new InputHandlerForWhenEditorIdle( this );
 			_inputHandlerForWhenMovingOrCopyingItems = new InputHandlerForWhenMovingOrCopyingItems( this );

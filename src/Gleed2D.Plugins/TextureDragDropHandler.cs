@@ -17,13 +17,13 @@ namespace Gleed2D.Plugins
 			_creationProperties = creationProperties;
 		}
 
-		public void WhenDroppedOntoEditor(IEditor editor, DraggingContext context)
+		public void WhenDroppedOntoEditor(ICanvas canvas, DraggingContext context)
 		{
-			editor.AddNewItemAtMouse(_entityCreation.CurrentEditor);
-			editor.SetModeTo(UserActionInEditor.Idle);
+			canvas.AddNewItemAtMouse(_entityCreation.CurrentEditor);
+			canvas.SetModeTo(UserActionInEditor.Idle);
 		}
 
-		public void WhenBeingDraggedOverEditor(IEditor editor, DraggingContext draggingContext)
+		public void WhenBeingDraggedOverEditor(ICanvas canvas, DraggingContext draggingContext)
 		{
 			_entityCreation.CurrentEditor.SetPosition(MouseStatus.WorldPosition);
 
@@ -31,14 +31,14 @@ namespace Gleed2D.Plugins
 			draggingContext.DragEventArgs.Effect = DRAG_DROP_EFFECTS;
 		}
 
-		public void WhenEnteringEditor( IEditor editor, DraggingContext context)
+		public void WhenEnteringEditor( ICanvas canvas, DraggingContext context)
 		{
-			_entityCreation = editor.StartCreatingEntityNow(_creationProperties);
+			_entityCreation = canvas.StartCreatingEntityNow(_creationProperties);
 		}
 
-		public void WhenLeavingEditor( IEditor editor, DraggingContext draggingContext )
+		public void WhenLeavingEditor( ICanvas canvas, DraggingContext draggingContext )
 		{
-			editor.CancelCreatingEntity();
+			canvas.CancelCreatingEntity();
 		}
 
 		public DragDropEffects DragDropEffects

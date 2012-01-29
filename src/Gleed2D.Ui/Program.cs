@@ -39,7 +39,7 @@ namespace GLEED2D
 							a.For<IExtensibility>().Singleton().Use<Extensibility>();
 							a.For<IGame>().Singleton().Use<XnaGame>();
 							a.For<IMainForm>().Singleton().Use<MainForm>();
-							a.For<IEditor>().Singleton().Use<Editor>();
+							a.For<ICanvas>().Singleton().Use<Canvas>();
 							a.For<ITextureStore>().Singleton().Use<TextureStore>();
 							a.For<IDrawing>().Singleton().Use<Drawing>();
 						});

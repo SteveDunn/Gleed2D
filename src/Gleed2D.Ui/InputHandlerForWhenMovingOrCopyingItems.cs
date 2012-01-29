@@ -11,12 +11,12 @@ namespace GLEED2D
 	{
 		Vector2 _newPosition ;
 
-		readonly IEditor _editor ;
+		readonly ICanvas _canvas ;
 		readonly IModel _model ;
 
-		public InputHandlerForWhenMovingOrCopyingItems(IEditor editor )
+		public InputHandlerForWhenMovingOrCopyingItems(ICanvas canvas )
 		{
-			_editor = editor ;
+			_canvas = canvas ;
 			_model = IoC.Model ;
 		}
 
@@ -28,11 +28,11 @@ namespace GLEED2D
 			
 			foreach( ItemEditor eachSelectedEditor in allSelectedEditors )
 			{
-				_newPosition = _editor.PositionsBeforeUserInteraction[ i ] + MouseStatus.WorldPosition - _editor.GrabPoint ;
+				_newPosition = _canvas.PositionsBeforeUserInteraction[ i ] + MouseStatus.WorldPosition - _canvas.GrabPoint ;
 
 				if( Constants.Instance.SnapToGrid || KeyboardStatus.IsKeyDown( Keys.G ) )
 				{
-					_newPosition = _editor.SnapToGrid( _newPosition ) ;
+					_newPosition = _canvas.SnapToGrid( _newPosition ) ;
 				}
 
 				//_editor.SnapPoint.Visible = false ;
@@ -51,10 +51,10 @@ namespace GLEED2D
 					eachSelectedEditor.OnMouseButtonUp( MouseStatus.WorldPosition ) ;
 				}
 
-				bool isMoving = _editor.CurrentUserAction == UserActionInEditor.MovingItems ;
-				_editor.SetModeToIdle( ) ;
+				bool isMoving = _canvas.CurrentUserAction == UserActionInEditor.MovingItems ;
+				_canvas.SetModeToIdle( ) ;
 
-				var samePoint = MouseStatus.WorldPosition == _editor.GrabPoint;
+				var samePoint = MouseStatus.WorldPosition == _canvas.GrabPoint;
 				
 				var memento = ObjectFactory.GetInstance<IMemento>() ;
 				

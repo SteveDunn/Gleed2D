@@ -80,7 +80,7 @@ namespace Gleed2D.Core.Controls
 
 			var creationProperties = new EntityCreationProperties(type, UiAction.DoubleClicking);
 
-			IoC.Editor.StartCreatingEntityAfterNextClick( creationProperties ) ;
+			IoC.Canvas.StartCreatingEntityAfterNextClick( creationProperties ) ;
 		}
 
 		public string CategoryName

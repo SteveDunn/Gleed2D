@@ -11,17 +11,17 @@ namespace Gleed2D.Core.UserActions
 
 		public void Process( )
 		{
-			IEditor editor = IoC.Editor ;
+			ICanvas canvas = IoC.Canvas ;
 
 			if (_treeItem is Level)
 			{
-				editor.Camera.Position = Microsoft.Xna.Framework.Vector2.Zero;
+				canvas.Camera.Position = Microsoft.Xna.Framework.Vector2.Zero;
 			}
 		
 			if (_treeItem is ItemEditor)
 			{
 				var i = (ItemEditor)_treeItem;
-				editor.Camera.Position = i.ItemProperties.Position;
+				canvas.Camera.Position = i.ItemProperties.Position;
 			}
 		}
 	}

@@ -10,12 +10,12 @@ namespace GLEED2D
 {
 	internal class InputHandlerWhenRotatingItems : IHandleEditorInput
 	{
-		readonly IEditor _editor ;
+		readonly ICanvas _canvas ;
 		readonly IModel _model ;
 
-		public InputHandlerWhenRotatingItems(IEditor editor )
+		public InputHandlerWhenRotatingItems(ICanvas canvas )
 		{
-			_editor = editor ;
+			_canvas = canvas ;
 			_model = IoC.Model ;
 		}
 
@@ -25,7 +25,7 @@ namespace GLEED2D
 
 			Vector2 newpos = MouseStatus.WorldPosition - allSelectedEditors.First().ItemProperties.Position ;
 			
-			float deltaTheta = (float) Math.Atan2( _editor.GrabPoint.Y, _editor.GrabPoint.X ) - (float) Math.Atan2( newpos.Y, newpos.X ) ;
+			float deltaTheta = (float) Math.Atan2( _canvas.GrabPoint.Y, _canvas.GrabPoint.X ) - (float) Math.Atan2( newpos.Y, newpos.X ) ;
 
 			int i = 0 ;
 
@@ -33,7 +33,7 @@ namespace GLEED2D
 			{
 				if( eachSelectedItem.CanRotate( ) )
 				{
-					eachSelectedItem.Rotation = _editor.RotationsBeforeUserInteraction[ i ] - deltaTheta ;
+					eachSelectedItem.Rotation = _canvas.RotationsBeforeUserInteraction[ i ] - deltaTheta ;
 
 					if( KeyboardStatus.IsKeyDown( Keys.LeftControl ) )
 					{
@@ -50,7 +50,7 @@ namespace GLEED2D
 
 			if( MouseStatus.IsNewMiddleMouseButtonRelease( ) || KeyboardStatus.IsNewKeyRelease( Keys.D2 ) )
 			{
-				_editor.SetModeToIdle(  );
+				_canvas.SetModeToIdle(  );
 
 				ObjectFactory.GetInstance<IMemento>().EndCommand( ) ;
 			}

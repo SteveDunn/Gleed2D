@@ -316,7 +316,7 @@ namespace Gleed2D.Plugins
 			drawing.DrawBoxFilled(spriteBatch, poly[0].X - 5, poly[0].Y - 5, 10, 10, color);
 
 			//todo: finish off
-			IEditor e = IoC.Editor ;
+			ICanvas e = IoC.Canvas ;
 			//e.u
 
 

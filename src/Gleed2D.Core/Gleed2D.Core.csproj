@@ -248,7 +248,7 @@
     <Compile Include="KeyboardStatus.cs" />
     <Compile Include="MouseStatus.cs" />
     <Compile Include="IConstants.cs" />
-    <Compile Include="IEditor.cs" />
+    <Compile Include="ICanvas.cs" />
     <Compile Include="IExtensibility.cs" />
     <Compile Include="IGame.cs" />
     <Compile Include="IMainForm.cs" />

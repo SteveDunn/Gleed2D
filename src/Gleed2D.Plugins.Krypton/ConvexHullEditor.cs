@@ -374,7 +374,7 @@ namespace Gleed2D.Plugins.Krypton
 				lineColor = Constants.Instance.ColorHighlight ;
 			}
 
-			Camera camera = ObjectFactory.GetInstance<IEditor>().Camera ;
+			Camera camera = ObjectFactory.GetInstance<ICanvas>().Camera ;
 			
 			Vector2[] worldPoints = _properties.WorldPoints.ToArray(  ) ;
 			

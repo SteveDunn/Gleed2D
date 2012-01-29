@@ -22,7 +22,7 @@ namespace Gleed2D.Core.Controls
 
 		readonly ImageList _imageList ;
 
-		IEditor _editor ;
+		ICanvas _canvas ;
 		IGame _game ;
 
 		readonly IModel _model ;
@@ -450,14 +450,14 @@ namespace Gleed2D.Core.Controls
 			_memento.EndCommand( ) ;
 		}
 
-		IEditor summonEditor( )
+		ICanvas summonEditor( )
 		{
-			if( _editor == null )
+			if( _canvas == null )
 			{
-				_editor = ObjectFactory.GetInstance<IEditor>( ) ;
+				_canvas = ObjectFactory.GetInstance<ICanvas>( ) ;
 			}
 
-			return _editor ;
+			return _canvas ;
 		}
 
 		IGame summonGame( )

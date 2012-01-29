@@ -34,24 +34,24 @@ namespace Gleed2D.Core.Controls
 			}
 		}
 
-		public void EnteredEditor( IEditor editor, DragEventArgs eventArgs )
+		public void EnteredEditor( ICanvas canvas, DragEventArgs eventArgs )
 		{
 			var context = new DraggingContext(eventArgs);
-			_handlerForPlugin.WhenEnteringEditor( editor, context );
+			_handlerForPlugin.WhenEnteringEditor( canvas, context );
 		}
 
-		public void DraggingOverEditor( IEditor editor, DragEventArgs eventArgs )
+		public void DraggingOverEditor( ICanvas canvas, DragEventArgs eventArgs )
 		{
 			var context = new DraggingContext(eventArgs);
 
-			_handlerForPlugin.WhenBeingDraggedOverEditor( editor, context );
+			_handlerForPlugin.WhenBeingDraggedOverEditor( canvas, context );
 		}
 
-		public void DroppedOnCanvas( IEditor editor, DragEventArgs eventArgs )
+		public void DroppedOnCanvas( ICanvas canvas, DragEventArgs eventArgs )
 		{
 			var context = new DraggingContext(eventArgs);
 
-			_handlerForPlugin.WhenDroppedOntoEditor(editor, context ) ;
+			_handlerForPlugin.WhenDroppedOntoEditor(canvas, context ) ;
 		}
 	}
 }

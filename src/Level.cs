@@ -252,7 +252,7 @@ Would you like to change it?".FormatWith( _properties.ContentRootFolder.Absolute
 
 		public void SaveAsXmlToDisk( string filename )
 		{
-			var editor = ObjectFactory.GetInstance<IEditor>( ) ;
+			var editor = ObjectFactory.GetInstance<ICanvas>( ) ;
 
 			_properties.CameraPosition = editor.Camera.Position ;
 

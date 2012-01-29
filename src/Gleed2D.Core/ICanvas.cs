@@ -8,7 +8,7 @@ using Rectangle = Microsoft.Xna.Framework.Rectangle ;
 
 namespace Gleed2D.Core
 {
-	public interface IEditor
+	public interface ICanvas
 	{
 		Camera Camera
 		{

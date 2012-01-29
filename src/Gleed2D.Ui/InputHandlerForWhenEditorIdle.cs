@@ -13,16 +13,16 @@ namespace GLEED2D
 {
 	public class InputHandlerForWhenEditorIdle : IHandleEditorInput
 	{
-		readonly IEditor _editor ;
+		readonly ICanvas _canvas ;
 		readonly IMainForm _mainForm ;
 		ItemEditor _lastItem ;
 
 		readonly Cursor _cursorDuplicate ;
 		readonly IModel _model ;
 
-		public InputHandlerForWhenEditorIdle( IEditor editor )
+		public InputHandlerForWhenEditorIdle( ICanvas canvas )
 		{
-			_editor = editor ;
+			_canvas = canvas ;
 			_mainForm = IoC.MainForm ;
 			_model = IoC.Model ;
 
@@ -49,7 +49,7 @@ namespace GLEED2D
 
 			var model = ObjectFactory.GetInstance<IModel>( ) ;
 
-			ItemEditor item = _editor.ItemUnderMouse ;
+			ItemEditor item = _canvas.ItemUnderMouse ;
 
 			bool controlButtonPressed = KeyboardStatus.IsKeyDown( Keys.LeftControl ) ;
 			
@@ -87,7 +87,7 @@ namespace GLEED2D
 
 				if( controlButtonPressed && item != null )
 				{
-					_editor.StartCopyingSelectedItems( ) ;
+					_canvas.StartCopyingSelectedItems( ) ;
 				}
 				else if( KeyboardStatus.IsKeyDown( Keys.LeftShift ) && item!=null )
 				{
@@ -95,18 +95,18 @@ namespace GLEED2D
 				}
 				else if( editors.Contains( item ) )
 				{
-					_editor.StartMovingSelectedItems( ) ;
+					_canvas.StartMovingSelectedItems( ) ;
 				}
 				else if (!selectedEditors().Contains(item))
 				{
 					if( item != null )
 					{
 						_model.SelectEditor( item ) ;
-						_editor.StartMovingSelectedItems(  );
+						_canvas.StartMovingSelectedItems(  );
 					}
 					else
 					{
-						_editor.CreateSelectionRectangle( ) ;
+						_canvas.CreateSelectionRectangle( ) ;
 					}
 				}
 			}
@@ -123,13 +123,13 @@ namespace GLEED2D
 
 				if( controlButtonPressed )
 				{
-					_editor.StartMovingCamera( ) ;
+					_canvas.StartMovingCamera( ) ;
 				}
 				else
 				{
 					if( anyEditorsSelected  )
 					{
-						_editor.StartRotatingItems( ) ;
+						_canvas.StartRotatingItems( ) ;
 					}
 				}
 			}
@@ -144,7 +144,7 @@ namespace GLEED2D
 
 				if( anyEditorsSelected )
 				{
-					_editor.StartScalingSelectedItems( ) ;
+					_canvas.StartScalingSelectedItems( ) ;
 				}
 			}
 

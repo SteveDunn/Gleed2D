@@ -18,9 +18,9 @@ namespace Gleed2D.Plugins
 			_buildBehaviour = buildBehaviour ;
 		}
 
-		public void WhenDroppedOntoEditor(IEditor editor, DraggingContext context)
+		public void WhenDroppedOntoEditor(ICanvas canvas, DraggingContext context)
 		{
-			ItemEditor itemEditor = editor.ItemUnderMouse;
+			ItemEditor itemEditor = canvas.ItemUnderMouse;
 
 			if (itemEditor == null)
 			{
@@ -30,9 +30,9 @@ namespace Gleed2D.Plugins
 			IoC.Model.AttachBehaviour(itemEditor, _buildBehaviour(itemEditor));
 		}
 
-		public void WhenBeingDraggedOverEditor(IEditor editor, DraggingContext draggingContext)
+		public void WhenBeingDraggedOverEditor(ICanvas canvas, DraggingContext draggingContext)
 		{
-			ItemEditor itemEditor = editor.ItemUnderMouse;
+			ItemEditor itemEditor = canvas.ItemUnderMouse;
 
 			if (itemEditor == null)
 			{
@@ -42,11 +42,11 @@ namespace Gleed2D.Plugins
 			draggingContext.DragEventArgs.Effect = DragDropEffects.Link;
 		}
 
-		public void WhenEnteringEditor( IEditor editor, DraggingContext context)
+		public void WhenEnteringEditor( ICanvas canvas, DraggingContext context)
 		{
 		}
 
-		public void WhenLeavingEditor( IEditor editor, DraggingContext draggingContext )
+		public void WhenLeavingEditor( ICanvas canvas, DraggingContext draggingContext )
 		{
 		}
 

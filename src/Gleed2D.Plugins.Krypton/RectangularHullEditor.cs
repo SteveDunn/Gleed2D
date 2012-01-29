@@ -300,7 +300,7 @@ namespace Gleed2D.Plugins.Krypton
 
 			var drawing = ObjectFactory.GetInstance<IDrawing>() ;
 
-			var camera = IoC.Editor.Camera ;
+			var camera = IoC.Canvas.Camera ;
 
 			drawing.DrawPolygon( spriteBatch, points, fillColor, 5  );
 			//drawing.DrawPolygonFilled( camera, spriteBatch, points, fillColor  );

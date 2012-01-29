@@ -4,11 +4,11 @@ namespace Gleed2D.Core
 {
 	public static class IoC
 	{
-		public static IEditor Editor
+		public static ICanvas Canvas
 		{
 			get
 			{
-				return ObjectFactory.GetInstance<IEditor>( ) ;
+				return ObjectFactory.GetInstance<ICanvas>( ) ;
 			}
 		}
 

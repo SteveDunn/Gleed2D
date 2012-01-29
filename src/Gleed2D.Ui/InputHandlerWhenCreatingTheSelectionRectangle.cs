@@ -7,12 +7,12 @@ namespace GLEED2D
 {
 	internal class InputHandlerWhenCreatingTheSelectionRectangle : IHandleEditorInput
 	{
-		readonly IEditor _editor ;
+		readonly ICanvas _canvas ;
 		readonly IModel _model ;
 
-		public InputHandlerWhenCreatingTheSelectionRectangle( IEditor editor )
+		public InputHandlerWhenCreatingTheSelectionRectangle( ICanvas canvas )
 		{
-			_editor = editor ;
+			_canvas = canvas ;
 			_model = IoC.Model ;
 		}
 
@@ -23,18 +23,18 @@ namespace GLEED2D
 				return ;
 			}
 
-			Vector2 distance = MouseStatus.WorldPosition - _editor.GrabPoint ;
+			Vector2 distance = MouseStatus.WorldPosition - _canvas.GrabPoint ;
 
 			if( distance.Length( ) > 0 )
 			{
-				_editor.SelectionRectangle = Extensions.RectangleFromVectors( _editor.GrabPoint, MouseStatus.WorldPosition ) ;
+				_canvas.SelectionRectangle = Extensions.RectangleFromVectors( _canvas.GrabPoint, MouseStatus.WorldPosition ) ;
 
 				var itemsCoveredByDragRectangle = _model.ActiveLayer.Items.Where(
 					i =>
 						{
 							var point = new Point( (int) i.ItemProperties.Position.X, (int) i.ItemProperties.Position.Y ) ;
 
-							return i.ItemProperties.Visible && _editor.SelectionRectangle.Contains( point ) ;
+							return i.ItemProperties.Visible && _canvas.SelectionRectangle.Contains( point ) ;
 						} ).ToList( ) ;
 
 				itemsCoveredByDragRectangle.Reverse( ) ;
@@ -43,7 +43,7 @@ namespace GLEED2D
 
 			if( MouseStatus.LeftButton == ButtonState.Released )
 			{
-				_editor.SetModeToIdle( ) ;
+				_canvas.SetModeToIdle( ) ;
 			}
 		}
 	}

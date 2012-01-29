@@ -6,10 +6,10 @@ namespace Gleed2D.Core
 {
 	public interface IHandleDragDrop
 	{
-		void WhenDroppedOntoEditor(IEditor editor, DraggingContext context);
-		void WhenBeingDraggedOverEditor(IEditor editor, DraggingContext draggingContext);
-		void WhenEnteringEditor( IEditor editor, DraggingContext context) ;
-		void WhenLeavingEditor( IEditor editor, DraggingContext draggingContext ) ;
+		void WhenDroppedOntoEditor(ICanvas canvas, DraggingContext context);
+		void WhenBeingDraggedOverEditor(ICanvas canvas, DraggingContext draggingContext);
+		void WhenEnteringEditor( ICanvas canvas, DraggingContext context) ;
+		void WhenLeavingEditor( ICanvas canvas, DraggingContext draggingContext ) ;
 
 		DragDropEffects DragDropEffects
 		{

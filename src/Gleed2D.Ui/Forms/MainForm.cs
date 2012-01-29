@@ -27,7 +27,7 @@ namespace GLEED2D.Forms
 		//todo: encapsulate
 		bool _dirtyFlag;
 
-		IEditor _editor ;
+		ICanvas _canvas ;
 		IGame _game ;
 		bool _built ;
 
@@ -52,7 +52,7 @@ namespace GLEED2D.Forms
 
 		void assetChosenByDoubleClicking( object sender, EntityChosenEventArgs e )
 		{
-			IoC.Editor.StartCreatingEntityAfterNextClick(e.EntityCreationProperties);
+			IoC.Canvas.StartCreatingEntityAfterNextClick(e.EntityCreationProperties);
 		}
 
 		void modelUnloading( object sender, ModelUnloadingEventArgs e )
@@ -161,14 +161,14 @@ namespace GLEED2D.Forms
 			}
 		}
 
-		IEditor summonEditor( )
+		ICanvas summonEditor( )
 		{
-			if( _editor == null )
+			if( _canvas == null )
 			{
-				_editor = ObjectFactory.GetInstance<IEditor>( ) ;
+				_canvas = ObjectFactory.GetInstance<ICanvas>( ) ;
 			}
 			
-			return _editor ;
+			return _canvas ;
 		}
 
 		IGame summonGame()
@@ -305,7 +305,7 @@ namespace GLEED2D.Forms
 
 			if( dragHandler != null )
 			{
-				dragHandler.EnteredEditor( _editor, e ) ;
+				dragHandler.EnteredEditor( _canvas, e ) ;
 				return ;
 			}
 
@@ -320,17 +320,17 @@ namespace GLEED2D.Forms
 	
 			Point p = uiCanvas.PointToClient(new Point(e.X, e.Y));
 
-			IEditor editor = summonEditor( ) ;
+			ICanvas canvas = summonEditor( ) ;
 
-			editor.SetMousePosition(p.X, p.Y);
+			canvas.SetMousePosition(p.X, p.Y);
 
 			IGame game = summonGame( ) ;
-			editor.Draw(game.GameTime,game.GraphicsDevice,game.SpriteBatch);
+			canvas.Draw(game.GameTime,game.GraphicsDevice,game.SpriteBatch);
 
 			var dragHandler = (HandleDraggingOfAssets) e.Data.GetData( typeof( HandleDraggingOfAssets ) ) ;
 			if( dragHandler != null )
 			{
-				dragHandler.DraggingOverEditor( _editor, e );
+				dragHandler.DraggingOverEditor( _canvas, e );
 				//return ;
 			}
 
@@ -342,9 +342,9 @@ namespace GLEED2D.Forms
 		{
 			IGame game = summonGame( ) ;
 
-			IEditor editor = summonEditor( ) ;
+			ICanvas canvas = summonEditor( ) ;
 
-			editor.SetModeToIdle();
+			canvas.SetModeToIdle();
 			
 			game.GraphicsDevice.Present();
 		}
@@ -358,7 +358,7 @@ namespace GLEED2D.Forms
 			
 			if( dragHandler != null )
 			{
-				dragHandler.DroppedOnCanvas( _editor, e );
+				dragHandler.DroppedOnCanvas( _canvas, e );
 				return ;
 			}
 		}
@@ -860,13 +860,13 @@ Level was saved."
 		{
 			everythingWithBehaviour( ).ForEach( b => b.Start( ) ) ;
 			
-			_editor.SetModeTo( UserActionInEditor.RunningBehaviour ) ;
+			_canvas.SetModeTo( UserActionInEditor.RunningBehaviour ) ;
 		}
 
 		private void uiStopBehaviourMenuItem_Click(object sender, EventArgs e)
 		{
 			everythingWithBehaviour( ).ForEach( b => b.Stop( ) ) ;
-			_editor.SetModeToIdle();
+			_canvas.SetModeToIdle();
 		}
 
 		IEnumerable<IBehaviour> everythingWithBehaviour( )

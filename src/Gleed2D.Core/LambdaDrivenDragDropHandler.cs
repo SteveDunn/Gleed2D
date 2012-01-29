@@ -10,17 +10,17 @@ namespace Gleed2D.Core
 		readonly Dictionary<string,object> _properties = new Dictionary<string, object>();
 
 		readonly Action<DraggingContext> _whenEnteringEditor ;
-		readonly Action<IEditor, DraggingContext> _whenDraggingOverEditor ;
+		readonly Action<ICanvas, DraggingContext> _whenDraggingOverEditor ;
 		readonly Action<DraggingContext> _whenLeavingEditor ;
-		readonly Action<IEditor, DraggingContext> _whenDroppedOntoEditor ;
+		readonly Action<ICanvas, DraggingContext> _whenDroppedOntoEditor ;
 		readonly DragDropEffects _dragDropEffects = DragDropEffects.Copy;
 
 		public LambdaDrivenDragDropHandler( 
 			DragDropEffects dragDropEffects,
 			Action<DraggingContext> whenEnteringEditor = null,
-			Action<IEditor, DraggingContext> whenDraggingOverEditor = null,
+			Action<ICanvas, DraggingContext> whenDraggingOverEditor = null,
 			Action<DraggingContext> whenLeavingEditor = null,
-			Action<IEditor,DraggingContext> whenDroppedOntoEditor = null )
+			Action<ICanvas,DraggingContext> whenDroppedOntoEditor = null )
 		{
 			_dragDropEffects = dragDropEffects ;
 			
@@ -30,23 +30,23 @@ namespace Gleed2D.Core
 			_whenDroppedOntoEditor = whenDroppedOntoEditor ;
 		}
 
-		public void WhenDroppedOntoEditor(IEditor editor, DraggingContext context)
+		public void WhenDroppedOntoEditor(ICanvas canvas, DraggingContext context)
 		{
 			if( _whenDroppedOntoEditor !=null )
 			{
-				_whenDroppedOntoEditor( editor, context ) ;
+				_whenDroppedOntoEditor( canvas, context ) ;
 			}
 		}
 
-		public void WhenBeingDraggedOverEditor(IEditor editor, DraggingContext draggingContext)
+		public void WhenBeingDraggedOverEditor(ICanvas canvas, DraggingContext draggingContext)
 		{
 			if (_whenDraggingOverEditor != null)
 			{
-				_whenDraggingOverEditor(editor, draggingContext);
+				_whenDraggingOverEditor(canvas, draggingContext);
 			}
 		}
 
-		public void WhenEnteringEditor( IEditor editor, DraggingContext context)
+		public void WhenEnteringEditor( ICanvas canvas, DraggingContext context)
 		{
 			if (_whenEnteringEditor != null)
 			{
@@ -54,7 +54,7 @@ namespace Gleed2D.Core
 			}
 		}
 
-		public void WhenLeavingEditor( IEditor editor, DraggingContext draggingContext )
+		public void WhenLeavingEditor( ICanvas canvas, DraggingContext draggingContext )
 		{
 			if (_whenLeavingEditor != null)
 			{

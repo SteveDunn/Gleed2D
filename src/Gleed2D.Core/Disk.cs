@@ -2,6 +2,7 @@ using System ;
 using System.Collections.Generic ;
 using System.IO ;
 using System.Reflection ;
+using Gleed2D.InGame;
 
 namespace Gleed2D.Core
 {
@@ -12,21 +13,29 @@ namespace Gleed2D.Core
 	{
 		public bool IsSubfolder(string parentPath, string childPath)
 		{
-			var parentUri = new Uri( parentPath ) ;
+			var parentDirectory = new DirectoryInfo(parentPath);
+			var childsParentDirectory = new DirectoryInfo(childPath).Parent;
 
-			var childUri = new DirectoryInfo( childPath ).Parent ;
+			var parentUri = new Uri(parentDirectory.FullName);
 
-			while( childUri != null )
+			while (childsParentDirectory != null)
 			{
-				if( new Uri( childUri.FullName ) == parentUri )
+				if (areSameFolders(parentDirectory, childsParentDirectory))
 				{
-					return true ;
+					return true;
 				}
 
-				childUri = childUri.Parent ;
+				childsParentDirectory = childsParentDirectory.Parent;
 			}
 
-			return false ;
+			return false;
+		}
+
+		private bool areSameFolders(DirectoryInfo left, DirectoryInfo right)
+		{
+			return string.Compare(left.FullName.TrimEnd('\\'),
+			                      right.FullName.TrimEnd('\\'),
+			                      StringComparison.InvariantCultureIgnoreCase) == 0;
 		}
 
 		/// <summary>

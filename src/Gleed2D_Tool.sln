@@ -9,13 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gleed2D", "Gleed2D.Ui\Gleed
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gleed2D.Core", "Gleed2D.Core\Gleed2D.Core.csproj", "{D96F3152-4F83-4729-9619-5A86B0A80AB1}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Misc", "Misc", "{86275C2D-6F99-4D36-B3C7-659445E7AF77}"
-	ProjectSection(SolutionItems) = preProject
-		Gleed2D.Core.FxCop = Gleed2D.Core.FxCop
-		notes.txt = notes.txt
-		todo.txt = todo.txt
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gleed2D.Plugins", "Gleed2D.Plugins\Gleed2D.Plugins.csproj", "{8251F3C4-3893-4106-811A-9513DE5A97A3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gleed2D.Plugins.Krypton", "Gleed2D.Plugins.Krypton\Gleed2D.Plugins.Krypton.csproj", "{0C434065-2B86-4949-96DE-7058E46A5742}"

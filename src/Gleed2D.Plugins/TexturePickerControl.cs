@@ -230,7 +230,7 @@ namespace Gleed2D.Plugins
 						Text = eachDirectoryInfo.Name,
 						ToolTipText = eachDirectoryInfo.Name,
 						ImageIndex = 0,
-						Tag = "folder",
+						Tag = FOLDER_MONIKER,
 						Name = eachDirectoryInfo.FullName
 					} ;
 				

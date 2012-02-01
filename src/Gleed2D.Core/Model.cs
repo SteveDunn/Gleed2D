@@ -309,12 +309,14 @@ namespace Gleed2D.Core
 				{
 					foreach( ItemEditor eachItem in eachLayer.Items )
 					{
-						foreach( CustomProperty cp in eachItem.ItemProperties.CustomProperties.Values )
+						CustomProperties customProperties = eachItem.ItemProperties.CustomProperties;
+
+						foreach( CustomProperty eachCustomerProperty in customProperties.Values )
 						{
-							var linkedItem = (LinkedItem) cp.Value ;
-							if( linkedItem != null && ( cp.Type == typeof( LinkedItem ) && linkedItem.Name == eachSelectedEditor.Name ) )
+							var linkedItem = eachCustomerProperty.Value as LinkedItem ;
+							if( linkedItem != null && ( eachCustomerProperty.Type == typeof( LinkedItem ) && linkedItem.Name == eachSelectedEditor.Name ) )
 							{
-								cp.Value = null ;
+								eachCustomerProperty.Value = null ;
 								itemsAffected.Add( eachItem ) ;
 							}
 						}

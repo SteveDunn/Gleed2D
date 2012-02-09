@@ -1,5 +1,6 @@
 using System.Collections.Generic ;
 using System.IO ;
+using Gleed2D.InGame;
 
 namespace Gleed2D.Core
 {
@@ -109,6 +110,11 @@ namespace Gleed2D.Core
 		void CreateDirectoryIfDoesNotExist( string directoryPath ) ;
 
 		string GetDirectoryNameFromPath( string path ) ;
+		
 		bool IsSubfolder(string potentialParent, string folder) ;
+
+		string MakeRelativePath(string fromPath, string toPath);
+
+		bool FolderExists(string pathToFolder);
 	}
 }

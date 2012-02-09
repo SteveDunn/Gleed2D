@@ -13,9 +13,9 @@ namespace Gleed2D.Core.UserActions
 		{
 			IModel model = IoC.Model ;
 
-			if (_treeItem is Layer)
+			if (_treeItem is LayerEditor)
 			{
-				var layer = (Layer)_treeItem;
+				var layer = (LayerEditor)_treeItem;
 				
 				if (layer.ParentLevel.Layers.IndexOf(layer) < layer.ParentLevel.Layers.Count - 1)
 				{

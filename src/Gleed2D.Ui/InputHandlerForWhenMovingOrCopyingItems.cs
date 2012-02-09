@@ -74,7 +74,7 @@ namespace GLEED2D
 			return getLevel( ).SelectedEditors ;
 		}
 
-		Level getLevel( )
+		LevelEditor getLevel( )
 		{
 			return _model.Level ;
 		}

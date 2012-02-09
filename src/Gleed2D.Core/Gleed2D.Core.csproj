@@ -87,6 +87,9 @@
     <Compile Include="..\Extensions.cs">
       <Link>Extensions.cs</Link>
     </Compile>
+    <Compile Include="..\Guard.cs">
+      <Link>Guard.cs</Link>
+    </Compile>
     <Compile Include="..\JetBrains.Annotations.cs">
       <Link>JetBrains.Annotations.cs</Link>
     </Compile>
@@ -105,6 +108,8 @@
     <Compile Include="Behaviour\TweenEndHandler.cs" />
     <Compile Include="Behaviour\TweeningFunction.cs" />
     <Compile Include="Camera.cs" />
+    <Compile Include="ContentRootChanged.cs" />
+    <Compile Include="EventHub.cs" />
     <Compile Include="Controls\AssetsControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -118,6 +123,8 @@
     <Compile Include="CustomUITypeEditors\PathToFolderConverter.cs" />
     <Compile Include="EntityCreationProperties.cs" />
     <Compile Include="IEntityCreationProperties.cs" />
+    <Compile Include="IEventHub.cs" />
+    <Compile Include="ISubscriber.cs" />
     <Compile Include="LambdaDrivenDragDropHandler.cs" />
     <Compile Include="Disk.cs" />
     <Compile Include="DiskEntity.cs" />
@@ -138,6 +145,7 @@
     <Compile Include="Controls\PluginDescriptionControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="NewModelLoaded.cs" />
     <Compile Include="PathToFile.cs" />
     <Compile Include="PropertyCustomisation.cs" />
     <Compile Include="EntityChosenEventArgs.cs" />
@@ -257,7 +265,7 @@
     <Compile Include="IEditorPlugin.cs" />
     <Compile Include="ItemEditor.cs" />
     <Compile Include="ITextureStore.cs" />
-    <Compile Include="Layer.cs" />
+    <Compile Include="LayerEditor.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Drawing.cs" />
     <Compile Include="PrimitiveType.cs" />

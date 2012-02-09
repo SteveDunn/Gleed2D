@@ -2,9 +2,9 @@ namespace Gleed2D.Core.UserActions
 {
 	public class MoveSelectedEditorsToLayerAction : IUserAction
 	{
-		readonly Layer _layer ;
+		readonly LayerEditor _layer ;
 
-		public MoveSelectedEditorsToLayerAction(Layer layer )
+		public MoveSelectedEditorsToLayerAction(LayerEditor layer )
 		{
 			_layer = layer ;
 		}

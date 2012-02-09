@@ -4,12 +4,12 @@ namespace Gleed2D.Core
 {
 	public class ModelUnloadingEventArgs : EventArgs
 	{
-		public ModelUnloadingEventArgs( Level level )
+		public ModelUnloadingEventArgs( LevelEditor level )
 		{
 			Level = level ;
 		}
 
-		public Level Level
+		public LevelEditor Level
 		{
 			get;
 			private set ;

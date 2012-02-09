@@ -11,7 +11,6 @@ using Krypton.Lights ;
 using Microsoft.Xna.Framework ;
 using Microsoft.Xna.Framework.Graphics ;
 using StructureMap ;
-using Layer = Gleed2D.Core.Layer ;
 
 namespace Gleed2D.Plugins.Krypton
 {
@@ -29,7 +28,7 @@ namespace Gleed2D.Plugins.Krypton
 			_drawing = ObjectFactory.GetInstance<IDrawing>( ) ;
 		}
 
-		public override void RecreateFromXml( Layer parentLayer, XElement xml )
+		public override void RecreateFromXml( LayerEditor parentLayer, XElement xml )
 		{
 			base.RecreateFromXml( parentLayer, xml );
 
@@ -37,7 +36,7 @@ namespace Gleed2D.Plugins.Krypton
 			_properties = xml.CertainElement( @"LightProperties" ).DeserializedAs<LightProperties>( ) ;
 		}
 
-		public override void CreateInDesignMode(Layer parentLayer, IEntityCreationProperties creationProperties)
+		public override void CreateInDesignMode(LayerEditor parentLayer, IEntityCreationProperties creationProperties)
 		{
 			ParentLayer = parentLayer ;
 

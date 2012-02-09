@@ -14,7 +14,7 @@ namespace Gleed2D.Core
 	[PublicAPI]
 	public class Model : IModel
 	{
-		Level _level ;
+		LevelEditor _level ;
 
 		readonly IMemento _memento ;
 
@@ -61,7 +61,7 @@ namespace Gleed2D.Core
 				}
 			}
 
-			var newLevel = new Level
+			var newLevel = new LevelEditor
 				{
 					Version = ObjectFactory.GetInstance<IGetAssemblyInformation>( ).Version
 				} ;
@@ -106,7 +106,7 @@ namespace Gleed2D.Core
 			// tryFire( ( ) => ItemsRenamed, treeItem ) ;
 		}
 
-		public Layer ActiveLayer
+		public LayerEditor ActiveLayer
 		{
 			get
 			{
@@ -122,9 +122,9 @@ namespace Gleed2D.Core
 			}
 		}
 
-		public void DuplicateLayer( Layer layer )
+		public void DuplicateLayer( LayerEditor layer )
 		{
-			Layer copiedLayer = layer.Clone( ) ;
+			LayerEditor copiedLayer = layer.Clone( ) ;
 
 			copiedLayer.Name = layer.ParentLevel.GetUniqueNameBasedOn( copiedLayer.Name ) ;
 
@@ -146,7 +146,7 @@ namespace Gleed2D.Core
 			mainForm.LevelExplorer.Rebuild( ) ;
 		}
 
-		public Level Level
+		public LevelEditor Level
 		{
 			get
 			{
@@ -190,7 +190,7 @@ namespace Gleed2D.Core
 			tryFire( ()=> SelectionChanged, behaviour  );
 		}
 
-		void setActiveLayerIfItsDifferent( Layer layer )
+		void setActiveLayerIfItsDifferent( LayerEditor layer )
 		{
 			if( ActiveLayer == layer )
 			{
@@ -207,7 +207,7 @@ namespace Gleed2D.Core
 			}
 		}
 
-		public void AddNewLayer( Layer layer )
+		public void AddNewLayer( LayerEditor layer )
 		{
 			layer.ParentLevel = Level ;
 
@@ -269,7 +269,7 @@ namespace Gleed2D.Core
 			tryFire( ( ) => SelectionChanged, editor ) ;
 		}
 
-		public void MoveItemToLayer( ItemEditor itemToMove, Layer layer, ItemEditor itemToMoveNewItemUnder )
+		public void MoveItemToLayer( ItemEditor itemToMove, LayerEditor layer, ItemEditor itemToMoveNewItemUnder )
 		{
 			int insertPosition = itemToMoveNewItemUnder == null ? 0 : layer.Items.IndexOf( itemToMoveNewItemUnder ) ;
 
@@ -280,7 +280,7 @@ namespace Gleed2D.Core
 			itemToMove.ParentLayer = layer ;
 		}
 
-		public void DeleteLayer( Layer layer )
+		public void DeleteLayer( LayerEditor layer )
 		{
 			_memento.BeginCommand( string.Format( @"Delete Layer '{0}'", layer.Name ) ) ;
 			Level.Layers.Remove( layer ) ;
@@ -288,7 +288,7 @@ namespace Gleed2D.Core
 
 			tryFire( ( ) => ItemsAddedOrRemoved, (ITreeItem) layer ) ;
 
-			Layer nextChoiceOfLayerToSelect = Level.Layers.Count > 0 ? Level.Layers.Last( ) : null ;
+			LayerEditor nextChoiceOfLayerToSelect = Level.Layers.Count > 0 ? Level.Layers.Last( ) : null ;
 			if( nextChoiceOfLayerToSelect != null )
 			{
 				setActiveLayerIfItsDifferent( nextChoiceOfLayerToSelect ) ;
@@ -305,7 +305,7 @@ namespace Gleed2D.Core
 
 			foreach( ItemEditor eachSelectedEditor in selectedEditors )
 			{
-				foreach( Layer eachLayer in Level.Layers )
+				foreach( LayerEditor eachLayer in Level.Layers )
 				{
 					foreach( ItemEditor eachItem in eachLayer.Items )
 					{
@@ -351,7 +351,7 @@ The corresponding Custom Properties have been set to NULL, since the Item referr
 			tryFire( ( ) => ItemsAddedOrRemoved, itemsAffected ) ;
 		}
 
-		public void MoveLayerUp( Layer layer )
+		public void MoveLayerUp( LayerEditor layer )
 		{
 			_memento.BeginCommand( string.Format( @"Move Down Layer '{0}'", layer.Name ) ) ;
 
@@ -364,7 +364,7 @@ The corresponding Custom Properties have been set to NULL, since the Item referr
 			SelectLayer( layer ) ;
 		}
 
-		public void MoveLayerDown( Layer layer )
+		public void MoveLayerDown( LayerEditor layer )
 		{
 			_memento.BeginCommand( string.Format( @"Move Up Layer '{0}'", layer.Name ) ) ;
 
@@ -379,7 +379,7 @@ The corresponding Custom Properties have been set to NULL, since the Item referr
 			_memento.EndCommand( ) ;
 		}
 
-		public void SelectLayer( Layer layer )
+		public void SelectLayer( LayerEditor layer )
 		{
 			if( Level.SelectedEditors.Any( ) )
 			{
@@ -427,11 +427,11 @@ The corresponding Custom Properties have been set to NULL, since the Item referr
 			tryFire( ( ) => ItemsRearrangedInLayer, editor ) ;
 		}
 
-		public void LoadLevel( Level level )
+		public void LoadLevel( LevelEditor level )
 		{
 			//todo: move to when the level is actually loaded
 
-			if( !level.ContentRootFolder.Exists )
+			if( !ObjectFactory.GetInstance<IDisk>().FolderExists(level.ContentRootFolder) )
 			{
 				MessageBox.Show(
 					string.Format(
@@ -496,7 +496,7 @@ The corresponding Custom Properties have been set to NULL, since the Item referr
 			tryFire( ( ) => SelectionChanged, Level.SelectedEditors ) ;
 		}
 
-		public void MoveSelectedItemsToLayer( Layer chosenLayer )
+		public void MoveSelectedItemsToLayer( LayerEditor chosenLayer )
 		{
 			if( chosenLayer == Level.ActiveLayer )
 			{
@@ -510,7 +510,7 @@ The corresponding Custom Properties have been set to NULL, since the Item referr
 			tryFire( ( ) => ItemsMoved, Level.SelectedEditors ) ;
 		}
 
-		public void CopySelectedItemsToLayer( Layer layer )
+		public void CopySelectedItemsToLayer( LayerEditor layer )
 		{
 			if( layer == ActiveLayer )
 			{

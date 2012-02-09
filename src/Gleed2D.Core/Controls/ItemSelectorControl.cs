@@ -7,7 +7,7 @@ namespace Gleed2D.Core.Controls
 	{
 		readonly LevelExplorerControl _levelExplorer ;
 		
-		public ItemSelectorControl( ItemEditor itemEditor )
+		public ItemSelectorControl( ITreeItem itemEditor )
 		{
 			ItemEditor = itemEditor ;
 
@@ -37,7 +37,7 @@ namespace Gleed2D.Core.Controls
 			_levelExplorer.Refresh(  );
 		}
 
-		public ItemEditor ItemEditor
+		public ITreeItem ItemEditor
 		{
 			get;
 			private set ;

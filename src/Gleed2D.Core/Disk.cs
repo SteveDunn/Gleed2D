@@ -16,8 +16,6 @@ namespace Gleed2D.Core
 			var parentDirectory = new DirectoryInfo(parentPath);
 			var childsParentDirectory = new DirectoryInfo(childPath).Parent;
 
-			var parentUri = new Uri(parentDirectory.FullName);
-
 			while (childsParentDirectory != null)
 			{
 				if (areSameFolders(parentDirectory, childsParentDirectory))
@@ -29,6 +27,30 @@ namespace Gleed2D.Core
 			}
 
 			return false;
+		}
+
+		/// <summary>
+		/// Creates a relative path from one file or folder to another.
+		/// </summary>
+		/// <param name="fromPath">Contains the directory that defines the start of the relative path.</param>
+		/// <param name="toPath">Contains the path that defines the endpoint of the relative path.</param>
+		/// <returns>The relative path from the start directory to the end path.</returns>
+		/// <exception cref="ArgumentNullException"></exception>
+		public string MakeRelativePath(string fromPath, string toPath)
+		{
+			var fromUri = new Uri(fromPath);
+
+			var toUri = new Uri(toPath);
+
+			Uri relativeUri = fromUri.MakeRelativeUri(toUri);
+			string relativePath = Uri.UnescapeDataString(relativeUri.ToString());
+
+			return relativePath.Replace('/', Path.DirectorySeparatorChar);
+		}
+
+		public bool FolderExists(string pathToFolder)
+		{
+			return Directory.Exists(pathToFolder);
 		}
 
 		private bool areSameFolders(DirectoryInfo left, DirectoryInfo right)

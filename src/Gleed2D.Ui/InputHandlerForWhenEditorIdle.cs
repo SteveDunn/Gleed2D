@@ -7,7 +7,6 @@ using System.Windows.Forms ;
 using Gleed2D.Core ;
 using StructureMap ;
 using Keys = Microsoft.Xna.Framework.Input.Keys ;
-using Level = Gleed2D.Core.Level ;
 
 namespace GLEED2D
 {
@@ -76,7 +75,7 @@ namespace GLEED2D
 
 			_lastItem = item ;
 
-			IEnumerable<ItemEditor> editors = selectedEditors( ).ToList(  ) ;
+			IEnumerable<ITreeItem> editors = selectedEditors( ).ToList(  ) ;
 
 			if ( MouseStatus.IsNewLeftMouseButtonClick() || KeyboardStatus.IsNewKeyPress(Keys.D1))
 			{
@@ -156,7 +155,7 @@ namespace GLEED2D
 			return getLevel( ).SelectedEditors ;
 		}
 
-		Level getLevel( )
+		LevelEditor getLevel( )
 		{
 			return _model.Level ;
 		}

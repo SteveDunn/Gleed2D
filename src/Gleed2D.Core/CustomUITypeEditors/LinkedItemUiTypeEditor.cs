@@ -21,7 +21,7 @@ namespace Gleed2D.Core.CustomUITypeEditors
 
 			if( editorService != null && value != null )
 			{
-				ItemEditor editor = IoC.Model.Level.GetItemByName( ( (LinkedItem) value ).Name ) ;
+				ITreeItem editor = IoC.Model.Level.GetItemByName( ( (LinkedItem) value ).Name ) ;
 				
 				var itemSelector = new ItemSelectorControl( editor ) ;
 				

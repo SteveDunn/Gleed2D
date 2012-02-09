@@ -28,7 +28,7 @@ namespace Gleed2D.Core
 			}
 		}
 
-		public ItemEditor EditorInstance
+		public ITreeItem EditorInstance
 		{
 			get ;
 			set ;

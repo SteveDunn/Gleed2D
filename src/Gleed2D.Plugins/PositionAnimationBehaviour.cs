@@ -1,6 +1,7 @@
 using System ;
 using System.ComponentModel ;
 using System.Reflection ;
+using System.Windows.Forms;
 using Gleed2D.Core ;
 using Gleed2D.Core.Behaviour ;
 using Gleed2D.InGame ;
@@ -130,6 +131,10 @@ namespace Gleed2D.Plugins
 		public virtual void AddBehaviour( IBehaviour behaviour )
 		{
 			
+		}
+
+		public void PropertiesChanged(PropertyValueChangedEventArgs whatChanged)
+		{
 		}
 
 		public virtual BehaviourProperties BehaviourProperties

@@ -38,7 +38,7 @@ namespace Gleed2D.Core
 			
 			if (args.KeyCode == Keys.D && args.Control)
 			{
-				ObjectFactory.GetInstance<IHandleUserActions>().ProcessAction(new DuplicateLayerAction(summonMainForm().LevelExplorer.SelectedEntity as Layer));
+				ObjectFactory.GetInstance<IHandleUserActions>().ProcessAction(new DuplicateLayerAction(summonMainForm().LevelExplorer.SelectedEntity as LayerEditor));
 			}
 		}
 

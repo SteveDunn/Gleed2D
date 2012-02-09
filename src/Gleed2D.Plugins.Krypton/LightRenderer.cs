@@ -40,7 +40,7 @@ namespace Gleed2D.Plugins.Krypton
 			_krypton.Lights.Clear(  );
 			_krypton.Hulls.Clear(  );
 
-			Layer activeLayer = IoC.Model.ActiveLayer ;
+			LayerEditor activeLayer = IoC.Model.ActiveLayer ;
 			if( activeLayer == null )
 			{
 				return ;

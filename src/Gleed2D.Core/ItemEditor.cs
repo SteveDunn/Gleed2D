@@ -15,7 +15,7 @@ namespace Gleed2D.Core
 	[DebuggerDisplay("Name={Name}, Layer={ParentLayer}, IsSelected={IsSelected}, IsHovering={IsHovering}, Position={ItemProperties.Position}, ItemProperties={ItemProperties}")]
 	public abstract class ItemEditor : ITreeItem
 	{
-		public virtual void RecreateFromXml( Layer parentLayer, XElement xml )
+		public virtual void RecreateFromXml( LayerEditor parentLayer, XElement xml )
 		{
 			Behaviours= new BehaviourCollection(ItemProperties, xml);
 		}
@@ -54,15 +54,15 @@ namespace Gleed2D.Core
 		/// </summary>
 		/// <param name="parentLayer"></param>
 		/// <param name="creationProperties"></param>
-		public abstract void CreateInDesignMode(Layer parentLayer, IEntityCreationProperties creationProperties) ;
+		public abstract void CreateInDesignMode(LayerEditor parentLayer, IEntityCreationProperties creationProperties) ;
 
-		public Layer ParentLayer
+		public LayerEditor ParentLayer
 		{
 			get ;
 			set ;
 		}
 
-		public virtual void PropertiesChanged( )
+		public virtual void PropertiesChanged(PropertyValueChangedEventArgs whatChanged)
 		{
 			
 		}

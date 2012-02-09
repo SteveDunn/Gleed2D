@@ -70,9 +70,9 @@ namespace GLEED2D.Forms
         	
 			var model = ObjectFactory.GetInstance<IModel>() ;
 
-        	IEnumerable<ItemEditor> selectedEditors = model.Level.SelectedEditors.ToList(  ) ;
+        	IEnumerable<ITreeItem> selectedEditors = model.Level.SelectedEditors.ToList(  ) ;
         	
-			ItemEditor firstSelectedItem = selectedEditors.First() ;
+			ITreeItem firstSelectedItem = selectedEditors.First() ;
 
         	CustomProperties customPropertiesForFirstItem = firstSelectedItem.ItemProperties.CustomProperties ;
 
@@ -96,7 +96,7 @@ namespace GLEED2D.Forms
         			Type = typeof( ItemEditor )
         		} ;
 
-        	ItemEditor secondSelectItem = selectedEditors.ElementAt( 1 ) ;
+        	ITreeItem secondSelectItem = selectedEditors.ElementAt( 1 ) ;
         	
 			customProperty.Value = secondSelectItem;
             
@@ -139,7 +139,7 @@ namespace GLEED2D.Forms
         {
         	var model = ObjectFactory.GetInstance<IModel>() ;
 
-        	IEnumerable<ItemEditor> selectedEditors = model.Level.SelectedEditors.ToList(  ) ;
+        	IEnumerable<ITreeItem> selectedEditors = model.Level.SelectedEditors.ToList(  ) ;
 
         	uiFirstItemGroupBox.Text = uiFirstItemGroupBox.Text.Replace( "$f", selectedEditors.First( ).ItemProperties.Name ) ;
         	uiSecondItemGroupBox.Text = uiSecondItemGroupBox.Text.Replace( "$s", selectedEditors.ElementAt( 1 ).ItemProperties.Name ) ;

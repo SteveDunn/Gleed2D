@@ -3,6 +3,7 @@ using System.Collections ;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq ;
+using System.Windows.Forms;
 using System.Xml.Linq ;
 using Gleed2D.Core.Behaviour ;
 using Gleed2D.InGame ;
@@ -12,7 +13,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Gleed2D.Core
 {
-	public class Layer : IEnumerable<ItemEditor>, ITreeItem
+	public class LayerEditor : IEnumerable<ItemEditor>, ITreeItem
 	{
 		static readonly StringComparer _comparer = StringComparer.OrdinalIgnoreCase ;
 
@@ -25,7 +26,7 @@ namespace Gleed2D.Core
 			_behaviours.ForEach( b => b.Update( gameTime ) ) ;
 		}
 	
-		public Layer(Level parentLevel, string name)
+		public LayerEditor(LevelEditor parentLevel, string name)
 		{
 			_properties = new LayerProperties
 				{
@@ -107,6 +108,10 @@ namespace Gleed2D.Core
 			Behaviours.Add( behaviour );
 		}
 
+		public void PropertiesChanged(PropertyValueChangedEventArgs whatChanged)
+		{
+		}
+
 		public Vector2 ScrollSpeed
 		{
 			get
@@ -120,7 +125,7 @@ namespace Gleed2D.Core
 		}
 
 		[Browsable(false)]
-		public Level ParentLevel
+		public LevelEditor ParentLevel
 		{
 			get ;
 			set ;
@@ -134,7 +139,7 @@ namespace Gleed2D.Core
 			}
 		}
 
-		public Layer Clone()
+		public LayerEditor Clone()
 		{
 			var clone = FromXml( ParentLevel, ToXml( ) ) ;
 			
@@ -227,10 +232,10 @@ namespace Gleed2D.Core
 			Items.Add( editor );
 		}
 
-		public static Layer FromXml(Level level, XElement xml)
+		public static LayerEditor FromXml(LevelEditor level, XElement xml)
 		{
 			var layerProperties = xml.CertainElement( @"LayerProperties" ).DeserializedAs<LayerProperties>( ) ;
-			var layer = new Layer( level, xml.CertainAttribute( @"Name" ).Value )
+			var layer = new LayerEditor( level, xml.CertainAttribute( @"Name" ).Value )
 				{
 					_properties = layerProperties,
 					_behaviours = new BehaviourCollection(layerProperties,xml)
@@ -243,7 +248,7 @@ namespace Gleed2D.Core
 			return layer ;
 		}
 
-		static ItemEditor createEditor( Layer layer, XElement xml )
+		static ItemEditor createEditor( LayerEditor layer, XElement xml )
 		{
 			string typeName = xml.CertainAttribute( @"ClrTypeOfEditor" ).Value ;
 

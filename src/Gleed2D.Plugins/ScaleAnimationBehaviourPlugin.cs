@@ -27,7 +27,7 @@ namespace Gleed2D.Plugins
 			return new BehaviourDragDropHandler(buildBehaviour);
 		}
 
-		IBehaviour buildBehaviour(ItemEditor forEditor)
+		IBehaviour buildBehaviour(ITreeItem forEditor)
 		{
 			ItemProperties itemProperties = forEditor.ItemProperties ;
 

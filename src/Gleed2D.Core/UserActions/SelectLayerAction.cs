@@ -2,9 +2,9 @@ namespace Gleed2D.Core.UserActions
 {
 	public class SelectLayerAction : IUserAction
 	{
-		readonly Layer _layer ;
+		readonly LayerEditor _layer ;
 
-		public SelectLayerAction( Layer layer )
+		public SelectLayerAction( LayerEditor layer )
 		{
 			_layer = layer ;
 		}

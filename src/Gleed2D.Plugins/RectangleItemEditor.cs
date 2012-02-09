@@ -10,7 +10,6 @@ using JetBrains.Annotations ;
 using Microsoft.Xna.Framework ;
 using Microsoft.Xna.Framework.Graphics ;
 using StructureMap ;
-using Layer = Gleed2D.Core.Layer ;
 using Keys = Microsoft.Xna.Framework.Input.Keys ;
 
 namespace Gleed2D.Plugins
@@ -87,7 +86,7 @@ namespace Gleed2D.Plugins
 			}
 		}
 
-		public override void PropertiesChanged()
+		public override void PropertiesChanged(PropertyValueChangedEventArgs whatChanged)
 		{
 			recalculateRectangle( ) ;
 		}
@@ -113,7 +112,7 @@ namespace Gleed2D.Plugins
 		}
 
 
-		public override void RecreateFromXml( Layer parentLayer, XElement xml )
+		public override void RecreateFromXml( LayerEditor parentLayer, XElement xml )
 		{
 			ParentLayer = parentLayer ;
 
@@ -125,7 +124,7 @@ namespace Gleed2D.Plugins
 			WhenUpdatedByUi(  );
 		}
 
-		public override void CreateInDesignMode(Layer parentLayer, IEntityCreationProperties creationProperties)
+		public override void CreateInDesignMode(LayerEditor parentLayer, IEntityCreationProperties creationProperties)
 		{
 			ParentLayer = parentLayer ;
 			
@@ -148,7 +147,7 @@ namespace Gleed2D.Plugins
 			WhenUpdatedByUi();
 		}
 
-		public virtual void CreateReadyForDroppingOntoCanvas(Layer parentLayer, IEntityCreationProperties creationProperties)
+		public virtual void CreateReadyForDroppingOntoCanvas(LayerEditor parentLayer, IEntityCreationProperties creationProperties)
 		{
 			ParentLayer = parentLayer ;
 			

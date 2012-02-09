@@ -12,44 +12,48 @@ using StructureMap ;
 
 namespace Gleed2D.Core
 {
-	public class Level : ICustomTypeDescriptor, ITreeItem
+	public class LevelEditor : ICustomTypeDescriptor, ITreeItem
 	{
 		static readonly StringComparer _comparer = StringComparer.OrdinalIgnoreCase ;
 
 		readonly LevelProperties _properties ;
 
 		static DateTime _seedForIdGenerator ;
+		PropertyCustomisation _propertyCustomisationForContentRootFolder;
 
-		public Level()
+		public LevelEditor()
 		{
 			Behaviours = new BehaviourCollection( );
+			
+			const string contentRootFolder = @"c:\";
+
 			_properties = new LevelProperties
 				{
 					Name = "Root",
 					Visible = true,
 					CustomProperties = new CustomProperties(),
-					ContentRootFolder = new PathToFolder { AbsolutePath = @"c:\" }
+					ContentRootFolder = contentRootFolder
 				};
+			
+			ObjectFactory.GetInstance<IEventHub>().Publish(new ContentRootChanged(contentRootFolder));
 
-			Layers = new List<Layer>
+			Layers = new List<LayerEditor>
 				{
-					new Layer( this, @"Layer_0" )
+					new LayerEditor( this, @"Layer_0" )
 				} ;
 		}
 
-		public Level(XElement xml)
+		public LevelEditor(XElement xml)
 		{
 			TypeLookup.Rehydrate( xml );
 			
 			_properties = xml.Element( @"LevelProperties" ).DeserializedAs<LevelProperties>( ) ;
 
-			if( !Directory.Exists( _properties.ContentRootFolder.AbsolutePath ) )
+			if( !Directory.Exists( _properties.ContentRootFolder ) )
 			{
 				string message = @"The level file has a content root folder that does not exist.
-
-It say the content root is at ""{0}"". Images specified in this level file are relative to this folder so you should change it in order to load this level file correctly.
-
-Would you like to change it?".FormatWith( _properties.ContentRootFolder.AbsolutePath ) ;
+It says the content root is at ""{0}"". Images specified in this level file are relative to this folder so you should change it in order to load this level file correctly.
+Would you like to change it?".FormatWith( _properties.ContentRootFolder ) ;
 
 				if(MessageBox.Show( message, @"Content root folder not found.", MessageBoxButtons.YesNo, MessageBoxIcon.Question )==DialogResult.Yes)
 				{
@@ -59,14 +63,15 @@ Would you like to change it?".FormatWith( _properties.ContentRootFolder.Absolute
 					
 					if( dialogResult == DialogResult.OK )
 					{
-						_properties.ContentRootFolder.AbsolutePath=folderBrowserDialog.SelectedPath ;
+						_properties.ContentRootFolder=folderBrowserDialog.SelectedPath ;
+						ObjectFactory.GetInstance<IEventHub>().Publish(new ContentRootChanged(_properties.ContentRootFolder));
 					}
 				}
 			}
 
 			Behaviours = new BehaviourCollection( _properties, xml );
 
-			Layers = new List<Layer>( xml.CertainElement( @"Layers" ).Elements( @"Layer" ).Select( x => Layer.FromXml( this, x ) ) ) ;
+			Layers = new List<LayerEditor>( xml.CertainElement( @"Layers" ).Elements( @"Layer" ).Select( x => LayerEditor.FromXml( this, x ) ) ) ;
 			
 			ActiveLayer = Layers.FirstOrDefault( ) ;
 		}
@@ -116,7 +121,7 @@ Would you like to change it?".FormatWith( _properties.ContentRootFolder.Absolute
 			}
 		}
 
-		public Layer ActiveLayer
+		public LayerEditor ActiveLayer
 		{
 			get;
 			private set ;
@@ -139,10 +144,7 @@ Would you like to change it?".FormatWith( _properties.ContentRootFolder.Absolute
 			get
 			{
 				var itemPropertiesWrapper = new ItemPropertiesWrapper<ItemProperties>( _properties ) ;
-				itemPropertiesWrapper.Customise( ( ) => _properties.ContentRootFolder ).SetDescription(
-					@"When the level is saved, each texture is saved with a path relative to this folder. You should set this to the ""Content.RootDirectory"" of your game project." )
-					.SetDisplayName(
-						@"Content root folder" ) ;
+				_propertyCustomisationForContentRootFolder = itemPropertiesWrapper.Customise(() => _properties.ContentRootFolder).SetDescription(@"When the level is saved, each texture is saved with a path relative to this folder. You should set this to the ""Content.RootDirectory"" of your game project.").SetDisplayName(@"Content root folder");
 
 				itemPropertiesWrapper.Customise( ( ) => _properties.NextItemNumber ).SetCategory( @"Editor related" ).Hide( ).MakeReadOnly( ) ;
 
@@ -172,6 +174,11 @@ Would you like to change it?".FormatWith( _properties.ContentRootFolder.Absolute
 			Behaviours.Add( behaviour );
 		}
 
+		public void PropertiesChanged(PropertyValueChangedEventArgs whatChanged)
+		{
+			int n = 1;
+		}
+
 		public bool Visible
 		{
 			get
@@ -187,7 +194,7 @@ Would you like to change it?".FormatWith( _properties.ContentRootFolder.Absolute
 		/// <summary>
 		/// A Level contains several Layers. Each Layer contains several Items.
 		/// </summary>
-		public List<Layer> Layers
+		public List<LayerEditor> Layers
 		{
 			get;
 			private set ;
@@ -198,22 +205,18 @@ Would you like to change it?".FormatWith( _properties.ContentRootFolder.Absolute
 			return Layers.SelectMany( layer => layer.Items ).FirstOrDefault( editor => editor.ItemProperties.Name == name ) ;
 		}
 
-		public Level Clone()
+		public LevelEditor Clone()
 		{
-			var clonedLevel = new Level(toXml());
+			var clonedLevel = new LevelEditor(toXml());
 
 			return clonedLevel;
 		}
 
-		public PathToFolder ContentRootFolder
+		public string ContentRootFolder
 		{
 			get
 			{
 				return _properties.ContentRootFolder ;
-			}
-			set
-			{
-				_properties.ContentRootFolder = value ;
 			}
 		}
 
@@ -345,14 +348,14 @@ Would you like to change it?".FormatWith( _properties.ContentRootFolder.Absolute
 
 		public void SelectEditor( ItemEditor editor )
 		{
-			Layer parentLayer = editor.ParentLayer ;
+			LayerEditor parentLayer = editor.ParentLayer ;
 
 			editor.IsSelected = true ;
 
 			ActiveLayer = parentLayer ;
 		}
 
-		public void SelectLayer( Layer value )
+		public void SelectLayer( LayerEditor value )
 		{
 			clearAllSelections( ) ;
 			
@@ -376,7 +379,7 @@ Would you like to change it?".FormatWith( _properties.ContentRootFolder.Absolute
 			ActiveLayer.Items.ForEach( i=>i.IsSelected=true );
 		}
 
-		public void MoveSelectedIditorsToLayer( Layer chosenLayer )
+		public void MoveSelectedIditorsToLayer( LayerEditor chosenLayer )
 		{
 			var selected = SelectedEditors.ToList(  ) ;
 
@@ -390,7 +393,7 @@ Would you like to change it?".FormatWith( _properties.ContentRootFolder.Absolute
 			}
 		}
 
-		public IEnumerable<ItemEditor> CopySelectedEditorsToLayer( Layer destinationLayer )
+		public IEnumerable<ItemEditor> CopySelectedEditorsToLayer( LayerEditor destinationLayer )
 		{
 			var selectedEditors = SelectedEditors.ToList(  )  ;
 
@@ -472,10 +475,11 @@ Would you like to change it?".FormatWith( _properties.ContentRootFolder.Absolute
 		/// <param name="legacyEditorInfo"></param>
 		public void SetLegacyEditorInfo( LegacyEditorInfo legacyEditorInfo )
 		{
-			_properties.ContentRootFolder = new PathToFolder
-				{
-					AbsolutePath = legacyEditorInfo.ContentRootFolder
-				} ;
+			var contentRootFolder = legacyEditorInfo.ContentRootFolder;
+
+			_properties.ContentRootFolder = contentRootFolder ;
+
+			ObjectFactory.GetInstance<IEventHub>().Publish(new ContentRootChanged(contentRootFolder));
 			
 			_properties.NextItemNumber = legacyEditorInfo.NextItemNumber ;
 			_properties.Position = legacyEditorInfo.CameraPosition ;

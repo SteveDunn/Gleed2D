@@ -14,7 +14,7 @@ namespace Gleed2D.Plugins
 	[Export( typeof( IBehaviourPlugin ) )]
 	public class PositionAnimationBehaviourPlugin : IBehaviourPlugin
 	{
-		IBehaviour buildBehaviour( ItemEditor forItem )
+		IBehaviour buildBehaviour( ITreeItem forItem )
 		{
 			ItemProperties itemProperties = forItem.ItemProperties;
 

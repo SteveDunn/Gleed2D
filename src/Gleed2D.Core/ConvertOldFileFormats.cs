@@ -20,7 +20,7 @@ namespace Gleed2D.Core
 
 			XElement d = XElement.Load( path ) ;
 
-			var level = new Level
+			var level = new LevelEditor
 				{
 					Name = oldLevel.Name,
 				} ;
@@ -37,7 +37,7 @@ namespace Gleed2D.Core
 			level.SaveAsXmlToDisk( _path );
 		}
 
-		void populateEditorRelatedStuff( Level level, XElement xml )
+		void populateEditorRelatedStuff( LevelEditor level, XElement xml )
 		{
 			var assemblyInformation = ObjectFactory.GetInstance<IGetAssemblyInformation>( ) ;
 			
@@ -58,9 +58,9 @@ namespace Gleed2D.Core
 			level.SetLegacyEditorInfo( legacyEditorInfo ) ;
 		}
 
-		Layer copyLayer( Legacy.Layer oldLayer )
+		LayerEditor copyLayer( Legacy.Layer oldLayer )
 		{
-			var newLayer = new Layer( null, oldLayer.Name )
+			var newLayer = new LayerEditor( null, oldLayer.Name )
 				{
 					Visible = oldLayer.Visible,
 					ScrollSpeed = oldLayer.ScrollSpeed

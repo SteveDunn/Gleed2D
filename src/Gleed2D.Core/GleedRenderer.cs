@@ -155,7 +155,7 @@ namespace Gleed2D.Core
 		{
 			var level = IoC.Model.Level ;
 
-			foreach( Layer eachLayer in level.Layers )
+			foreach( LayerEditor eachLayer in level.Layers )
 			{
 				Vector2 mainCameraPosition = rendererParams.Camera.Position ;
 
@@ -188,7 +188,7 @@ namespace Gleed2D.Core
 
 		void drawFramesAroundSelectedEditors(RendererParams rendererParams )
 		{
-			Level level = IoC.Model.Level ;
+			LevelEditor level = IoC.Model.Level ;
 
 			IEnumerable<ItemEditor> selectedEditors = level.SelectedEditors.ToList(  ) ;
 

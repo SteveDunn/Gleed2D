@@ -14,7 +14,6 @@ namespace Gleed2D.Core
 		readonly Dictionary<string, Func<T, ValidationError>> _validationFuncs ;
 		readonly Dictionary<string, PropertyCustomisation> _customisations ;
 
-
 		public ItemPropertiesWrapper( T itemProperties )
 		{
 			_itemProperties = itemProperties ;
@@ -162,7 +161,6 @@ namespace Gleed2D.Core
 		{
 			return summonCustomisation( fieldName ) ;
 		}
-
 
 		PropertyCustomisation summonCustomisation( string fieldName )
 		{

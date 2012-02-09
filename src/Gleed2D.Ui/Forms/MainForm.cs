@@ -149,7 +149,7 @@ namespace GLEED2D.Forms
 
 		void activeLayerChanged( object sender, EventArgs e )
 		{
-			Layer layer = _model.Level.ActiveLayer ;
+			LayerEditor layer = _model.Level.ActiveLayer ;
 			
 			if( layer == null )
 			{
@@ -409,7 +409,7 @@ Level was saved."
 
 		void loadLevel(string filename)
 		{
-			var level = new Level( XElement.Load( filename  )  ); 
+			var level = new LevelEditor( XElement.Load( filename  )  ); 
 
 			_model.LoadLevel(level);
 
@@ -797,11 +797,11 @@ Level was saved."
 			redoButton.Enabled = redoMenuItem.Enabled = false ;
 		}
 
-		ToolStripMenuItem[ ] buildMenuItemsForLayers( Action<Layer> whenSelected )
+		ToolStripMenuItem[ ] buildMenuItemsForLayers( Action<LayerEditor> whenSelected )
 		{
 			ToolStripMenuItem[ ] items = (
 				from layer in _model.Level.Layers
-				select new ToolStripMenuItem( layer.Name, null, ( sender, e ) => whenSelected(((ToolStripMenuItem)sender).Tag as Layer) )
+				select new ToolStripMenuItem( layer.Name, null, ( sender, e ) => whenSelected(((ToolStripMenuItem)sender).Tag as LayerEditor) )
 					{
 						Text = layer.Name,
 						Name = layer.Name,

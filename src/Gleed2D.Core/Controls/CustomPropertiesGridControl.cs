@@ -134,11 +134,12 @@ namespace Gleed2D.Core.Controls
 
 			_memento.BeginCommand( "Edit '{0}' property".FormatWith( getNameOfChangedItem( e.ChangedItem ) ) ) ;
 
+			_currentItem.PropertiesChanged(e);
+
 			var itemEditor = _currentItem as ItemEditor ;
 			if( itemEditor != null )
 			{
-				itemEditor.PropertiesChanged(  );
-
+				//debt: Should we not notify the model about other non 'ItemEditor' changes, such as the level itself and the layers?
 				IoC.Model.NotifyChanged( itemEditor ) ;
 			}
 		}

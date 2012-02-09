@@ -7,7 +7,7 @@ using StructureMap;
 
 namespace Gleed2D.Plugins
 {
-	public class TextureTabPage  : TabPage, ICategoryTabPage
+	public class TextureTabPage  : TabPage, ICategoryTabPage, ISubscriber<ContentRootChanged>, ISubscriber<NewModelLoaded>
 	{
 		readonly TexturePickerControl _picker ;
 
@@ -18,23 +18,27 @@ namespace Gleed2D.Plugins
 					Dock = DockStyle.Fill
 				} ;
 
-			_picker.PathToFolderChanged += pathToFolderChanging ;
+			//_picker.PathToFolderChanged += pathToFolderChanging ;
 			_picker.TextureChosen += textureChosen ;
 
 			IModel model = IoC.Model ;
 
+			var eventHub = ObjectFactory.GetInstance<IEventHub>();
+			eventHub.Subscribe<ContentRootChanged>(this);
+			eventHub.Subscribe<NewModelLoaded>(this);
+
 			if( model.Level != null )
 			{
-				model.Level.ContentRootFolder.PathChanging += ( s, e ) => _picker.SetFolder( new PathToFolder( e.ChosenFolder ) ) ;
+				//model.Level.ContentRootFolder.PathChanging += ( s, e ) => _picker.SetFolder( new PathToFolder( e.ChosenFolder ) ) ;
 			}
 
-			model.NewModelLoaded += ( s, e ) =>
-			                        	{
-			                        		model.Level.ContentRootFolder.PathChanging +=
-			                        			( ss, ee ) => _picker.SetFolder( new PathToFolder( ee.ChosenFolder ) ) ;
+			//model.NewModelLoaded += ( s, e ) =>
+			//                            {
+			//                                model.Level.ContentRootFolder.PathChanging +=
+			//                                    ( ss, ee ) => _picker.SetFolder( new PathToFolder( ee.ChosenFolder ) ) ;
 
-			                        		_picker.SetFolder( model.Level.ContentRootFolder ) ;
-			                        	} ;
+			//                                _picker.SetFolder( model.Level.ContentRootFolder ) ;
+			//                            } ;
 
 			Controls.Add( _picker ) ;
 		}
@@ -49,7 +53,7 @@ namespace Gleed2D.Plugins
 		{
 			var disk = ObjectFactory.GetInstance<IDisk>( ) ;
 
-			string currentContentRoot = IoC.Model.Level.ContentRootFolder.AbsolutePath ;
+			string currentContentRoot = IoC.Model.Level.ContentRootFolder ;
 
 			if (disk.IsSubfolder(currentContentRoot, e.ChosenFolder))
 			{
@@ -80,9 +84,19 @@ namespace Gleed2D.Plugins
 		{
 		}
 
-		public void SetRootFolder( PathToFolder folder )
+		public void SetRootFolder( string folder )
 		{
 			_picker.SetFolder( folder );
+		}
+
+		public void Receive(ContentRootChanged subject)
+		{
+			_picker.SetFolder( subject.ContentRootFolder) ;
+		}
+
+		public void Receive(NewModelLoaded subject)
+		{
+			int n = 1;
 		}
 	}
 }

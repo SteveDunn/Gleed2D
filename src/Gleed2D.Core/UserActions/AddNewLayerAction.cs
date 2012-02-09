@@ -15,7 +15,7 @@ namespace Gleed2D.Core.UserActions
 			{
 				IModel model = IoC.Model ;
 
-				model.AddNewLayer( new Layer(model.Level,dialog.ChosenName ) );
+				model.AddNewLayer( new LayerEditor(model.Level,dialog.ChosenName ) );
 			}
 		}
 

@@ -9,18 +9,18 @@ namespace Gleed2D.Plugins
 {
 	public class BehaviourDragDropHandler : IHandleDragDrop
 	{
-		readonly Func<ItemEditor, IBehaviour> _buildBehaviour ;
+		readonly Func<ITreeItem, IBehaviour> _buildBehaviour ;
 
 		readonly Dictionary<string,object> _properties = new Dictionary<string, object>();
 
-		public BehaviourDragDropHandler(Func<ItemEditor, IBehaviour> buildBehaviour  )
+		public BehaviourDragDropHandler(Func<ITreeItem, IBehaviour> buildBehaviour  )
 		{
 			_buildBehaviour = buildBehaviour ;
 		}
 
 		public void WhenDroppedOntoEditor(ICanvas canvas, DraggingContext context)
 		{
-			ItemEditor itemEditor = canvas.ItemUnderMouse;
+			ITreeItem itemEditor = canvas.ItemUnderMouse;
 
 			if (itemEditor == null)
 			{
@@ -32,7 +32,7 @@ namespace Gleed2D.Plugins
 
 		public void WhenBeingDraggedOverEditor(ICanvas canvas, DraggingContext draggingContext)
 		{
-			ItemEditor itemEditor = canvas.ItemUnderMouse;
+			ITreeItem itemEditor = canvas.ItemUnderMouse;
 
 			if (itemEditor == null)
 			{

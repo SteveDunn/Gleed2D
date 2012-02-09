@@ -9,7 +9,6 @@ using JetBrains.Annotations ;
 using Microsoft.Xna.Framework ;
 using Microsoft.Xna.Framework.Graphics ;
 using StructureMap ;
-using Layer = Gleed2D.Core.Layer ;
 
 namespace Gleed2D.Plugins.Krypton
 {
@@ -39,14 +38,14 @@ namespace Gleed2D.Plugins.Krypton
 		}
 
 
-		public override void RecreateFromXml( Layer parentLayer, XElement xml )
+		public override void RecreateFromXml( LayerEditor parentLayer, XElement xml )
 		{
 			ParentLayer = parentLayer ;
 			base.RecreateFromXml( parentLayer, xml );
 			_properties = xml.CertainElement( @"CircularHullProperties" ).DeserializedAs<CircularHullProperties>( ) ;
 		}
 
-		public override void CreateInDesignMode(Layer parentLayer, IEntityCreationProperties creationProperties)
+		public override void CreateInDesignMode(LayerEditor parentLayer, IEntityCreationProperties creationProperties)
 		{
 			ParentLayer = parentLayer ;
 

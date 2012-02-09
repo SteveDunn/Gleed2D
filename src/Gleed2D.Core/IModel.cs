@@ -19,13 +19,13 @@ namespace Gleed2D.Core
 		
 		event EventHandler<ModelUnloadingEventArgs> OnBeforeUnloadingModel ;
 
-		Level Level
+		LevelEditor Level
 		{
 			get ;
 			set ;
 		}
 
-		Layer ActiveLayer
+		LayerEditor ActiveLayer
 		{
 			get ;
 		}
@@ -37,26 +37,26 @@ namespace Gleed2D.Core
 
 		void AddEditor( ItemEditor editor ) ;
 
-		void AddNewLayer( Layer layer ) ;
+		void AddNewLayer( LayerEditor layer ) ;
 
 		void SelectEditor( ItemEditor editor ) ;
 	
-		void MoveItemToLayer( ItemEditor i1, Layer layer, ItemEditor itemEditor ) ;
+		void MoveItemToLayer( ItemEditor i1, LayerEditor layer, ItemEditor itemEditor ) ;
 
-		void DeleteLayer( Layer layer ) ;
+		void DeleteLayer( LayerEditor layer ) ;
 	
 		void DeleteSelectedItems( ) ;
 		
-		void MoveLayerUp( Layer layer ) ;
+		void MoveLayerUp( LayerEditor layer ) ;
 		void MoveEditorUp( ItemEditor item ) ;
 		
-		void MoveLayerDown( Layer layer ) ;
+		void MoveLayerDown( LayerEditor layer ) ;
 		void MoveEditorDown( ItemEditor editor ) ;
 		
 		void SelectEverythingInSelectedLayer( ) ;
 
-		void MoveSelectedItemsToLayer( Layer chosenLayer ) ;
-		void CopySelectedItemsToLayer( Layer chosenlayer ) ;
+		void MoveSelectedItemsToLayer( LayerEditor chosenLayer ) ;
+		void CopySelectedItemsToLayer( LayerEditor chosenlayer ) ;
 	
 		void AlignHorizontally( ) ;
 		void AlignVertically( ) ;
@@ -64,14 +64,14 @@ namespace Gleed2D.Core
 		void AlignScale( ) ;
 
 	
-		void LoadLevel( Level newlevel ) ;
+		void LoadLevel( LevelEditor newlevel ) ;
 		void SaveLevel( string filename ) ;
 		void CreateNewLevel( ) ;
 		void RemoveCustomPropertyItem( ITreeItem item, DictionaryPropertyDescriptor propertyDescriptor ) ;
 		void RenameItem( ITreeItem treeItem, string newName ) ;
-		void DuplicateLayer( Layer layer ) ;
+		void DuplicateLayer( LayerEditor layer ) ;
 		void SelectEditors( SelectedEditors itemEditors ) ;
-		void SelectLayer( Layer layer ) ;
+		void SelectLayer( LayerEditor layer ) ;
 		void AddEditorToSelection(ItemEditor editor) ;
 		void ToggleSelectionOnItem( ItemEditor item ) ;
 		event EventHandler<EventArgs> ActiveLayerChanged ;

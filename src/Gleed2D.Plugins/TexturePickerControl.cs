@@ -17,7 +17,7 @@ namespace Gleed2D.Plugins
 	{
     	readonly Stopwatch _stopwatch = new Stopwatch();
 
-		public event EventHandler<PathToFolderChangedEventArgs> PathToFolderChanged ;
+		//public event EventHandler<PathToFolderChangedEventArgs> PathToFolderChanged ;
 		public event EventHandler<EntityChosenEventArgs> TextureChosen;
 
 		readonly ImageList _imageList48;
@@ -58,17 +58,9 @@ namespace Gleed2D.Plugins
 					NotifyFilters.FileName |
 						NotifyFilters.DirectoryName ;
 
-			fileSystemWatcher.Changed += ( sender, e ) => loadFolder(
-				new PathToFolder
-					{
-						AbsolutePath = fileSystemWatcher.Path
-					} ) ;
+			fileSystemWatcher.Changed += ( sender, e ) => loadFolder( fileSystemWatcher.Path ) ;
 
-			fileSystemWatcher.Deleted += ( sender1, e1 ) => loadFolder(
-				new PathToFolder
-					{
-						AbsolutePath = fileSystemWatcher.Path
-					} ) ;
+			fileSystemWatcher.Deleted += ( sender1, e1 ) => loadFolder( fileSystemWatcher.Path ) ;
 		}
 
 		void init( ImageList imageList, int size )
@@ -119,37 +111,33 @@ namespace Gleed2D.Plugins
 				return;
 			}
 
-			bool shouldCancel = notifyPathChanged(directoryInfo.FullName) ;
+			bool shouldCancel = false;// notifyPathChanged(directoryInfo.FullName);
 
 			if( shouldCancel )
 			{
 				return ;
 			}
-			
-			loadFolder(
-				new PathToFolder
-					{
-						AbsolutePath = directoryInfo.FullName
-					} ) ;
+
+			loadFolder(directoryInfo.FullName);
 		}
 
-		bool notifyPathChanged( string path )
-		{
-			if (PathToFolderChanged != null)
-			{
-				var pathToFolderChangedEventArgs = new PathToFolderChangedEventArgs
-					{
-						Cancel = false,
-						ChosenFolder = path
-					} ;
+		//bool notifyPathChanged( string path )
+		//{
+		//    if (PathToFolderChanged != null)
+		//    {
+		//        var pathToFolderChangedEventArgs = new PathToFolderChangedEventArgs
+		//            {
+		//                Cancel = false,
+		//                ChosenFolder = path
+		//            } ;
 				
-				PathToFolderChanged(this, pathToFolderChangedEventArgs);
+		//        PathToFolderChanged(this, pathToFolderChangedEventArgs);
 
-				return pathToFolderChangedEventArgs.Cancel ;
-			}
+		//        return pathToFolderChangedEventArgs.Cancel ;
+		//    }
 			
-			return true ;
-		}
+		//    return true ;
+		//}
 
 		void chooseFolderClick(object sender, EventArgs e)
 		{
@@ -161,15 +149,11 @@ namespace Gleed2D.Plugins
 				{
 					string selectedPath = dialog.SelectedPath ;
 
-					bool shouldCancel = notifyPathChanged(selectedPath) ;
+					bool shouldCancel = false;// notifyPathChanged(selectedPath);
 
 					if (!shouldCancel)
 					{
-						loadFolder(
-							new PathToFolder
-								{
-									AbsolutePath = selectedPath
-								});
+						loadFolder(selectedPath);
 					}
 				}
 			}
@@ -202,7 +186,7 @@ namespace Gleed2D.Plugins
 			}
 		}
 
-		void populateTexturesWithItemInFolder(PathToFolder path)
+		void populateTexturesWithItemInFolder(string path)
 		{
 			var imageLists = new[ ]
 				{
@@ -217,7 +201,7 @@ namespace Gleed2D.Plugins
 
 			uiListView.Clear();
 
-			var directoryInfo = new DirectoryInfo(path.AbsolutePath);
+			var directoryInfo = new DirectoryInfo(path);
 
 			uiFolderText.Text = directoryInfo.FullName;
 			
@@ -290,11 +274,7 @@ namespace Gleed2D.Plugins
 
 			if (pathToTexture == FOLDER_MONIKER)
 			{
-				loadFolder(
-					new PathToFolder
-						{
-							AbsolutePath = focusedItem.Name
-						});
+				loadFolder(focusedItem.Name);
 
 				return;
 			}
@@ -319,9 +299,9 @@ namespace Gleed2D.Plugins
 		}
 
 
-		void loadFolder(PathToFolder path)
+		void loadFolder(string path)
 		{
-			fileSystemWatcher.Path = path.AbsolutePath ;
+			fileSystemWatcher.Path = path;
 			
 			populateTexturesWithItemInFolder(path);
 		}
@@ -508,9 +488,9 @@ namespace Gleed2D.Plugins
             }
         }
 
-		public void SetFolder( PathToFolder contentRootFolder )
+		public void SetFolder( string contentRootFolder )
 		{
-			uiFolderText.Text = contentRootFolder.AbsolutePath ;
+			uiFolderText.Text = contentRootFolder ;
 
 			loadFolder( contentRootFolder );
 		}

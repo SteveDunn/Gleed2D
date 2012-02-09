@@ -2,9 +2,9 @@ namespace Gleed2D.Core.UserActions
 {
 	public class DuplicateLayerAction : IUserAction
 	{
-		readonly Layer _layer ;
+		readonly LayerEditor _layer ;
 
-		public DuplicateLayerAction( Layer layer )
+		public DuplicateLayerAction( LayerEditor layer )
 		{
 			_layer = layer ;
 		}

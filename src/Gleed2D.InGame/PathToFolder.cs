@@ -7,7 +7,7 @@ namespace Gleed2D.InGame
 	[DebuggerDisplay("AbsolutePath={AbsolutePath}, Exists={Exists}")]
 	public class PathToFolder
 	{
-		public event EventHandler<PathToFolderChangedEventArgs> PathChanging ;
+//		public event EventHandler<PathToFolderChangedEventArgs> PathChanging ;
 
 		string _absolutePath ;
 
@@ -38,26 +38,26 @@ namespace Gleed2D.InGame
 					value = value + @"\";
 				}
 				
-				bool shouldCancel = false ;
+				//bool shouldCancel = false ;
 				
-				var handler = PathChanging ;
+				//var handler = PathChanging ;
 				
-				if( handler != null )
-				{
-					var args = new PathToFolderChangedEventArgs
-						{
-							Cancel = false,
-							ChosenFolder = value
-						} ;
+				//if( handler != null )
+				//{
+				//    var args = new PathToFolderChangedEventArgs
+				//        {
+				//            Cancel = false,
+				//            ChosenFolder = value
+				//        } ;
 					
-					handler(this, args);
-					shouldCancel = args.Cancel ;
-				}
+				//    handler(this, args);
+				//    shouldCancel = args.Cancel ;
+				//}
 
-				if (shouldCancel)
-				{
-					return ;
-				}
+				//if (shouldCancel)
+				//{
+				//    return ;
+				//}
 				
 				_absolutePath = value ;
 			}

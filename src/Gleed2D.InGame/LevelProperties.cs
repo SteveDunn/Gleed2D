@@ -4,7 +4,7 @@ namespace Gleed2D.InGame
 {
 	public class LevelProperties : ItemProperties
 	{
-		public PathToFolder ContentRootFolder 
+		public string ContentRootFolder 
 		{
 			get;
 			set ;

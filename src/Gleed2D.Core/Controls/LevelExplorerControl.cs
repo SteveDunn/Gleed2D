@@ -246,7 +246,7 @@ namespace Gleed2D.Core.Controls
 		{
 			if( e.KeyCode == Keys.Delete )
 			{
-				if( SelectedEntity is Layer )
+				if( SelectedEntity is LayerEditor )
 				{
 					ObjectFactory.GetInstance<IHandleUserActions>( ).ProcessAction( new DeleteActiveLayerAction( ) ) ;
 				}
@@ -290,14 +290,14 @@ namespace Gleed2D.Core.Controls
 
 		void entityTreeAfterCheck( object sender, TreeViewEventArgs e )
 		{
-			if( e.Node.Tag is Level )
+			if( e.Node.Tag is LevelEditor )
 			{
 				_model.Level.Visible = e.Node.Checked ;
 			}
 
-			if( e.Node.Tag is Layer )
+			if( e.Node.Tag is LayerEditor )
 			{
-				var layer = (Layer) e.Node.Tag ;
+				var layer = (LayerEditor) e.Node.Tag ;
 				layer.Visible = e.Node.Checked ;
 			}
 
@@ -325,16 +325,16 @@ namespace Gleed2D.Core.Controls
 				return ;
 			}
 
-			if( e.Node.Tag is Level )
+			if( e.Node.Tag is LevelEditor )
 			{
 				ObjectFactory.GetInstance<IHandleUserActions>( ).ProcessAction(
 					new SelectLevelAction( ) ) ;
 			}
 
-			if( e.Node.Tag is Layer )
+			if( e.Node.Tag is LayerEditor )
 			{
 				ObjectFactory.GetInstance<IHandleUserActions>( ).ProcessAction(
-					new SelectLayerAction( e.Node.Tag as Layer ) ) ;
+					new SelectLayerAction( e.Node.Tag as LayerEditor ) ) ;
 			}
 
 			if( e.Node.Tag is ItemEditor )
@@ -359,12 +359,12 @@ namespace Gleed2D.Core.Controls
 
 		void entityTreeItemDrag( object sender, ItemDragEventArgs e )
 		{
-			if( ( (TreeNode) e.Item ).Tag is Layer )
+			if( ( (TreeNode) e.Item ).Tag is LayerEditor )
 			{
 				return ;
 			}
 
-			if( ( (TreeNode) e.Item ).Tag is Level )
+			if( ( (TreeNode) e.Item ).Tag is LevelEditor )
 			{
 				return ;
 			}
@@ -392,7 +392,7 @@ namespace Gleed2D.Core.Controls
 
 			TreeNode destNode = uiTree.GetNodeAt( p ) ;
 
-			if( destNode.Tag is Level )
+			if( destNode.Tag is LevelEditor )
 			{
 				return ;
 			}
@@ -423,9 +423,9 @@ namespace Gleed2D.Core.Controls
 				destNode.Parent.Nodes.Insert( destNode.Index + delta, sourceNode ) ;
 			}
 
-			if( destNode.Tag is Layer )
+			if( destNode.Tag is LayerEditor )
 			{
-				var destItem = (Layer) destNode.Tag ;
+				var destItem = (LayerEditor) destNode.Tag ;
 
 				_model.MoveItemToLayer( sourceItem, destItem, null ) ;
 
@@ -512,7 +512,7 @@ namespace Gleed2D.Core.Controls
 
 			uiTree.Nodes.Clear( ) ;
 
-			Level level = _model.Level ;
+			LevelEditor level = _model.Level ;
 
 			var levelTreeNode = uiTree.Nodes.Add( level.Name ) ;
 
@@ -524,7 +524,7 @@ namespace Gleed2D.Core.Controls
 
 			levelTreeNode.ContextMenuStrip = _hideContextMenus?null:uiContextMenuForLevel ;
 
-			foreach( Layer eachLayer in level.Layers )
+			foreach( LayerEditor eachLayer in level.Layers )
 			{
 				TreeNode layerTreeNode = levelTreeNode.Nodes.Add( eachLayer.Name, eachLayer.Name ) ;
 
@@ -605,7 +605,7 @@ namespace Gleed2D.Core.Controls
 
 		void actionDelete( object sender, EventArgs eventArgs )
 		{
-			if (SelectedEntity is Layer)
+			if (SelectedEntity is LayerEditor)
 			{
 				ObjectFactory.GetInstance<IHandleUserActions>( ).ProcessAction( new DeleteActiveLayerAction( ) ) ;
 			}
@@ -635,7 +635,7 @@ namespace Gleed2D.Core.Controls
 		private void duplicateToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			ObjectFactory.GetInstance<IHandleUserActions>( ).ProcessAction( 
-				new DuplicateLayerAction( SelectedEntity as Layer ) ) ;
+				new DuplicateLayerAction( SelectedEntity as LayerEditor ) ) ;
 		}
 	}
 

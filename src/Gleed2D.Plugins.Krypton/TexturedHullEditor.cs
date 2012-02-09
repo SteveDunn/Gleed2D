@@ -13,7 +13,6 @@ using Microsoft.Xna.Framework.Graphics ;
 using StructureMap ;
 using Color = Microsoft.Xna.Framework.Color ;
 using Keys = Microsoft.Xna.Framework.Input.Keys ;
-using Layer = Gleed2D.Core.Layer ;
 using Rectangle = Microsoft.Xna.Framework.Rectangle ;
 
 namespace Gleed2D.Plugins.Krypton
@@ -210,7 +209,7 @@ namespace Gleed2D.Plugins.Krypton
 			}
 		}
 
-		public override void RecreateFromXml( Layer parentLayer, XElement xml )
+		public override void RecreateFromXml( LayerEditor parentLayer, XElement xml )
 		{
 			base.RecreateFromXml( parentLayer, xml );
 
@@ -225,7 +224,7 @@ namespace Gleed2D.Plugins.Krypton
 			WhenUpdatedByUi( ) ;
 		}
 
-		public override void CreateInDesignMode(Layer parentLayer, IEntityCreationProperties creationProperties)
+		public override void CreateInDesignMode(LayerEditor parentLayer, IEntityCreationProperties creationProperties)
 		{
 			_polygon = new Vector2[ 4 ] ;
 
@@ -239,7 +238,7 @@ namespace Gleed2D.Plugins.Krypton
 				{
 					//todo: need filename
 					Position = MouseStatus.WorldPosition,
-					TexturePathRelativeToContentRoot = makeRelativePath( parentLayer.ParentLevel.ContentRootFolder, fullPath ),
+					TexturePathRelativeToContentRoot = makeRelativePath( new PathToFolder( parentLayer.ParentLevel.ContentRootFolder), fullPath ),
 					CustomProperties = new CustomProperties( ),
 					Visible = true,
 					Scale = Vector2.One,

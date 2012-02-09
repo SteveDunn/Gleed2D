@@ -1,48 +1,37 @@
-using System ;
-using System.ComponentModel ;
-using System.Drawing ;
-using System.IO ;
-using System.Windows.Forms ;
-using System.Xml.Linq ;
-using Gleed2D.Core ;
-using Gleed2D.InGame ;
-using JetBrains.Annotations ;
-using Microsoft.Xna.Framework ;
-using Microsoft.Xna.Framework.Graphics ;
-using StructureMap ;
-using Color = Microsoft.Xna.Framework.Color ;
-using Keys = Microsoft.Xna.Framework.Input.Keys ;
-using Layer = Gleed2D.Core.Layer ;
-using Rectangle = Microsoft.Xna.Framework.Rectangle ;
+using System;
+using System.ComponentModel;
+using System.Drawing;
+using System.IO;
+using System.Windows.Forms;
+using System.Xml.Linq;
+using Gleed2D.Core;
+using Gleed2D.InGame;
+using JetBrains.Annotations;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using StructureMap;
+using Color = Microsoft.Xna.Framework.Color;
+using Keys = Microsoft.Xna.Framework.Input.Keys;
+using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
 namespace Gleed2D.Plugins
 {
 	public class TextureItemEditor : ItemEditor
 	{
-		//for anim support
-		int _frameIndex ;
-		IMainForm _mainForm ;
-		TextureItemProperties _properties ;
-		Rectangle _boundingRectangle ;
-		Color[ ] _colorDataForTexture ;
+		IMainForm _mainForm;
+		TextureItemProperties _properties;
+		Rectangle _boundingRectangle;
+		Color[] _colorDataForTexture;
 
-		int _column ;
-		int _columns ;
-		int _frameCount ;
-		float _frameTime ;
-		Vector2[ ] _polygon ;
-		bool _reversed ;
-		int _row ;
-		int _rows ;
+		Vector2[] _polygon;
 
-		Texture2D _texture ;
-		float _time ;
-		Matrix _transform ;
+		Texture2D _texture;
+		Matrix _transform;
 
 		[UsedImplicitly]
-		public TextureItemEditor( )
+		public TextureItemEditor()
 		{
-			_properties = new TextureItemProperties( ) ;
+			_properties = new TextureItemProperties();
 		}
 
 		/// <summary>
@@ -54,18 +43,24 @@ namespace Gleed2D.Plugins
 		{
 			get
 			{
-				var wrapper = new ItemPropertiesWrapper<TextureItemProperties>( _properties ) ;
-				wrapper.Customise( ( ) => _properties.Rotation ).SetDescription( "The item's rotation in radians." ) ;
-				wrapper.Customise( ( ) => _properties.Scale ).SetDescription( "The item's scale vector." ) ;
-				wrapper.Customise( ( ) => _properties.TintColor ).SetDescription( "The Color to tint the texture with. Use white for no tint." ) ;
-				wrapper.Customise( ( ) => _properties.FlipHorizontally ).SetDisplayName( @"Flip horizontally" ).SetDescription( "If true, the texture is flipped horizontally when drawn." ) ;
-				wrapper.Customise( ( ) => _properties.FlipVertically ).SetDisplayName( @"Flip vertically" ).SetDescription( "If true, the texture is flipped vertically when drawn." ) ;
-				wrapper.Customise( ( ) => _properties.Origin ).SetDescription( "The item's origin in texture space ([0,0] is upper left corner)." ) ;
-				wrapper.Customise( ( ) => _properties.IsTemplate ).SetDisplayName( @"Is a template?" ).SetDescription( "Can be used as template for various objects (chains, tracks, spawners), will not be drawn in this exact location" ) ;
-				wrapper.Customise( ( ) => _properties.TexturePathRelativeToContentRoot ).Hide( ) ;
-				wrapper.Customise( ( ) => _properties.AssetName ).Hide( ) ;
+				var wrapper = new ItemPropertiesWrapper<TextureItemProperties>(_properties);
+			
+				wrapper.Customise(() => _properties.Rotation).SetDescription(@"The item's rotation in radians.");
+				wrapper.Customise(() => _properties.Scale).SetDescription(@"The item's scale vector.");
+				wrapper.Customise(() => _properties.TintColor).SetDescription(
+					@"The Color to tint the texture with. Use white for no tint.");
+				wrapper.Customise(() => _properties.FlipHorizontally).SetDisplayName(@"Flip horizontally").SetDescription(
+					@"If true, the texture is flipped horizontally when drawn.");
+				wrapper.Customise(() => _properties.FlipVertically).SetDisplayName(@"Flip vertically").SetDescription(
+					@"If true, the texture is flipped vertically when drawn.");
+				wrapper.Customise(() => _properties.Origin).SetDescription(
+					@"The item's origin in texture space ([0,0] is upper left corner).");
+				wrapper.Customise(() => _properties.IsTemplate).SetDisplayName(@"Is a template?").SetDescription(
+					@"Can be used as template for various objects (chains, tracks, spawners), will not be drawn in this exact location");
+				wrapper.Customise(() => _properties.TexturePathRelativeToContentRoot).Hide();
+				wrapper.Customise(() => _properties.AssetName).Hide();
 
-				return wrapper ;
+				return wrapper;
 			}
 		}
 
@@ -73,7 +68,7 @@ namespace Gleed2D.Plugins
 		{
 			get
 			{
-				return @"Texture" ;
+				return @"Texture";
 			}
 		}
 
@@ -81,7 +76,7 @@ namespace Gleed2D.Plugins
 		{
 			get
 			{
-				return true ;
+				return true;
 			}
 		}
 
@@ -89,11 +84,11 @@ namespace Gleed2D.Plugins
 		{
 			get
 			{
-				return _properties.Rotation ;
+				return _properties.Rotation;
 			}
 			set
 			{
-				_properties.Rotation = value ;
+				_properties.Rotation = value;
 			}
 		}
 
@@ -101,35 +96,35 @@ namespace Gleed2D.Plugins
 		{
 			get
 			{
-				return _properties.Scale ;
+				return _properties.Scale;
 			}
 			set
 			{
-				_properties.Scale = value ;
+				_properties.Scale = value;
 
-				WhenUpdatedByUi( ) ;
+				WhenUpdatedByUi();
 			}
 		}
 
-		void flipHorizontally( bool value )
+		void flipHorizontally(bool value)
 		{
-			_properties.FlipHorizontally = value ;
+			_properties.FlipHorizontally = value;
 
-			WhenUpdatedByUi( ) ;
+			WhenUpdatedByUi();
 		}
 
-		void flipVertically( bool value )
+		void flipVertically(bool value)
 		{
-			_properties.FlipVertically = value ;
+			_properties.FlipVertically = value;
 
-			WhenUpdatedByUi( ) ;
+			WhenUpdatedByUi();
 		}
 
 		public override string Name
 		{
 			get
 			{
-				return _properties.Name ;
+				return _properties.Name;
 			}
 		}
 
@@ -137,25 +132,25 @@ namespace Gleed2D.Plugins
 		{
 			get
 			{
-				var imageRepository = ObjectFactory.GetNamedInstance<IImageRepository>( @"iconImages" ) ;
+				var imageRepository = ObjectFactory.GetNamedInstance<IImageRepository>(@"iconImages");
 
-				string name = @"texture_{0}".FormatWith( _properties.TexturePathRelativeToContentRoot ) ;
+				string name = @"texture_{0}".FormatWith(_properties.TexturePathRelativeToContentRoot);
 
-				if( !imageRepository.ContainsImage( name ) )
+				if (!imageRepository.ContainsImage(name))
 				{
-					using( var memoryStream = new MemoryStream( ) )
+					using (var memoryStream = new MemoryStream())
 					{
-						_texture.SaveAsPng( memoryStream, 64, 64 ) ;
+						_texture.SaveAsPng(memoryStream, 64, 64);
 
-						memoryStream.Position = 0 ;
+						memoryStream.Position = 0;
 
-						Image image = Image.FromStream( memoryStream ) ;
+						Image image = Image.FromStream(memoryStream);
 
-						imageRepository.Set( new ImageProperties( name, image ) ) ;
+						imageRepository.Set(new ImageProperties(name, image));
 					}
 				}
 
-				return imageRepository.GetByName( name ) ;
+				return imageRepository.GetByName(name);
 			}
 		}
 
@@ -163,165 +158,139 @@ namespace Gleed2D.Plugins
 		{
 			get
 			{
-				return _properties ;
+				return _properties;
 			}
 		}
 
-		public override void RecreateFromXml( Layer parentLayer, XElement xml )
+		public override void RecreateFromXml(LayerEditor parentLayer, XElement xml)
 		{
-			base.RecreateFromXml( parentLayer, xml );
+			base.RecreateFromXml(parentLayer, xml);
 
-			_polygon = new Vector2[ 4 ] ;
+			_polygon = new Vector2[4];
 
-			ParentLayer = parentLayer ;
+			ParentLayer = parentLayer;
 
-			_properties = xml.Element( @"TextureItemProperties" ).DeserializedAs<TextureItemProperties>( ) ;
+			_properties = xml.Element(@"TextureItemProperties").DeserializedAs<TextureItemProperties>();
 
-			initialiseTexture( _properties.TexturePathRelativeToContentRoot ) ;
+			initialiseTexture(_properties.TexturePathRelativeToContentRoot);
 
-			WhenUpdatedByUi( ) ;
+			WhenUpdatedByUi();
 		}
 
 		public override void CreateInDesignMode(
-			Layer parentLayer,
-			IEntityCreationProperties creationProperties )
+			LayerEditor parentLayer,
+			IEntityCreationProperties creationProperties)
 		{
-			_polygon = new Vector2[ 4 ] ;
+			_polygon = new Vector2[4];
 
-			ParentLayer = parentLayer ;
+			ParentLayer = parentLayer;
 
-			var tCreationProperties = (TextureCreationProperties) creationProperties;
+			var tCreationProperties = (TextureCreationProperties)creationProperties;
 
 			string fullPath = tCreationProperties.PathToTexture;
 
-			initialiseTexture( fullPath ) ;
+			initialiseTexture(fullPath);
 
-// ReSharper disable UseObjectOrCollectionInitializer
+			// ReSharper disable UseObjectOrCollectionInitializer
 			_properties = new TextureItemProperties
-// ReSharper restore UseObjectOrCollectionInitializer
+				// ReSharper restore UseObjectOrCollectionInitializer
 				{
 					Position = MouseStatus.WorldPosition,
-					TexturePathRelativeToContentRoot = makeRelativePath( parentLayer.ParentLevel.ContentRootFolder, fullPath ),
-					CustomProperties = new CustomProperties( ),
+					TexturePathRelativeToContentRoot = ObjectFactory.GetInstance<IDisk>().MakeRelativePath(parentLayer.ParentLevel.ContentRootFolder, fullPath),
+					CustomProperties = new CustomProperties(),
 					Visible = true,
 					Scale = Vector2.One,
 					TintColor = Color.White,
-				} ;
+				};
 
-			_properties.Origin = getTextureOrigin( ) ;
+			_properties.Origin = getTextureOrigin();
 
-			WhenUpdatedByUi( ) ;
+			WhenUpdatedByUi();
 		}
 
 		public virtual void CreateReadyForDroppingOntoCanvas(
-			Layer parentLayer,
-			IEntityCreationProperties creationProperties )
+			LayerEditor parentLayer,
+			IEntityCreationProperties creationProperties)
 		{
-			_polygon = new Vector2[ 4 ] ;
+			_polygon = new Vector2[4];
 
-			ParentLayer = parentLayer ;
+			ParentLayer = parentLayer;
 
-			var tCreationProperties = (TextureCreationProperties) creationProperties;
+			var tCreationProperties = (TextureCreationProperties)creationProperties;
 
 			string fullPath = tCreationProperties.PathToTexture;
 
-			initialiseTexture( fullPath ) ;
+			initialiseTexture(fullPath);
 
-// ReSharper disable UseObjectOrCollectionInitializer
+			// ReSharper disable UseObjectOrCollectionInitializer
 			_properties = new TextureItemProperties
-// ReSharper restore UseObjectOrCollectionInitializer
+				// ReSharper restore UseObjectOrCollectionInitializer
 				{
 					Position = MouseStatus.WorldPosition,
-					TexturePathRelativeToContentRoot = makeRelativePath( parentLayer.ParentLevel.ContentRootFolder, fullPath ),
-					CustomProperties = new CustomProperties( ),
+					TexturePathRelativeToContentRoot = ObjectFactory.GetInstance<IDisk>().MakeRelativePath(parentLayer.ParentLevel.ContentRootFolder, fullPath),
+					CustomProperties = new CustomProperties(),
 					Visible = true,
 					Scale = Vector2.One,
 					TintColor = Color.White,
-				} ;
+				};
 
-			_properties.Origin = getTextureOrigin( ) ;
+			_properties.Origin = getTextureOrigin();
 
-			WhenUpdatedByUi( ) ;
+			WhenUpdatedByUi();
 		}
 
-		/// <summary>
-		/// Creates a relative path from one file or folder to another.
-		/// </summary>
-		/// <param name="fromPath">Contains the directory that defines the start of the relative path.</param>
-		/// <param name="toPath">Contains the path that defines the endpoint of the relative path.</param>
-		/// <returns>The relative path from the start directory to the end path.</returns>
-		/// <exception cref="ArgumentNullException"></exception>
-		static string makeRelativePath( PathToFolder fromPath, string toPath )
+		public override bool CanRotate()
 		{
-			var fromUri = new Uri( fromPath.AbsolutePath ) ;
-			
-			var toUri = new Uri( toPath ) ;
-
-			Uri relativeUri = fromUri.MakeRelativeUri( toUri ) ;
-			string relativePath = Uri.UnescapeDataString( relativeUri.ToString( ) ) ;
-
-			return relativePath.Replace( '/', Path.DirectorySeparatorChar ) ;
+			return true;
 		}
 
-		public override bool CanRotate( )
+		Vector2 getTextureOrigin()
 		{
-			return true ;
-		}
-
-		Vector2 getTextureOrigin( )
-		{
-			switch( Constants.Instance.DefaultTextureOrigin )
+			switch (Constants.Instance.DefaultTextureOrigin)
 			{
 				case InternalPoint.Middle:
-					if( _properties.CustomProperties.ContainsKey( "Animated" ) )
-					{
-						var dimensions = (Vector2) _properties.CustomProperties[ "FrameDimensions" ].Value ;
-
-						return new Vector2( dimensions.X / 2, dimensions.Y / 2 ) ;
-					}
-
-					return new Vector2( _texture.Width / 2, _texture.Height / 2 ) ;
+					return new Vector2(_texture.Width, _texture.Height) / 2;
 
 				case InternalPoint.Centroid:
-					var data = new uint[ _texture.Width * _texture.Height ] ;
-					_texture.GetData( data ) ;
-					Vertices verts = Vertices.CreatePolygon( data, _texture.Width, _texture.Height ) ;
-					Vector2 textureOrigin = verts.GetCentroid( ) ;
-					return new Vector2( textureOrigin.X, textureOrigin.Y ) ;
+					var data = new uint[_texture.Width * _texture.Height];
+					_texture.GetData(data);
+					Vertices verts = Vertices.CreatePolygon(data, _texture.Width, _texture.Height);
+					Vector2 textureOrigin = verts.GetCentroid();
+					return new Vector2(textureOrigin.X, textureOrigin.Y);
 
 				case InternalPoint.TopLeft:
 					{
-						return new Vector2( 0, 0 ) ;
+						return new Vector2(0, 0);
 					}
 
 				case InternalPoint.TopRight:
 					{
-						return new Vector2( _texture.Width, 0 ) ;
+						return new Vector2(_texture.Width, 0);
 					}
 
 				case InternalPoint.BottomLeft:
 					{
-						return new Vector2( 0, _texture.Height ) ;
+						return new Vector2(0, _texture.Height);
 					}
 
 				case InternalPoint.BottomRight:
 					{
-						return new Vector2( _texture.Width, _texture.Height ) ;
+						return new Vector2(_texture.Width, _texture.Height);
 					}
 			}
 
-			return Vector2.Zero ;
+			return Vector2.Zero;
 		}
 
-		void initialiseTexture( string textureFilename )
+		void initialiseTexture(string textureFilename)
 		{
-			var textureStore = ObjectFactory.GetInstance<ITextureStore>( ) ;
-			var game = ObjectFactory.GetInstance<IGame>( ) ;
+			var textureStore = ObjectFactory.GetInstance<ITextureStore>();
+			var game = ObjectFactory.GetInstance<IGame>();
 
 			string absolutePath =
-				Path.Combine( string.Format( @"{0}\", ParentLayer.ParentLevel.ContentRootFolder.AbsolutePath ), textureFilename ) ;
+				Path.Combine(string.Format(@"{0}\", ParentLayer.ParentLevel.ContentRootFolder), textureFilename);
 
-			if( !File.Exists( absolutePath ) )
+			if (!File.Exists(absolutePath))
 			{
 				DialogResult result =
 					MessageBox.Show(
@@ -335,199 +304,163 @@ For now, a dummy texture will be used. Continue loading the level?"
 						MessageBoxButtons.YesNo,
 						MessageBoxIcon.Question);
 
-				if( result == DialogResult.No )
+				if (result == DialogResult.No)
 				{
-					return ;
+					return;
 				}
 
-				_texture = textureStore.DummyTexture ;
+				_texture = textureStore.DummyTexture;
 			}
 			else
 			{
-				_texture = textureStore.FromFile( game.GraphicsDevice, absolutePath ) ;
+				_texture = textureStore.FromFile(game.GraphicsDevice, absolutePath);
 			}
 
 			//for per-pixel-collision
-			_colorDataForTexture = new Color[ _texture.Width * _texture.Height ] ;
-			
-			_texture.GetData( _colorDataForTexture ) ;
+			_colorDataForTexture = new Color[_texture.Width * _texture.Height];
+
+			_texture.GetData(_colorDataForTexture);
 		}
 
-		IMainForm summonMainForm( )
+		IMainForm summonMainForm()
 		{
-			if( _mainForm == null )
+			if (_mainForm == null)
 			{
-				_mainForm = ObjectFactory.GetInstance<IMainForm>( ) ;
+				_mainForm = ObjectFactory.GetInstance<IMainForm>();
 			}
 
-			return _mainForm ;
+			return _mainForm;
 		}
 
-		public override bool ContainsPoint( Vector2 point )
+		public override bool ContainsPoint(Vector2 point)
 		{
-			if( _boundingRectangle.Contains( (int) point.X, (int) point.Y ) )
+			if (_boundingRectangle.Contains((int)point.X, (int)point.Y))
 			{
-				return intersectPixels( point ) ;
+				return intersectPixels(point);
 			}
 
-			return false ;
+			return false;
 		}
 
-		bool intersectPixels( Vector2 worldpos )
+		bool intersectPixels(Vector2 worldpos)
 		{
-			Vector2 positionInB = Vector2.Transform( worldpos, Matrix.Invert( _transform ) ) ;
+			Vector2 positionInB = Vector2.Transform(worldpos, Matrix.Invert(_transform));
 
-			var xB = (int) Math.Round( positionInB.X ) ;
-			var yB = (int) Math.Round( positionInB.Y ) ;
+			var xB = (int)Math.Round(positionInB.X);
+			var yB = (int)Math.Round(positionInB.Y);
 
-			if( _properties.FlipHorizontally )
+			if (_properties.FlipHorizontally)
 			{
-				xB = _texture.Width - xB ;
+				xB = _texture.Width - xB;
 			}
 
-			if( _properties.FlipVertically )
+			if (_properties.FlipVertically)
 			{
-				yB = _texture.Height - yB ;
+				yB = _texture.Height - yB;
 			}
 
 			// If the pixel lies within the bounds of B
-			if( 0 <= xB && xB < _texture.Width && 0 <= yB && yB < _texture.Height )
+			if (0 <= xB && xB < _texture.Width && 0 <= yB && yB < _texture.Height)
 			{
-				Color colorB = _colorDataForTexture[ xB + yB * _texture.Width ] ;
-				if( colorB.A != 0 )
+				Color colorB = _colorDataForTexture[xB + yB * _texture.Width];
+				if (colorB.A != 0)
 				{
-					return true ;
+					return true;
 				}
 			}
-			return false ;
+			return false;
 		}
 
-		public override void OnMouseButtonUp( Vector2 mouseWorldPos )
+		public override void OnMouseButtonUp(Vector2 mouseWorldPos)
 		{
 		}
 
-		public override void SetPosition( Vector2 position )
+		public override void SetPosition(Vector2 position)
 		{
-			ItemProperties.Position = position ;
+			ItemProperties.Position = position;
 
-			WhenUpdatedByUi( ) ;
+			WhenUpdatedByUi();
 		}
 
-		public override void UserInteractionDuringCreation( )
+		public override void UserInteractionDuringCreation()
 		{
-			SetPosition( MouseStatus.WorldPosition ) ;
+			SetPosition(MouseStatus.WorldPosition);
 
-			if( MouseStatus.IsNewLeftMouseButtonClick( ) )
+			if (MouseStatus.IsNewLeftMouseButtonClick())
 			{
-				PreviewEndedReadyForCreation( this, EventArgs.Empty ) ;
+				PreviewEndedReadyForCreation(this, EventArgs.Empty);
 			}
 
-			WhenUpdatedByUi( ) ;
+			WhenUpdatedByUi();
 		}
 
-		public override void DrawSelectionFrame( SpriteBatch spriteBatch, Color color )
+		public override void DrawSelectionFrame(SpriteBatch spriteBatch, Color color)
 		{
-			//todo: remove
-			Matrix matrix = Matrix.Identity ;
+			Matrix matrix = Matrix.Identity;
 
-			var drawing = ObjectFactory.GetInstance<IDrawing>( ) ;
+			var drawing = ObjectFactory.GetInstance<IDrawing>();
 
-			var poly = new Vector2[ 4 ] ;
-			Vector2.Transform( _polygon, ref matrix, poly ) ;
+			var poly = new Vector2[4];
+			Vector2.Transform(_polygon, ref matrix, poly);
 
-			drawing.DrawPolygon( spriteBatch, poly, color, 2 ) ;
+			drawing.DrawPolygon(spriteBatch, poly, color, 2);
 
-			foreach( Vector2 eachVector in poly )
+			foreach (Vector2 eachVector in poly)
 			{
-				drawing.DrawCircleFilled( spriteBatch, eachVector, 4, color ) ;
+				drawing.DrawCircleFilled(spriteBatch, eachVector, 4, color);
 			}
 
-			Vector2 origin = Vector2.Transform( _properties.Position, matrix ) ;
+			Vector2 origin = Vector2.Transform(_properties.Position, matrix);
 
-			drawing.DrawBoxFilled( spriteBatch, origin.X - 5, origin.Y - 5, 10, 10, color ) ;
+			drawing.DrawBoxFilled(spriteBatch, origin.X - 5, origin.Y - 5, 10, 10, color);
 		}
 
-		public override void DrawInEditor( SpriteBatch spriteBatch )
+		public override void DrawInEditor(SpriteBatch spriteBatch)
 		{
-			var game = ObjectFactory.GetInstance<IGame>( ) ;
-
-			if( !_properties.Visible )
+			if (!_properties.Visible)
 			{
-				return ;
+				return;
 			}
 
-			SpriteEffects se = SpriteEffects.None ;
-			if( _properties.FlipHorizontally )
-				se |= SpriteEffects.FlipHorizontally ;
-			if( _properties.FlipVertically )
-				se |= SpriteEffects.FlipVertically ;
-			Color c = _properties.TintColor ;
-			if( IsHovering && Constants.Instance.EnableHighlightOnMouseOver )
-				c = Constants.Instance.ColorHighlight ;
-			if( _properties.CustomProperties.ContainsKey( "Animated" ) )
+			SpriteEffects effects = SpriteEffects.None;
+			if (_properties.FlipHorizontally)
 			{
-				var dimensions = (Vector2) _properties.CustomProperties[ "FrameDimensions" ].Value ;
-
-				_properties.Origin = new Vector2( dimensions.X / 2, dimensions.Y / 2 ) ;
-				_frameCount = int.Parse( (string) _properties.CustomProperties[ "FrameCount" ].Value ) ;
-				_frameTime = 1 / float.Parse( (string) _properties.CustomProperties[ "FrameRate" ].Value ) ;
-				_columns = (int) ( _texture.Width / dimensions.X ) ;
-				_rows = (int) ( _texture.Height / dimensions.Y ) ;
-				_reversed = (bool) _properties.CustomProperties[ "Reversed" ].Value ;
-
-				//  Rectangle temprectangle = new Rectangle(0, 0, (int)dimensions.X, (int)dimensions.Y);
-				if( _column < 0 )
-				{
-					_column = 0 ;
-				}
-				if( _row < 0 )
-				{
-					_row = 0 ;
-				}
-
-				_time += (float) game.GameTime.ElapsedGameTime.TotalSeconds ;
-
-				if( _time > _frameTime )
-				{
-					if( !_reversed )
-					{
-						computeFrameIndex( ) ;
-					}
-					else
-					{
-						reversedFrameIndex( ) ;
-					}
-				}
-
-				var source = new Rectangle(
-					(int) dimensions.X * _column, (int) dimensions.Y * _row, (int) dimensions.X, (int) dimensions.Y ) ;
-
-				spriteBatch.Draw( _texture, _properties.Position, source, c, Rotation, _properties.Origin, Scale, se, 0 ) ;
+				effects |= SpriteEffects.FlipHorizontally;
 			}
-			else
+
+			if (_properties.FlipVertically)
 			{
-				spriteBatch.Draw( _texture, _properties.Position, null, c, Rotation, _properties.Origin, Scale, se, 0 ) ;
+				effects |= SpriteEffects.FlipVertically;
 			}
+
+			Color tintColor = _properties.TintColor;
+
+			if (IsHovering && Constants.Instance.EnableHighlightOnMouseOver)
+			{
+				tintColor = Constants.Instance.ColorHighlight;
+			}
+
+			spriteBatch.Draw(_texture, _properties.Position, null, tintColor, Rotation, _properties.Origin, Scale, effects, 0);
 		}
 
-		public override void OnMouseButtonDown( Vector2 mouseWorldPos )
+		public override void OnMouseButtonDown(Vector2 mouseWorldPos)
 		{
-			IsHovering = false ;
+			IsHovering = false;
 
-			summonMainForm( ).SetCursorForCanvas( Cursors.SizeAll ) ;
+			summonMainForm().SetCursorForCanvas(Cursors.SizeAll);
 		}
 
-		public override void OnMouseOver( Vector2 mouseWorldPos )
+		public override void OnMouseOver(Vector2 mouseWorldPos)
 		{
-			IsHovering = true ;
+			IsHovering = true;
 		}
 
-		protected override void WhenUpdatedByUi( )
+		protected override void WhenUpdatedByUi()
 		{
 			_transform =
-				Matrix.CreateTranslation(new Vector3(-_properties.Origin.X, -_properties.Origin.Y, 0.0f))*
-				Matrix.CreateScale(Scale.X, Scale.Y, 1)*
-				Matrix.CreateRotationZ(Rotation)*
+				Matrix.CreateTranslation(new Vector3(-_properties.Origin.X, -_properties.Origin.Y, 0.0f)) *
+				Matrix.CreateScale(Scale.X, Scale.Y, 1) *
+				Matrix.CreateRotationZ(Rotation) *
 				Matrix.CreateTranslation(new Vector3(_properties.Position, 0.0f));
 
 			Vector2 leftTop = Vector2.Zero;
@@ -551,101 +484,50 @@ For now, a dummy texture will be used. Continue loading the level?"
 			Vector2 min = Vector2.Min(
 				Vector2.Min(leftTop, rightTop),
 				Vector2.Min(leftBottom, rightBottom));
-			
+
 			Vector2 max = Vector2.Max(
 				Vector2.Max(leftTop, rightTop),
 				Vector2.Max(leftBottom, rightBottom));
 
 			// Return as a rectangle
 			_boundingRectangle = new Rectangle(
-				(int) min.X,
-				(int) min.Y,
-				(int) (max.X - min.X),
-				(int) (max.Y - min.Y));
+				(int)min.X,
+				(int)min.Y,
+				(int)(max.X - min.X),
+				(int)(max.Y - min.Y));
 		}
 
-		public override ItemEditor Clone( )
+		public override ItemEditor Clone()
 		{
-			var result = new TextureItemEditor( ) ;
+			var result = new TextureItemEditor();
 
-			result.RecreateFromXml( ParentLayer, ToXml( ) ) ;
+			result.RecreateFromXml(ParentLayer, ToXml());
 
-			return result ;
+			return result;
 		}
 
-		//Compute frame index in forward animations
-		private void computeFrameIndex( )
+		public override void HandleKeyPressWhenFocused()
 		{
-			_time -= _frameTime ;
-
-			_frameIndex++ ;
-
-			_column++ ;
-
-			if( _column >= _columns )
+			if (KeyboardStatus.IsNewKeyPress(Keys.H))
 			{
-				_column = 0 ;
-				_row++ ;
+				IMemento memento = IoC.Memento;
+				memento.BeginCommand("Flip Item(s) Horizontally");
+
+				flipHorizontally(!_properties.FlipHorizontally);
+				IoC.Model.NotifyChanged(this);
+
+				memento.EndCommand();
 			}
 
-			if( _frameIndex >= _frameCount )
+			if (KeyboardStatus.IsNewKeyPress(Keys.V))
 			{
-				_frameIndex = 0 ;
-				_row = 0 ;
-				_column = 0 ;
-			}
-		}
+				IMemento memento = IoC.Memento;
+				memento.BeginCommand("Flip Item(s) Vertically");
 
-		void reversedFrameIndex( )
-		{
-			_time -= _frameTime ;
+				flipVertically(!_properties.FlipVertically);
+				IoC.Model.NotifyChanged(this);
 
-			_frameIndex-- ;
-
-			_column-- ;
-
-			if( _column <= 0 )
-			{
-				_column = _columns - 1 ;
-
-				_row-- ;
-
-				if( _row < 0 )
-				{
-					_row = 0 ;
-				}
-			}
-
-			if( _frameIndex <= 0 )
-			{
-				_frameIndex = _frameCount ;
-				_column = _columns - 1 ;
-				_row = _rows - 1 ;
-			}
-		}
-
-		public override void HandleKeyPressWhenFocused(  )
-		{
-			if( KeyboardStatus.IsNewKeyPress( Keys.H ) )
-			{
-				IMemento memento = IoC.Memento ;
-				memento.BeginCommand( "Flip Item(s) Horizontally" ) ;
-				
-				flipHorizontally( !_properties.FlipHorizontally ) ;
-				IoC.Model.NotifyChanged( this ) ;
-				
-				memento.EndCommand(  );
-			}
-			
-			if( KeyboardStatus.IsNewKeyPress( Keys.V ) )
-			{
-				IMemento memento = IoC.Memento ;
-				memento.BeginCommand( "Flip Item(s) Vertically" ) ;
-
-				flipVertically( !_properties.FlipVertically ) ;
-				IoC.Model.NotifyChanged( this ) ;
-
-				memento.EndCommand(  );
+				memento.EndCommand();
 			}
 		}
 	}

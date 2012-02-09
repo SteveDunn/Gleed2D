@@ -11,8 +11,8 @@ namespace Gleed2D.Core
 			private set ;
 		}
 
-		readonly Level _levelBefore ;
-		Level _levelAfter ;
+		readonly LevelEditor _levelBefore ;
+		LevelEditor _levelAfter ;
 		
 		readonly IModel _model ;
 

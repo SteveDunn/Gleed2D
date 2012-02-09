@@ -15,7 +15,6 @@ using GLEED2D.Properties;
 using StructureMap ;
 using ButtonState = Microsoft.Xna.Framework.Input.ButtonState ;
 using Keys = Microsoft.Xna.Framework.Input.Keys ;
-using Level = Gleed2D.Core.Level ;
 using Rectangle = Microsoft.Xna.Framework.Rectangle ;
 
 namespace GLEED2D
@@ -286,7 +285,7 @@ namespace GLEED2D
 		{
 			var clonedItems = new List<ItemEditor>( ) ;
 
-			Level level = getLevel( ) ;
+			LevelEditor level = getLevel( ) ;
 
 			var editors = selectedEditors( ) ;
 			foreach( ItemEditor eachEditor in editors )
@@ -471,7 +470,7 @@ namespace GLEED2D
 			_userActionInEditor = UserActionInEditor.MovingItems ;
 		}
 
-		Level getLevel( )
+		LevelEditor getLevel( )
 		{
 			return _model.Level ;
 		}

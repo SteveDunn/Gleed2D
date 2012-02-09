@@ -9,7 +9,6 @@ using JetBrains.Annotations ;
 using Microsoft.Xna.Framework ;
 using Microsoft.Xna.Framework.Graphics ;
 using StructureMap ;
-using Layer = Gleed2D.Core.Layer ;
 
 namespace Gleed2D.Plugins
 {
@@ -47,14 +46,14 @@ namespace Gleed2D.Plugins
 		}
 
 
-		public override void RecreateFromXml( Layer parentLayer, XElement xml )
+		public override void RecreateFromXml( LayerEditor parentLayer, XElement xml )
 		{
 			base.RecreateFromXml( parentLayer, xml );
 			ParentLayer = parentLayer ;
 			_properties = xml.Element( @"CircleItemProperties" ).DeserializedAs<CircleItemProperties>( ) ;
 		}
 
-		public override void CreateInDesignMode(Layer parentLayer, IEntityCreationProperties creationProperties)
+		public override void CreateInDesignMode(LayerEditor parentLayer, IEntityCreationProperties creationProperties)
 		{
 			ParentLayer = parentLayer ;
 

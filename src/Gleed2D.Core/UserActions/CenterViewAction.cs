@@ -13,7 +13,7 @@ namespace Gleed2D.Core.UserActions
 		{
 			ICanvas canvas = IoC.Canvas ;
 
-			if (_treeItem is Level)
+			if (_treeItem is LevelEditor)
 			{
 				canvas.Camera.Position = Microsoft.Xna.Framework.Vector2.Zero;
 			}

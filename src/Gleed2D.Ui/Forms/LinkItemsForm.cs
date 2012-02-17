@@ -79,10 +79,7 @@ namespace GLEED2D.Forms
         	if (customPropertiesForFirstItem.ContainsKey(uiFirstItemCustomPropertyNameTextBox.Text))
 			{
 				MessageBox.Show(
-					string.Format(
-						"The first Item ({0}) already has a Custom Property named \"{1}\". Please use another name.",
-						firstSelectedItem.ItemProperties.Name,
-						uiFirstItemCustomPropertyNameTextBox.Text ),
+					"The first Item ({0}) already has a Custom Property named \"{1}\". Please use another name.".FormatWith(firstSelectedItem.ItemProperties.Name, uiFirstItemCustomPropertyNameTextBox.Text),
 					@"Error",
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Error ) ;
@@ -109,10 +106,7 @@ namespace GLEED2D.Forms
             	if (customPropertiesForSecondItem.ContainsKey(uiSecondItemCustomPropertyNameTextBox.Text))
             	{
             		MessageBox.Show(
-            			string.Format(
-            				"The second Item ({0}) already has a Custom Property named \"{1}\". Please use another name!",
-            				secondSelectItem.ItemProperties.Name,
-            				uiSecondItemCustomPropertyNameTextBox.Text ),
+            			"The second Item ({0}) already has a Custom Property named \"{1}\". Please use another name!".FormatWith(secondSelectItem.ItemProperties.Name, uiSecondItemCustomPropertyNameTextBox.Text),
             			"Error",
             			MessageBoxButtons.OK,
             			MessageBoxIcon.Information ) ;

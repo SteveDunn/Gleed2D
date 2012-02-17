@@ -109,11 +109,11 @@ Would you like to change it?".FormatWith( _properties.ContentRootFolder ) ;
 		{
 			int i=0;
 			
-			string newName = string.Format( @"Copy of {0}", name );
+			string newName = @"Copy of {0}".FormatWith(name);
 
 			while (ContainsAnythingNamed( newName )) 
 			{
-				newName = string.Format( @"Copy({0}) of {1}", i++, name );
+				newName = @"Copy({0}) of {1}".FormatWith(i++, name);
 			}
 			
 			return newName;

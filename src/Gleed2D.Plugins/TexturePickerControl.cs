@@ -349,8 +349,7 @@ namespace Gleed2D.Plugins
 
         	uiListView.Items[ fullName ].ImageKey = fullName ;
         	
-			uiListView.Items[ fullName ].ToolTipText = string.Format(
-        		"{0} ({1} x {2})", passedObject.FileInfo.Name, bitmap.Width, bitmap.Height ) ;
+			uiListView.Items[ fullName ].ToolTipText = "{0} ({1} x {2})".FormatWith(passedObject.FileInfo.Name, bitmap.Width, bitmap.Height) ;
 
 			IoC.MainForm.SetToolStripStatusLabel1( e.ProgressPercentage.ToString( ) ) ;
         }

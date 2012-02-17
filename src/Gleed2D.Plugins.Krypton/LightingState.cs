@@ -1,5 +1,6 @@
 using System ;
 using System.IO ;
+using System.Windows.Forms;
 using System.Xml.Linq ;
 using Gleed2D.Core ;
 using StructureMap ;
@@ -8,7 +9,7 @@ namespace Gleed2D.Plugins.Krypton
 {
 	public class LightingState : IDisposable, ILightingState
 	{
-		readonly static string _path = string.Format( @"{0}\lighting.state", System.Windows.Forms.Application.StartupPath ) ;
+		readonly static string _path = @"{0}\lighting.state".FormatWith(Application.StartupPath) ;
 
 		public static ILightingState FromDiskOrDefault
 		{

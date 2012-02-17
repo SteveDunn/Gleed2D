@@ -361,7 +361,7 @@ The corresponding Custom Properties have been set to NULL, since the Item referr
 
 		public void MoveEditorUp( ItemEditor i )
 		{
-			_memento.BeginCommand( string.Format( @"Move editor up '{0}'", i.Name ) ) ;
+			_memento.BeginCommand( @"Move editor up '{0}'".FormatWith(i.Name) ) ;
 
 			int index = i.ParentLayer.Items.IndexOf( i ) ;
 
@@ -377,7 +377,7 @@ The corresponding Custom Properties have been set to NULL, since the Item referr
 
 		public void MoveEditorDown( ItemEditor editor )
 		{
-			_memento.BeginCommand( string.Format( @"Move editor down'{0}'", editor.Name ) ) ;
+			_memento.BeginCommand( @"Move editor down'{0}'".FormatWith(editor.Name) ) ;
 
 			int index = editor.ParentLayer.Items.IndexOf( editor ) ;
 			editor.ParentLayer.Items[ index ] = editor.ParentLayer.Items[ index + 1 ] ;
@@ -395,8 +395,7 @@ The corresponding Custom Properties have been set to NULL, since the Item referr
 			if( !ObjectFactory.GetInstance<IDisk>().FolderExists(level.ContentRootFolder) )
 			{
 				MessageBox.Show(
-					string.Format(
-						@"The directory '{0}' doesn't exist! Please adjust the XML file before trying again.", level.ContentRootFolder ) ) ;
+					@"The directory '{0}' doesn't exist! Please adjust the XML file before trying again.".FormatWith(level.ContentRootFolder) ) ;
 
 				return ;
 			}
@@ -440,7 +439,7 @@ The corresponding Custom Properties have been set to NULL, since the Item referr
 				return ;
 			}
 
-			_memento.BeginCommand( string.Format( @"Move Item(s) To Layer '{0}'", chosenLayer.Name ) ) ;
+			_memento.BeginCommand( @"Move Item(s) To Layer '{0}'".FormatWith(chosenLayer.Name) ) ;
 
 			Level.MoveSelectedIditorsToLayer( chosenLayer ) ;
 

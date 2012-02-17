@@ -323,18 +323,16 @@ namespace Gleed2D.Plugins.Krypton
 			var game = ObjectFactory.GetInstance<IGame>( ) ;
 
 			string absolutePath =
-				Path.Combine( string.Format( @"{0}\", ParentLayer.ParentLevel.ContentRootFolder ), textureFilename ) ;
+				Path.Combine( @"{0}\".FormatWith(ParentLayer.ParentLevel.ContentRootFolder), textureFilename ) ;
 
 			if( !File.Exists( absolutePath ) )
 			{
 				DialogResult dr =
 					MessageBox.Show(
-						string.Format(
-							@"The file ""{0}"" doesn't exist!
+						@"The file ""{0}"" doesn't exist!
 The texture path is a combination of the Level's ContentRootFolder and the TextureItem's relative path.
 Please adjust the XML file before trying to load this level again.
-For now, a dummy texture will be used. Continue loading the level?",
-							absolutePath ),
+For now, a dummy texture will be used. Continue loading the level?".FormatWith(absolutePath),
 						@"Error loading texture file",
 						MessageBoxButtons.YesNo,
 						MessageBoxIcon.Question ) ;

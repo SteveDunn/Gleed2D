@@ -62,16 +62,10 @@ namespace Gleed2D.InGame
 		}
 
 
-	    string _texturePathRelativeToContentRoot;
-
 	    /// <summary>
-		/// The path to the texture's filename (including the extension) relative to ContentRootFolder.
-		/// </summary>
-		public string TexturePathRelativeToContentRoot
-	    {
-	        get { return _texturePathRelativeToContentRoot; }
-	        set { _texturePathRelativeToContentRoot = value; }
-	    }
+	    /// The path to the texture's filename (including the extension) relative to ContentRootFolder.
+	    /// </summary>
+	    public string TexturePathRelativeToContentRoot { get; set; }
 
 	    /// <summary>
         /// Gets the asset name. This is the <see cref="TexturePathRelativeToContentRoot"/> without the extension. For use in Content.Load<Texture2D/>().

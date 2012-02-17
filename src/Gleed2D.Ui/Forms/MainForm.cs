@@ -73,7 +73,7 @@ namespace GLEED2D.Forms
 				if (!File.Exists(filename))
 				{
 					MessageBox.Show(
-						string.Format(@"Could not find file specified in the command line{0}{1}", Environment.NewLine, filename),
+						@"Could not find file specified in the command line{0}{1}".FormatWith(Environment.NewLine, filename),
 						@"File specified in command line not found",
 						MessageBoxButtons.OK,
 						MessageBoxIcon.Information);
@@ -88,8 +88,7 @@ namespace GLEED2D.Forms
 					catch( IOException ex )
 					{
 						MessageBox.Show(
-							string.Format(
-								@"Something went wrong loading the file. {0}.{1}{2}", filename, Environment.NewLine, ex.Message ),
+							@"Something went wrong loading the file. {0}.{1}{2}".FormatWith(filename, Environment.NewLine, ex.Message),
 							@"Could not load the file specified in the command line",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Information ) ;
@@ -205,7 +204,7 @@ namespace GLEED2D.Forms
 
 		void updateTitleBar()
 		{
-			Text = string.Format( @"GLEED2D - {0}{1}", _levelFilename, ( _dirtyFlag ? @"*" : string.Empty ) ) ;
+			Text = @"GLEED2D - {0}{1}".FormatWith(_levelFilename, ( _dirtyFlag ? @"*" : string.Empty )) ;
 		}
 
 		void mainFormLoad(object sender, EventArgs e)
@@ -640,9 +639,7 @@ Level was saved."
 			if (!File.Exists(Constants.Instance.RunLevelApplicationToStart))
 			{
 				MessageBox.Show(
-					string.Format(
-						"The file \"{0}\" doesn't exist!\nPlease provide a valid application executable in Tools -> Settings -> Run Level!",
-						Constants.Instance.RunLevelApplicationToStart ),
+					"The file \"{0}\" doesn't exist!\nPlease provide a valid application executable in Tools -> Settings -> Run Level!".FormatWith(Constants.Instance.RunLevelApplicationToStart),
 					@"Error",
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Error ) ;

@@ -1,6 +1,7 @@
 ﻿using System ;
 using System.ComponentModel ;
 using System.IO ;
+using System.Windows.Forms;
 using System.Xml.Serialization ;
 using Gleed2D.Core.CustomUITypeEditors ;
 using Gleed2D.InGame ;
@@ -232,7 +233,7 @@ namespace Gleed2D.Core
 
 		public static void TryToLoadOtherwiseSetDefaults( string filename )
 		{
-			string path = string.Format( @"{0}\{1}", System.Windows.Forms.Application.StartupPath, filename ) ;
+			string path = @"{0}\{1}".FormatWith(Application.StartupPath, filename) ;
 
 			if( !File.Exists( path ) )
 			{

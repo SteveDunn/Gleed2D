@@ -181,8 +181,7 @@ namespace Gleed2D.Plugins.Krypton
 					_pointUnderMouse = i ;
 					mainForm.SetCursorForCanvas( Cursors.Hand ) ;
 					mainForm.SetToolStripStatusLabel1(
-						string.Format(
-							"{0} (Point {1}: {2})", _properties.Name, i.ToString( ), _properties.WorldPoints[ i ].ToString( ) ) ) ;
+						"{0} (Point {1}: {2})".FormatWith(_properties.Name, i.ToString( ), _properties.WorldPoints[ i ].ToString( )) ) ;
 				}
 			}
 
@@ -238,11 +237,7 @@ namespace Gleed2D.Plugins.Krypton
 				WhenUpdatedByUi( ) ;
 				
 				summonMainForm( ).SetToolStripStatusLabel1(
-					string.Format(
-						"{0} (Point {1}: {2})",
-						_properties.Name,
-						_pointGrabbed.ToString( ),
-						_properties.WorldPoints[ _pointGrabbed ].ToString( ) ) ) ;
+					"{0} (Point {1}: {2})".FormatWith(_properties.Name, _pointGrabbed.ToString( ), _properties.WorldPoints[ _pointGrabbed ].ToString( )) ) ;
 			}
 			else
 			{

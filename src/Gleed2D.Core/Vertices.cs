@@ -2149,7 +2149,7 @@ namespace Gleed2D.Core
 
             public override string ToString()
             {
-                return string.Format("{0} ({1})", Position, Index);
+                return "{0} ({1})".FormatWith(Position, Index);
             }
         }
         #endregion
@@ -2508,12 +2508,12 @@ namespace Gleed2D.Core
 #if DEBUG
             StringBuilder vString = new StringBuilder();
             foreach (Vertex v in polygonVertices)
-                vString.Append(string.Format("{0}, ", v));
+                vString.Append("{0}, ".FormatWith(v));
             Log("Shape Vertices: {0}", vString);
 
             vString = new StringBuilder();
             foreach (Vertex v in holePolygon)
-                vString.Append(string.Format("{0}, ", v));
+                vString.Append("{0}, ".FormatWith(v));
             Log("Hole Vertices: {0}", vString);
 #endif
 
@@ -2618,7 +2618,7 @@ namespace Gleed2D.Core
 #if DEBUG
             vString = new StringBuilder();
             foreach (Vertex v in polygonVertices)
-                vString.Append(string.Format("{0}, ", v));
+                vString.Append("{0}, ".FormatWith(v));
             Log("New Shape Vertices: {0}\n", vString);
 #endif
 

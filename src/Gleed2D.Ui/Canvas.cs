@@ -296,7 +296,7 @@ namespace GLEED2D
 
 				ItemProperties itemProperties = clone.ItemProperties ;
 
-				itemProperties.Name = string.Format( @"{0}_{1}", itemProperties.Name.TrimEnd( _toTrim ), nextItemNumber ) ;
+				itemProperties.Name = @"{0}_{1}".FormatWith(itemProperties.Name.TrimEnd( _toTrim ), nextItemNumber) ;
 				itemProperties.Id = level.GenerateId( nextItemNumber ) ;
 
 				clone.IsSelected = true ;
@@ -739,7 +739,7 @@ namespace GLEED2D
 			MouseStatus.WorldPosition = MouseStatus.WorldPosition.Round( ) ;
 
 			_mainForm.SetToolStripStatusLabel3(
-				string.Format( "Mouse: ({0}, {1})", MouseStatus.WorldPosition.X, MouseStatus.WorldPosition.Y ) ) ;
+				"Mouse: ({0}, {1})".FormatWith(MouseStatus.WorldPosition.X, MouseStatus.WorldPosition.Y) ) ;
 
 			Camera.Position = maincameraposition ;
 		}

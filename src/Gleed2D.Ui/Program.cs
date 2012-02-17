@@ -135,15 +135,15 @@ namespace GLEED2D
 
 		static void reportError(Exception e, bool @continue)
 		{
-			Logger.Instance.log(string.Format(@"Exception caught: 
+			Logger.Instance.log(@"Exception caught: 
 
  {0}
 
-{1}", e.Message, e.StackTrace));
+{1}".FormatWith(e.Message, e.StackTrace));
 
 			if (e.InnerException != null)
 			{
-				Logger.Instance.log(string.Format("Inner Exception: {0}", e.InnerException.Message));
+				Logger.Instance.log("Inner Exception: {0}".FormatWith(e.InnerException.Message));
 			}
 
 			if (Debugger.IsAttached)

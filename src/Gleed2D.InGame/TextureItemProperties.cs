@@ -1,9 +1,11 @@
 using System ;
+using System.Diagnostics;
 using System.IO ;
 using Microsoft.Xna.Framework ;
 
 namespace Gleed2D.InGame
 {
+	[DebuggerDisplay("Name={Name}, AssetName={AssetName}, TexturePathRelativeToContentRoot={TexturePathRelativeToContentRoot}, Id={Id}, Visible={Visible}, Position={Position}")]
 	public class TextureItemProperties : ItemProperties, IRotatable, IScalable
 	{
 		/// <summary>
@@ -60,16 +62,18 @@ namespace Gleed2D.InGame
 		}
 
 
-		/// <summary>
+	    string _texturePathRelativeToContentRoot;
+
+	    /// <summary>
 		/// The path to the texture's filename (including the extension) relative to ContentRootFolder.
 		/// </summary>
 		public string TexturePathRelativeToContentRoot
-		{
-			get;
-			set ;
-		}
+	    {
+	        get { return _texturePathRelativeToContentRoot; }
+	        set { _texturePathRelativeToContentRoot = value; }
+	    }
 
-        /// <summary>
+	    /// <summary>
         /// Gets the asset name. This is the <see cref="TexturePathRelativeToContentRoot"/> without the extension. For use in Content.Load<Texture2D/>().
         /// </summary>
         public string AssetName

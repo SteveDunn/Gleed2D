@@ -13,7 +13,7 @@ namespace Gleed2D.Core
 		//Type is the subject type, and the list is all the subscriber information for that subject
 		private readonly IDictionary<Type, IList> _subscribers = new Dictionary<Type, IList>();
 
-		public void Publish<T>(T subject)
+		public virtual void Publish<T>(T subject)
 		{
 			Publish(subject, null);
 		}
@@ -90,7 +90,7 @@ namespace Gleed2D.Core
 			return null;
 		}
 
-		private IEnumerable<SubscriberInfo<T>> getSubscriberInfos<T>(T subject, Predicate<ISubscriber<T>> publisherFilter)
+		IEnumerable<SubscriberInfo<T>> getSubscriberInfos<T>(T subject, Predicate<ISubscriber<T>> publisherFilter)
 		{
 			List<SubscriberInfo<T>> subscriberInfos = getSubscriberInfoList<T>();
 
@@ -147,6 +147,11 @@ namespace Gleed2D.Core
 				_filter = filter;
 				_synchronizationContext = synchronizationContext;
 			}
+		}
+
+		protected void ClearAllSubscribers()
+		{
+			_subscribers.Clear();
 		}
 	}
 }

@@ -26,6 +26,7 @@ namespace GLEED2D
 					a =>
 						{
 							a.For<IEventHub>().Singleton().Use<EventHub>();
+							a.For<IModelEventHub>().Singleton().Use<ModelEventHub>();
 							a.For<IDisk>().Singleton().Use<Disk>();
 							a.For<IMenuItems>().Singleton().Use<MainFormMenuItems>();
 							a.For<IGleedRenderer>().Singleton().Use<GleedRenderer>();

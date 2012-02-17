@@ -2,6 +2,7 @@ using System;
 using System.Collections ;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq ;
 using System.Windows.Forms;
 using System.Xml.Linq ;
@@ -13,6 +14,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Gleed2D.Core
 {
+	[DebuggerDisplay("Name={Name}, ItemProperties={ItemProperties}, Layer={ParentLayer}, IsSelected={IsSelected}, IsHovering={IsHovering}, Position={ItemProperties.Position}")]
 	public class LayerEditor : IEnumerable<ItemEditor>, ITreeItem
 	{
 		static readonly StringComparer _comparer = StringComparer.OrdinalIgnoreCase ;
@@ -25,7 +27,12 @@ namespace Gleed2D.Core
 		{
 			_behaviours.ForEach( b => b.Update( gameTime ) ) ;
 		}
-	
+
+		public LevelEditor Level
+		{
+			get { return ParentLevel; }
+		}
+
 		public LayerEditor(LevelEditor parentLevel, string name)
 		{
 			_properties = new LayerProperties
@@ -70,8 +77,9 @@ namespace Gleed2D.Core
 			get
 			{
 				var wrapper = new ItemPropertiesWrapper<LayerProperties>( _properties ) ;
+
 				wrapper.Customise( ( ) => _properties.ScrollSpeed ).SetDisplayName( @"Scroll speed" )
-					.SetDescription( "The Scroll Speed relative to the main camera. The X and Y components are interpreted as factors, so Vector2.One means same scrolling speed as the main camera. To be used for parallax scrolling." ) ;
+					.SetDescription( @"The scroll speed relative to the main camera. The X and Y components are interpreted as factors, so Vector2.One means same scrolling speed as the main camera. To be used for parallax scrolling." ) ;
 
 				return wrapper ;
 			}

@@ -3,6 +3,7 @@ using System.Collections.Generic ;
 using System.Diagnostics ;
 using System.Linq ;
 using System.Windows.Forms ;
+using System.Xml.Linq;
 using Gleed2D.Core.Behaviour ;
 using Gleed2D.InGame ;
 using JetBrains.Annotations ;
@@ -14,11 +15,17 @@ namespace Gleed2D.Core
 	[PublicAPI]
 	public class Model : IModel
 	{
-		LevelEditor _level ;
+	    readonly IMemento _memento ;
+	    LevelEditor _level ;
 
-		readonly IMemento _memento ;
+	    public Model( IMemento memento )
+	    {
+	        _memento = memento ;
+	    }
 
-		public event EventHandler<ModelChangedEventArgs> ItemChanged ;
+	    #region IModel Members
+
+	    public event EventHandler<ModelChangedEventArgs> ItemChanged ;
 
 		public event EventHandler<ModelChangedEventArgs> SelectionChanged ;
 		public event EventHandler<EventArgs> ActiveLayerChanged ;
@@ -39,12 +46,7 @@ namespace Gleed2D.Core
 
 		public event EventHandler<ModelUnloadingEventArgs> OnBeforeUnloadingModel ;
 
-		public Model( IMemento memento )
-		{
-			_memento = memento ;
-		}
-
-		public void CreateNewLevel( )
+	    public void CreateNewLevel( )
 		{
 			if( Level != null )
 			{
@@ -76,13 +78,13 @@ namespace Gleed2D.Core
 
 		public void RemoveCustomPropertyItem( ITreeItem item, DictionaryPropertyDescriptor propertyDescriptor )
 		{
-			_memento.BeginCommand( "Delete Custom Property" ) ;
+		    _memento.Record(@"Delete custom property", () =>
+		                                                   {
 
-			propertyDescriptor.Remove( propertyDescriptor.Name ) ;
+		                                                       propertyDescriptor.Remove(propertyDescriptor.Name);
 
-			tryFire( ( ) => ItemChanged, item ) ;
-
-			_memento.EndCommand( ) ;
+		                                                       tryFire(() => ItemChanged, item);
+		                                                   });
 		}
 
 		public void NotifyChanged( IEnumerable<ItemEditor> items )
@@ -97,13 +99,8 @@ namespace Gleed2D.Core
 
 		public void RenameItem( ITreeItem treeItem, string newName )
 		{
-			_memento.BeginCommand( string.Format( @"Rename Item ('{0}' -> '{1}')", treeItem.Name, newName ) ) ;
-
-			treeItem.RenameTo( newName ) ;
-
-			_memento.EndCommand( ) ;
-
-			// tryFire( ( ) => ItemsRenamed, treeItem ) ;
+		    _memento.Record(@"Rename Item ('{0}' -> '{1}')".FormatWith(treeItem.Name, newName),
+		                    () => treeItem.RenameTo(newName));
 		}
 
 		public LayerEditor ActiveLayer
@@ -135,13 +132,9 @@ namespace Gleed2D.Core
 
 			IMainForm mainForm = IoC.MainForm ;
 
-			_memento.BeginCommand( string.Format( @"Duplicate Layer '{0}'", layer.Name ) ) ;
+		    _memento.Record(@"Duplicate Layer '{0}'".FormatWith(layer.Name), () => AddNewLayer( copiedLayer ));
 
-			AddNewLayer( copiedLayer ) ;
-
-			_memento.EndCommand( ) ;
-
-			tryFire( ( ) => ItemsAddedOrRemoved, (ITreeItem) copiedLayer ) ;
+		    tryFire( ( ) => ItemsAddedOrRemoved, (ITreeItem) copiedLayer ) ;
 
 			mainForm.LevelExplorer.Rebuild( ) ;
 		}
@@ -165,49 +158,35 @@ namespace Gleed2D.Core
 
 		public void AddEditor( ItemEditor editor )
 		{
-			_memento.BeginCommand( string.Format( @"Add Item '{0}'", editor.ItemProperties.Name ) ) ;
-
-			Level.AddEditor( editor ) ;
-
-			tryFire( ( ) => ItemsAddedOrRemoved, editor ) ;
-
-			_memento.EndCommand( ) ;
+		    _memento.Record(@"Add Item '{0}'".FormatWith(editor.ItemProperties.Name), () =>
+		        {
+		            Level.AddEditor( editor ) ;
+		            tryFire( ( ) => ItemsAddedOrRemoved, editor ) ;
+		        });
 		}
 
-		public void AttachBehaviour( ITreeItem target, IBehaviour behaviour)
+	    public void AttachBehaviour( ITreeItem target, IBehaviour behaviour)
 		{
-			_memento.BeginCommand( string.Format( @"Attach behavour to '{0}'", target.Name ) ) ;
-
-			target.Behaviours.Add( behaviour );
-
-			tryFire( ( ) => ItemsAddedOrRemoved, target ) ;
-
-			_memento.EndCommand( ) ;
+		    _memento.Record(@"Attach behavour to '{0}'".FormatWith(target.Name), () =>
+		        {
+		            target.Behaviours.Add( behaviour );
+		            tryFire( ( ) => ItemsAddedOrRemoved, target ) ;
+		        });
 		}
 
-		public void SelectBehaviour( ITreeItem behaviour )
+	    public void SelectBehaviour( ITreeItem behaviour )
 		{
 			tryFire( ()=> SelectionChanged, behaviour  );
 		}
 
-		void setActiveLayerIfItsDifferent( LayerEditor layer )
-		{
-			if( ActiveLayer == layer )
-			{
-				return ;
-			}
+	    public void DeserialiseLevel(XElement xml)
+	    {
+	        ObjectFactory.GetInstance<IModelEventHub>().ClearAllSubscribers();
 
-			Level.SelectLayer( layer ) ;
+	        Level = new LevelEditor(xml);
+	    }
 
-			var eventHandler = ActiveLayerChanged ;
-
-			if( eventHandler != null )
-			{
-				eventHandler( this, EventArgs.Empty ) ;
-			}
-		}
-
-		public void AddNewLayer( LayerEditor layer )
+	    public void AddNewLayer( LayerEditor layer )
 		{
 			layer.ParentLevel = Level ;
 
@@ -244,14 +223,7 @@ namespace Gleed2D.Core
 			tryFire( ( ) => SelectionChanged, Level.SelectedEditors ) ;
 		}
 
-		void clearSelectedEditors( )
-		{
-			Level.ClearSelectedEditors( ) ;
-
-			tryFire( ( ) => SelectionChanged, Enumerable.Empty<ItemEditor>( ) ) ;
-		}
-
-		public void ToggleSelectionOnItem( ItemEditor item )
+	    public void ToggleSelectionOnItem( ItemEditor item )
 		{
 			item.ToggleSelection( ) ;
 
@@ -282,11 +254,9 @@ namespace Gleed2D.Core
 
 		public void DeleteLayer( LayerEditor layer )
 		{
-			_memento.BeginCommand( string.Format( @"Delete Layer '{0}'", layer.Name ) ) ;
-			Level.Layers.Remove( layer ) ;
-			_memento.EndCommand( ) ;
+		    _memento.Record(@"Delete Layer '{0}'".FormatWith(layer.Name), () => Level.Layers.Remove( layer ));
 
-			tryFire( ( ) => ItemsAddedOrRemoved, (ITreeItem) layer ) ;
+		    tryFire( ( ) => ItemsAddedOrRemoved, (ITreeItem) layer ) ;
 
 			LayerEditor nextChoiceOfLayerToSelect = Level.Layers.Count > 0 ? Level.Layers.Last( ) : null ;
 			if( nextChoiceOfLayerToSelect != null )
@@ -297,38 +267,37 @@ namespace Gleed2D.Core
 
 		public void DeleteSelectedItems( )
 		{
-			_memento.BeginCommand( "Delete Item(s)" ) ;
+		    var itemsAffected = new List<ItemEditor>( ) ;
+		    
+            _memento.Record("Delete Item(s)", () =>
+		                                          {
+		                                              var selectedEditors = new List<ItemEditor>( Level.SelectedEditors ) ;
+		    
+                                                      foreach( ItemEditor eachSelectedEditor in selectedEditors )
+		                                              {
+		                                                  foreach( LayerEditor eachLayer in Level.Layers )
+		                                                  {
+		                                                      foreach( ItemEditor eachItem in eachLayer.Items )
+		                                                      {
+		                                                          CustomProperties customProperties = eachItem.ItemProperties.CustomProperties;
 
-			var selectedEditors = new List<ItemEditor>( Level.SelectedEditors ) ;
+		                                                          foreach( CustomProperty eachCustomerProperty in customProperties.Values )
+		                                                          {
+		                                                              var linkedItem = eachCustomerProperty.Value as LinkedItem ;
+		                                                              if( linkedItem != null && ( eachCustomerProperty.Type == typeof( LinkedItem ) && linkedItem.Name == eachSelectedEditor.Name ) )
+		                                                              {
+		                                                                  eachCustomerProperty.Value = null ;
+		                                                                  itemsAffected.Add( eachItem ) ;
+		                                                              }
+		                                                          }
+		                                                      }
+		                                                  }
 
-			var itemsAffected = new List<ItemEditor>( ) ;
+		                                                  eachSelectedEditor.ParentLayer.Items.Remove( eachSelectedEditor ) ;
+		                                              }
+		                                          });
 
-			foreach( ItemEditor eachSelectedEditor in selectedEditors )
-			{
-				foreach( LayerEditor eachLayer in Level.Layers )
-				{
-					foreach( ItemEditor eachItem in eachLayer.Items )
-					{
-						CustomProperties customProperties = eachItem.ItemProperties.CustomProperties;
-
-						foreach( CustomProperty eachCustomerProperty in customProperties.Values )
-						{
-							var linkedItem = eachCustomerProperty.Value as LinkedItem ;
-							if( linkedItem != null && ( eachCustomerProperty.Type == typeof( LinkedItem ) && linkedItem.Name == eachSelectedEditor.Name ) )
-							{
-								eachCustomerProperty.Value = null ;
-								itemsAffected.Add( eachItem ) ;
-							}
-						}
-					}
-				}
-
-				eachSelectedEditor.ParentLayer.Items.Remove( eachSelectedEditor ) ;
-			}
-
-			_memento.EndCommand( ) ;
-
-			clearSelectedEditors( ) ;
+		    clearSelectedEditors( ) ;
 
 			if( itemsAffected.Count > 0 )
 			{
@@ -336,16 +305,14 @@ namespace Gleed2D.Core
 					itemsAffected.Aggregate(
 						string.Empty,
 						( current, item ) => current +
-							string.Format( "{0} (Layer: {1}){2}", item.ItemProperties.Name, item.ParentLayer.Name, Environment.NewLine ) ) ;
+							@"{0} (Layer: {1}){2}".FormatWith(item.ItemProperties.Name, item.ParentLayer.Name, Environment.NewLine) ) ;
 
 
 				MessageBox.Show(
-					string.Format(
-						@"The following Items have Custom Properties of Type 'LinkedItem' that refered to items that have just been deleted:
+					@"The following Items have Custom Properties of Type 'LinkedItem' that refered to items that have just been deleted:
 
 {0}
-The corresponding Custom Properties have been set to NULL, since the Item referred to doesn't exist anymore.",
-						message ) ) ;
+The corresponding Custom Properties have been set to NULL, since the Item referred to doesn't exist anymore.".FormatWith(message) ) ;
 			}
 
 			tryFire( ( ) => ItemsAddedOrRemoved, itemsAffected ) ;
@@ -353,33 +320,29 @@ The corresponding Custom Properties have been set to NULL, since the Item referr
 
 		public void MoveLayerUp( LayerEditor layer )
 		{
-			_memento.BeginCommand( string.Format( @"Move Down Layer '{0}'", layer.Name ) ) ;
-
-			int index = Level.Layers.IndexOf( layer ) ;
-			Level.Layers[ index ] = Level.Layers[ index - 1 ] ;
-			Level.Layers[ index - 1 ] = layer ;
-
-			tryFire( ( ) => ItemsRearrangedInLayer, (ITreeItem) layer ) ;
-
-			SelectLayer( layer ) ;
+		    _memento.Record(@"Move Down Layer '{0}'".FormatWith(layer.Name), () =>
+		        {
+		            int index = Level.Layers.IndexOf( layer ) ;
+		            Level.Layers[ index ] = Level.Layers[ index - 1 ] ;
+		            Level.Layers[ index - 1 ] = layer ;
+		            tryFire( ( ) => ItemsRearrangedInLayer, (ITreeItem) layer ) ;
+		            SelectLayer( layer ) ;
+		        });
 		}
 
-		public void MoveLayerDown( LayerEditor layer )
-		{
-			_memento.BeginCommand( string.Format( @"Move Up Layer '{0}'", layer.Name ) ) ;
+	    public void MoveLayerDown( LayerEditor layer )
+	    {
+	        _memento.Record(@"Move Up Layer '{0}'".FormatWith(layer.Name), () =>
+	            {
+	                int index = Level.Layers.IndexOf( layer ) ;
+	                Level.Layers[ index ] = Level.Layers[ index + 1 ] ;
+	                Level.Layers[ index + 1 ] = layer ;
+	                tryFire( ( ) => ItemsRearrangedInLayer, (ITreeItem) layer ) ;
+	                SelectLayer( layer ) ;
+	            });
+	    }
 
-			int index = Level.Layers.IndexOf( layer ) ;
-			Level.Layers[ index ] = Level.Layers[ index + 1 ] ;
-			Level.Layers[ index + 1 ] = layer ;
-
-			tryFire( ( ) => ItemsRearrangedInLayer, (ITreeItem) layer ) ;
-
-			SelectLayer( layer ) ;
-
-			_memento.EndCommand( ) ;
-		}
-
-		public void SelectLayer( LayerEditor layer )
+	    public void SelectLayer( LayerEditor layer )
 		{
 			if( Level.SelectedEditors.Any( ) )
 			{
@@ -429,8 +392,6 @@ The corresponding Custom Properties have been set to NULL, since the Item referr
 
 		public void LoadLevel( LevelEditor level )
 		{
-			//todo: move to when the level is actually loaded
-
 			if( !ObjectFactory.GetInstance<IDisk>().FolderExists(level.ContentRootFolder) )
 			{
 				MessageBox.Show(
@@ -440,20 +401,6 @@ The corresponding Custom Properties have been set to NULL, since the Item referr
 				return ;
 			}
 
-			//foreach( Layer layer in level.Layers )
-			//{
-			//    layer.ParentLevel = level ;
-
-			//    foreach( ItemEditor item in layer.Items )
-			//    {
-			//        item.ParentLayer = layer ;
-			//        if( !item.LoadIntoEditor( ) )
-			//        {
-			//            return ;
-			//        }
-			//    }
-			//}
-
 			Level = level ;
 
 			if( NewModelLoaded != null )
@@ -461,26 +408,16 @@ The corresponding Custom Properties have been set to NULL, since the Item referr
 				NewModelLoaded( this, EventArgs.Empty ) ;
 			}
 
-			//if( Level.Name == null )
-			//{
-			//    Level.Name = "Level_01" ;
-			//}
-
 			if( Level.Layers.Count > 0 )
 			{
 				setActiveLayerIfItsDifferent( Level.Layers[ 0 ] ) ;
 			}
 
 			_memento.Clear( ) ;
-
 		}
 
 		public void SaveLevel( string filename )
 		{
-			//todo: might need to put this back
-			//Level.CameraPosition = Camera.Position ;
-			//Level.EditorRelated.Version = Version ;
-
 			Level.SaveAsXmlToDisk( filename ) ;
 		}
 
@@ -517,7 +454,7 @@ The corresponding Custom Properties have been set to NULL, since the Item referr
 				return ;
 			}
 
-			_memento.BeginCommand( string.Format( @"Copy Item(s) To Layer '{0}'", layer.Name ) ) ;
+			_memento.BeginCommand( @"Copy Item(s) To Layer '{0}'".FormatWith(layer.Name) ) ;
 
 			var clonedEditors = Level.CopySelectedEditorsToLayer( layer ).ToList( ) ;
 
@@ -528,27 +465,7 @@ The corresponding Custom Properties have been set to NULL, since the Item referr
 			tryFire( ( ) => ItemsAddedOrRemoved, clonedEditors ) ;
 		}
 
-		void tryFire( Func<EventHandler<ModelChangedEventArgs>> func, ITreeItem item )
-		{
-			tryFire(
-				func,
-				new[ ]
-					{
-						item
-					} ) ;
-		}
-
-		void tryFire( Func<EventHandler<ModelChangedEventArgs>> func, IEnumerable<ITreeItem> items )
-		{
-			var f = func( ) ;
-
-			if( f != null )
-			{
-				f( this, new ModelChangedEventArgs( items ) ) ;
-			}
-		}
-
-		public void AlignHorizontally( )
+	    public void AlignHorizontally( )
 		{
 			_memento.BeginCommand( "Align Horizontally" ) ;
 
@@ -622,5 +539,51 @@ The corresponding Custom Properties have been set to NULL, since the Item referr
 
 			_memento.EndCommand( ) ;
 		}
+
+	    #endregion
+
+	    void clearSelectedEditors( )
+	    {
+	        Level.ClearSelectedEditors( ) ;
+
+	        tryFire( ( ) => SelectionChanged, Enumerable.Empty<ItemEditor>( ) ) ;
+	    }
+
+	    void setActiveLayerIfItsDifferent( LayerEditor layer )
+	    {
+	        if( ActiveLayer == layer )
+	        {
+	            return ;
+	        }
+
+	        Level.SelectLayer( layer ) ;
+
+	        var eventHandler = ActiveLayerChanged ;
+
+	        if( eventHandler != null )
+	        {
+	            eventHandler( this, EventArgs.Empty ) ;
+	        }
+	    }
+
+	    void tryFire( Func<EventHandler<ModelChangedEventArgs>> func, ITreeItem item )
+	    {
+	        tryFire(
+	            func,
+	            new[ ]
+	                {
+	                    item
+	                } ) ;
+	    }
+
+	    void tryFire( Func<EventHandler<ModelChangedEventArgs>> func, IEnumerable<ITreeItem> items )
+	    {
+	        var f = func( ) ;
+
+	        if( f != null )
+	        {
+	            f( this, new ModelChangedEventArgs( items ) ) ;
+	        }
+	    }
 	}
 }

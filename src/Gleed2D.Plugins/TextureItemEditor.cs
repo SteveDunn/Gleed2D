@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -16,7 +17,8 @@ using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
 namespace Gleed2D.Plugins
 {
-	public class TextureItemEditor : ItemEditor
+	[DebuggerDisplay("Name={Name}, Id={Id}, Visible={Visible}, Position={Position}")]
+	public class TextureItemEditor : ItemEditor, ISubscriber<ContentRootChanged>
 	{
 		IMainForm _mainForm;
 		TextureItemProperties _properties;
@@ -32,6 +34,23 @@ namespace Gleed2D.Plugins
 		public TextureItemEditor()
 		{
 			_properties = new TextureItemProperties();
+			
+            ObjectFactory.GetInstance<IModelEventHub>().Subscribe<ContentRootChanged>(this);
+		}
+
+		public override void RecreateFromXml(LayerEditor parentLayer, XElement xml)
+		{
+			base.RecreateFromXml(parentLayer, xml);
+
+			_polygon = new Vector2[4];
+
+			ParentLayer = parentLayer;
+
+			_properties = xml.Element(@"TextureItemProperties").DeserializedAs<TextureItemProperties>();
+
+			tryInitialiseTexture(_properties.TexturePathRelativeToContentRoot);
+
+			WhenUpdatedByUi();
 		}
 
 		/// <summary>
@@ -162,21 +181,6 @@ namespace Gleed2D.Plugins
 			}
 		}
 
-		public override void RecreateFromXml(LayerEditor parentLayer, XElement xml)
-		{
-			base.RecreateFromXml(parentLayer, xml);
-
-			_polygon = new Vector2[4];
-
-			ParentLayer = parentLayer;
-
-			_properties = xml.Element(@"TextureItemProperties").DeserializedAs<TextureItemProperties>();
-
-			initialiseTexture(_properties.TexturePathRelativeToContentRoot);
-
-			WhenUpdatedByUi();
-		}
-
 		public override void CreateInDesignMode(
 			LayerEditor parentLayer,
 			IEntityCreationProperties creationProperties)
@@ -189,7 +193,7 @@ namespace Gleed2D.Plugins
 
 			string fullPath = tCreationProperties.PathToTexture;
 
-			initialiseTexture(fullPath);
+			tryInitialiseTexture(fullPath);
 
 			// ReSharper disable UseObjectOrCollectionInitializer
 			_properties = new TextureItemProperties
@@ -208,36 +212,36 @@ namespace Gleed2D.Plugins
 			WhenUpdatedByUi();
 		}
 
-		public virtual void CreateReadyForDroppingOntoCanvas(
-			LayerEditor parentLayer,
-			IEntityCreationProperties creationProperties)
-		{
-			_polygon = new Vector2[4];
+		//public virtual void CreateReadyForDroppingOntoCanvas(
+		//    LayerEditor parentLayer,
+		//    IEntityCreationProperties creationProperties)
+		//{
+		//    _polygon = new Vector2[4];
 
-			ParentLayer = parentLayer;
+		//    ParentLayer = parentLayer;
 
-			var tCreationProperties = (TextureCreationProperties)creationProperties;
+		//    var tCreationProperties = (TextureCreationProperties)creationProperties;
 
-			string fullPath = tCreationProperties.PathToTexture;
+		//    string fullPath = tCreationProperties.PathToTexture;
 
-			initialiseTexture(fullPath);
+		//    initialiseTexture(fullPath);
 
-			// ReSharper disable UseObjectOrCollectionInitializer
-			_properties = new TextureItemProperties
-				// ReSharper restore UseObjectOrCollectionInitializer
-				{
-					Position = MouseStatus.WorldPosition,
-					TexturePathRelativeToContentRoot = ObjectFactory.GetInstance<IDisk>().MakeRelativePath(parentLayer.ParentLevel.ContentRootFolder, fullPath),
-					CustomProperties = new CustomProperties(),
-					Visible = true,
-					Scale = Vector2.One,
-					TintColor = Color.White,
-				};
+		//    // ReSharper disable UseObjectOrCollectionInitializer
+		//    _properties = new TextureItemProperties
+		//        // ReSharper restore UseObjectOrCollectionInitializer
+		//        {
+		//            Position = MouseStatus.WorldPosition,
+		//            TexturePathRelativeToContentRoot = ObjectFactory.GetInstance<IDisk>().MakeRelativePath(parentLayer.ParentLevel.ContentRootFolder, fullPath),
+		//            CustomProperties = new CustomProperties(),
+		//            Visible = true,
+		//            Scale = Vector2.One,
+		//            TintColor = Color.White,
+		//        };
 
-			_properties.Origin = getTextureOrigin();
+		//    _properties.Origin = getTextureOrigin();
 
-			WhenUpdatedByUi();
-		}
+		//    WhenUpdatedByUi();
+		//}
 
 		public override bool CanRotate()
 		{
@@ -282,32 +286,32 @@ namespace Gleed2D.Plugins
 			return Vector2.Zero;
 		}
 
-		void initialiseTexture(string textureFilename)
+		void tryInitialiseTexture(string textureFilename)
 		{
 			var textureStore = ObjectFactory.GetInstance<ITextureStore>();
 			var game = ObjectFactory.GetInstance<IGame>();
 
 			string absolutePath =
-				Path.Combine(string.Format(@"{0}\", ParentLayer.ParentLevel.ContentRootFolder), textureFilename);
+				Path.Combine(@"{0}\".FormatWith(ParentLayer.ParentLevel.ContentRootFolder), textureFilename);
 
 			if (!File.Exists(absolutePath))
 			{
-				DialogResult result =
-					MessageBox.Show(
-						@"The file ""{0}"" doesn't exist!
-The texture path is a combination of the Level's ContentRootFolder and the TextureItem's relative path.
-Please adjust the XML file before trying to load this level again.
-For now, a dummy texture will be used. Continue loading the level?"
-							.FormatWith(
-								absolutePath),
-						@"Error loading texture file",
-						MessageBoxButtons.YesNo,
-						MessageBoxIcon.Question);
+//                DialogResult result =
+//                    MessageBox.Show(
+//                        @"The file ""{0}"" doesn't exist!
+//The texture path is a combination of the Level's ContentRootFolder and the TextureItem's relative path.
+//Please adjust the XML file before trying to load this level again.
+//For now, a dummy texture will be used. Continue loading the level?"
+//                            .FormatWith(
+//                                absolutePath),
+//                        @"Error loading texture file",
+//                        MessageBoxButtons.YesNo,
+//                        MessageBoxIcon.Question);
 
-				if (result == DialogResult.No)
-				{
-					return;
-				}
+//                if (result == DialogResult.No)
+//                {
+//                    return;
+//                }
 
 				_texture = textureStore.DummyTexture;
 			}
@@ -511,24 +515,43 @@ For now, a dummy texture will be used. Continue loading the level?"
 			if (KeyboardStatus.IsNewKeyPress(Keys.H))
 			{
 				IMemento memento = IoC.Memento;
-				memento.BeginCommand("Flip Item(s) Horizontally");
-
-				flipHorizontally(!_properties.FlipHorizontally);
-				IoC.Model.NotifyChanged(this);
-
-				memento.EndCommand();
+			    memento.Record(@"Flip Item(s) Horizontally", () =>
+			        {
+			            flipHorizontally(!_properties.FlipHorizontally);
+			            IoC.Model.NotifyChanged(this);
+			        });
 			}
 
 			if (KeyboardStatus.IsNewKeyPress(Keys.V))
 			{
 				IMemento memento = IoC.Memento;
-				memento.BeginCommand("Flip Item(s) Vertically");
-
-				flipVertically(!_properties.FlipVertically);
-				IoC.Model.NotifyChanged(this);
-
-				memento.EndCommand();
+			    
+                memento.Record(@"Flip Item(s) Vertically", () =>
+			        {
+			            flipVertically(!_properties.FlipVertically);
+			            IoC.Model.NotifyChanged(this);
+			        });
 			}
+		}
+
+		public void Receive(ContentRootChanged whatChanged)
+		{
+			var disk = ObjectFactory.GetInstance<IDisk>();
+
+			string oldAbsolutePath =
+				Path.Combine(whatChanged.OldContentRootFolder, _properties.TexturePathRelativeToContentRoot);
+
+			string relativePath = disk.MakeRelativePath(whatChanged.NewContentRootFolder, whatChanged.OldContentRootFolder);
+
+			int n = _properties.TexturePathRelativeToContentRoot.LastIndexOf(@"\", StringComparison.Ordinal);
+			string s = _properties.TexturePathRelativeToContentRoot.Substring(n+1);
+
+			string texturePathRelativeToContentRoot = Path.Combine(relativePath,s);
+			_properties.TexturePathRelativeToContentRoot = texturePathRelativeToContentRoot;
+
+			tryInitialiseTexture(_properties.TexturePathRelativeToContentRoot);
+
+			WhenUpdatedByUi();
 		}
 	}
 }

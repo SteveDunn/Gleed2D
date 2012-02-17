@@ -1,45 +1,44 @@
 using System ;
+using System.Xml.Linq;
 using StructureMap ;
 
 namespace Gleed2D.Core
 {
 	public class Command
 	{
+		readonly XElement _levelBefore ;
+		readonly IModel _model ;
+
+		XElement _levelAfter ;
+
 		public string Description
 		{
 			get;
 			private set ;
 		}
 
-		readonly LevelEditor _levelBefore ;
-		LevelEditor _levelAfter ;
-		
-		readonly IModel _model ;
-
 		public Command(string description)
 		{
-			_model = ObjectFactory.GetInstance<IModel>( ) ;
-		
+			_model = ObjectFactory.GetInstance<IModel>();
+
 			Description = description;
 
-			_levelBefore = _model.Level.Clone( ) ;
+			_levelBefore = _model.Level.ToXml();
 		}
 
 		public void Undo()
 		{
-			_model.Level = _levelBefore ;
+			_model.DeserialiseLevel(_levelBefore ) ;
 		}
 
 		public void Redo()
 		{
-			_model.Level = _levelAfter ;
+			_model.DeserialiseLevel(_levelAfter);
 		}
 
 		public void Completed()
 		{
-			var clonedModel = _model.Level.Clone() ;
-
-			_levelAfter=clonedModel;
+		    _levelAfter=_model.Level.ToXml();
 		}
 	}
 }

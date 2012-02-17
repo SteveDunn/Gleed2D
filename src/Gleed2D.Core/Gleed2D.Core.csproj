@@ -145,6 +145,7 @@
     <Compile Include="Controls\PluginDescriptionControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ModelEventHub.cs" />
     <Compile Include="NewModelLoaded.cs" />
     <Compile Include="PathToFile.cs" />
     <Compile Include="PropertyCustomisation.cs" />

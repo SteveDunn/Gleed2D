@@ -91,7 +91,7 @@ namespace Gleed2D.Plugins
 
 		public void Receive(ContentRootChanged subject)
 		{
-			_picker.SetFolder( subject.ContentRootFolder) ;
+			_picker.SetFolder( subject.NewContentRootFolder) ;
 		}
 
 		public void Receive(NewModelLoaded subject)

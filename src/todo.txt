@@ -1,15 +1,16 @@
-Renamed 'Editor' and IEditor to Canvas
+X Rename 'Editor' and IEditor to Canvas
+Have ITreeItem's handle the 'MoveUp' and 'MoveDown' functionality (and out of the MoveItemUp/DownAction)
 Better error trapping and continuation
 Encapsulate name creation
 Have behaviour run even if focus isn't on the canvas
 Have a map of Krypton objects and properties so that the whole Krypton world doesn't have to be rebuilt when a property changes
 Bug: clicking into property grid fires an event and changes selection
-Fix drag drop of textures from toolbox
+X Fix drag drop of textures from toolbox
 Fix dragging - canvas goes blank (doesn't on original)
 
 
  - BEFFORE ANY RELEASE
-Enable drag of shapes from assets tree
+X Enable drag of shapes from assets tree
 Enable property selection from FloatAnimation
 Show behaviour properties from level explorer
 Ability to delete behaviours
@@ -19,7 +20,7 @@ Enable drag of behaviours from assets to tree
 Bug: when got a dirty level, then loading a level from disk (without first saving), the dirty flag remains from the first dirty level
 Finish off About box .
 Exception handling (maybe send e-mail off somewhere?)
-Disable and UI when running behaviours
+Disable all UI when running behaviours
 
 
  - FOR FARSEER RELEASE

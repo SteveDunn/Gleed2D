@@ -1,5 +1,6 @@
 using System ;
 using System.Collections.Generic ;
+using System.Xml.Linq;
 using Gleed2D.Core.Behaviour ;
 using Gleed2D.InGame ;
 
@@ -19,13 +20,12 @@ namespace Gleed2D.Core
 		
 		event EventHandler<ModelUnloadingEventArgs> OnBeforeUnloadingModel ;
 
-		LevelEditor Level
-		{
-			get ;
-			set ;
-		}
+        LevelEditor Level
+        {
+            get;
+        }
 
-		LayerEditor ActiveLayer
+	    LayerEditor ActiveLayer
 		{
 			get ;
 		}
@@ -84,5 +84,6 @@ namespace Gleed2D.Core
 		void SelectLevel( ) ;
 		void AttachBehaviour( ITreeItem target, IBehaviour behaviour) ;
 		void SelectBehaviour( ITreeItem behaviour ) ;
+	    void DeserialiseLevel(XElement xml);
 	}
 }

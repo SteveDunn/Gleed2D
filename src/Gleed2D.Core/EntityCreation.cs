@@ -28,18 +28,13 @@ namespace Gleed2D.Core
 			}
 		}
 
-		public ITreeItem EditorInstance
-		{
-			get ;
-			set ;
-		}
-
 		public void ClearCurrentEditor( )
 		{
 			if( _currentEditor != null )
 			{
 				_currentEditor.PreviewEndedReadyForCreation -= ( s, e ) => _whenEntityReadyToBeAdded( ) ;
 			}
+
 			_currentEditor = null ;
 		}
 	}

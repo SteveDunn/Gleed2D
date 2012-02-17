@@ -2,11 +2,13 @@ namespace Gleed2D.Core
 {
 	public class ContentRootChanged
 	{
-		public string ContentRootFolder { get; private set; }
+		public string OldContentRootFolder { get; private set; }
+		public string NewContentRootFolder { get; private set; }
 
-		public ContentRootChanged(string contentRootFolder)
+		public ContentRootChanged(string oldContentRootFolder, string contentRootFolder)
 		{
-			ContentRootFolder = contentRootFolder;
+			OldContentRootFolder = oldContentRootFolder;
+			NewContentRootFolder = contentRootFolder;
 		}
 	}
 }

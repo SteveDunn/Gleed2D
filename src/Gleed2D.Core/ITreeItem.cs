@@ -9,7 +9,7 @@ namespace Gleed2D.Core
 	public interface ITreeItem
 	{
 		void Update( GameTime gameTime ) ;
-		
+
 		string Name
 		{
 			get ;

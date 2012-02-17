@@ -166,7 +166,7 @@ namespace GLEED2D
 			return _entityCreation;
 		}
 
-		void startCreatingEntity( IEntityCreationProperties properties, bool startNow )
+		void startCreatingEntity( IEntityCreationProperties properties, bool addToCanvasNow )
 		{
 			if( _model.Level.ActiveLayer == null )
 			{
@@ -179,21 +179,21 @@ namespace GLEED2D
 
 			_mainForm.SetCursorForCanvas( Cursors.Cross ) ;
 
-			_entityCreation.StartedCreating = startNow ;
+			_entityCreation.StartedCreating = addToCanvasNow ;
 			_entityCreation.CreationProperties = properties ;
 
 			var extensibility = ObjectFactory.GetInstance<IExtensibility>( ) ;
+
 			var plugin = extensibility.FindPluginInstanceForType( properties.PluginType ) ;
 
-			var editorInstance = (ItemEditor) Activator.CreateInstance( plugin.EditorType ) ;
+			var newEditor = (ItemEditor) Activator.CreateInstance( plugin.EditorType ) ;
 
-			editorInstance.WhenChosenFromToolbox( ) ;
+			newEditor.WhenChosenFromToolbox( ) ;
 	
-			_entityCreation.EditorInstance = editorInstance ;
-
-			if (startNow)
+			if (addToCanvasNow)
 			{
-				_entityCreation.CurrentEditor = buildPrimitiveEditorReadyForDesigning( _entityCreation.CreationProperties ) ;
+				newEditor.CreateInDesignMode( _model.Level.ActiveLayer, _entityCreation.CreationProperties ) ;
+				_entityCreation.CurrentEditor = newEditor;
 			}
 		}
 

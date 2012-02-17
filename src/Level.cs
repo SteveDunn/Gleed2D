@@ -19,7 +19,7 @@ namespace Gleed2D.Core
 		readonly LevelProperties _properties ;
 
 		static DateTime _seedForIdGenerator ;
-		PropertyCustomisation _propertyCustomisationForContentRootFolder;
+		private string _previousContentRootFolder;
 
 		public LevelEditor()
 		{
@@ -34,8 +34,13 @@ namespace Gleed2D.Core
 					CustomProperties = new CustomProperties(),
 					ContentRootFolder = contentRootFolder
 				};
+
+			_previousContentRootFolder = contentRootFolder;
+
+			var contentRootChanged = new ContentRootChanged(_previousContentRootFolder, contentRootFolder);
 			
-			ObjectFactory.GetInstance<IEventHub>().Publish(new ContentRootChanged(contentRootFolder));
+			ObjectFactory.GetInstance<IEventHub>().Publish(contentRootChanged);
+//			ObjectFactory.GetInstance<IModelEventHub>().Publish(contentRootChanged);
 
 			Layers = new List<LayerEditor>
 				{
@@ -48,6 +53,8 @@ namespace Gleed2D.Core
 			TypeLookup.Rehydrate( xml );
 			
 			_properties = xml.Element( @"LevelProperties" ).DeserializedAs<LevelProperties>( ) ;
+
+			_previousContentRootFolder = _properties.ContentRootFolder;
 
 			if( !Directory.Exists( _properties.ContentRootFolder ) )
 			{
@@ -64,9 +71,13 @@ Would you like to change it?".FormatWith( _properties.ContentRootFolder ) ;
 					if( dialogResult == DialogResult.OK )
 					{
 						_properties.ContentRootFolder=folderBrowserDialog.SelectedPath ;
-						ObjectFactory.GetInstance<IEventHub>().Publish(new ContentRootChanged(_properties.ContentRootFolder));
 					}
 				}
+			}
+
+			if (_properties.ContentRootFolder != _previousContentRootFolder)
+			{
+				//ObjectFactory.GetInstance<IEventHub>().Publish(new ContentRootChanged(_previousContentRootFolder, _properties.ContentRootFolder));
 			}
 
 			Behaviours = new BehaviourCollection( _properties, xml );
@@ -76,7 +87,7 @@ Would you like to change it?".FormatWith( _properties.ContentRootFolder ) ;
 			ActiveLayer = Layers.FirstOrDefault( ) ;
 		}
 
-		XElement toXml( )
+		public XElement ToXml( )
 		{
 			var xml = new XElement(
 				new XElement(
@@ -144,7 +155,7 @@ Would you like to change it?".FormatWith( _properties.ContentRootFolder ) ;
 			get
 			{
 				var itemPropertiesWrapper = new ItemPropertiesWrapper<ItemProperties>( _properties ) ;
-				_propertyCustomisationForContentRootFolder = itemPropertiesWrapper.Customise(() => _properties.ContentRootFolder).SetDescription(@"When the level is saved, each texture is saved with a path relative to this folder. You should set this to the ""Content.RootDirectory"" of your game project.").SetDisplayName(@"Content root folder");
+				itemPropertiesWrapper.Customise(() => _properties.ContentRootFolder).SetDescription(@"When the level is saved, each texture is saved with a path relative to this folder. You should set this to the ""Content.RootDirectory"" of your game project.").SetDisplayName(@"Content root folder");
 
 				itemPropertiesWrapper.Customise( ( ) => _properties.NextItemNumber ).SetCategory( @"Editor related" ).Hide( ).MakeReadOnly( ) ;
 
@@ -176,7 +187,19 @@ Would you like to change it?".FormatWith( _properties.ContentRootFolder ) ;
 
 		public void PropertiesChanged(PropertyValueChangedEventArgs whatChanged)
 		{
-			int n = 1;
+			if (whatChanged.ChangedItem.PropertyDescriptor == null)
+			{
+				return;
+			}
+			
+			if( whatChanged.ChangedItem.PropertyDescriptor.Name==@"ContentRootFolder")
+			{
+				var contentRootChanged = new ContentRootChanged(_previousContentRootFolder, _properties.ContentRootFolder);
+				ObjectFactory.GetInstance<IEventHub>().Publish(contentRootChanged );
+				ObjectFactory.GetInstance<IModelEventHub>().Publish(contentRootChanged );
+				
+				_previousContentRootFolder = _properties.ContentRootFolder;
+			}
 		}
 
 		public bool Visible
@@ -207,7 +230,9 @@ Would you like to change it?".FormatWith( _properties.ContentRootFolder ) ;
 
 		public LevelEditor Clone()
 		{
-			var clonedLevel = new LevelEditor(toXml());
+			XElement xElement = ToXml();
+
+			var clonedLevel = new LevelEditor(xElement);
 
 			return clonedLevel;
 		}
@@ -259,7 +284,7 @@ Would you like to change it?".FormatWith( _properties.ContentRootFolder ) ;
 
 			_properties.CameraPosition = editor.Camera.Position ;
 
-			var document = toXml( ) ;
+			var document = ToXml( ) ;
 
 			document.Save( filename ) ;
 		}
@@ -479,7 +504,7 @@ Would you like to change it?".FormatWith( _properties.ContentRootFolder ) ;
 
 			_properties.ContentRootFolder = contentRootFolder ;
 
-			ObjectFactory.GetInstance<IEventHub>().Publish(new ContentRootChanged(contentRootFolder));
+			ObjectFactory.GetInstance<IModelEventHub>().Publish(new ContentRootChanged(contentRootFolder, contentRootFolder));
 			
 			_properties.NextItemNumber = legacyEditorInfo.NextItemNumber ;
 			_properties.Position = legacyEditorInfo.CameraPosition ;
@@ -489,6 +514,11 @@ Would you like to change it?".FormatWith( _properties.ContentRootFolder ) ;
 		public void Update( GameTime gameTime )
 		{
 			Behaviours.ForEach( b => b.Update( gameTime ) ) ;
+		}
+
+		public LevelEditor Level
+		{
+			get { return this; }
 		}
 
 		public BehaviourCollection Behaviours

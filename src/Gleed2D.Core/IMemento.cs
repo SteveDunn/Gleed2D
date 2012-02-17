@@ -4,6 +4,7 @@ namespace Gleed2D.Core
 {
 	public interface IMemento
 	{
+	    void Record(string description, Action action);
 		void BeginCommand( string text ) ;
 		void EndCommand( ) ;
 		void Undo( ) ;

@@ -279,8 +279,7 @@ namespace Gleed2D.Core.Controls
 			if( nodes.Length > 0 )
 			{
 				MessageBox.Show(
-					string.Format(
-						@"A layer or item with the name ""{0}"" already exists in the level. Please use another name!", newName ) ) ;
+					@"A layer or item with the name ""{0}"" already exists in the level. Please use another name!".FormatWith(newName) ) ;
 				e.CancelEdit = true ;
 				return ;
 			}

@@ -132,7 +132,7 @@ namespace Gleed2D.Core.Controls
 		{
 			_memento.EndCommand( ) ;
 
-			_memento.BeginCommand( "Edit '{0}' property".FormatWith( getNameOfChangedItem( e.ChangedItem ) ) ) ;
+			_memento.BeginCommand( @"Edit '{0}' property".FormatWith( getNameOfChangedItem( e.ChangedItem ) ) ) ;
 
 			_currentItem.PropertiesChanged(e);
 

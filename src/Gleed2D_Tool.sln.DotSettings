@@ -1,8 +1,410 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 	<s:String x:Key="/Default/CodeInspection/Highlighting/InspectionSeverities/=LocalizableElement/@EntryIndexedValue">HINT</s:String>
+	<s:String x:Key="/Default/CodeStyle/CodeCleanup/Profiles/=Just_0020reorder_0020type_0020members/@EntryIndexedValue">&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;Profile name="Just reorder type members"&gt;&lt;CSReorderTypeMembers&gt;True&lt;/CSReorderTypeMembers&gt;&lt;/Profile&gt;</s:String>
+	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/EXPLICIT_PRIVATE_MODIFIER/@EntryValue">False</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/INDENT_ANONYMOUS_METHOD_BLOCK/@EntryValue">False</s:Boolean>
 	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/SPACE_WITHIN_SINGLE_LINE_ARRAY_INITIALIZER_BRACES/@EntryValue">True</s:Boolean>
+	<s:String x:Key="/Default/CodeStyle/CSharpMemberOrderPattern/CustomPattern/@EntryValue">&lt;?xml version="1.0" encoding="utf-8" ?&gt;&#xD;
+&#xD;
+&lt;!--&#xD;
+I. Overall&#xD;
+&#xD;
+I.1 Each pattern can have &lt;Match&gt;....&lt;/Match&gt; element. For the given type declaration, the pattern with the match, evaluated to 'true' with the largest weight, will be used &#xD;
+I.2 Each pattern consists of the sequence of &lt;Entry&gt;...&lt;/Entry&gt; elements. Type member declarations are distributed between entries&#xD;
+I.3 If pattern has RemoveAllRegions="true" attribute, then all regions will be cleared prior to reordering. Otherwise, only auto-generated regions will be cleared&#xD;
+I.4 The contents of each entry is sorted by given keys (First key is primary,  next key is secondary, etc). Then the declarations are grouped and en-regioned by given property&#xD;
+&#xD;
+II. Available match operands&#xD;
+&#xD;
+Each operand may have Weight="..." attribute. This weight will be added to the match weight if the operand is evaluated to 'true'.&#xD;
+The default weight is 1&#xD;
+&#xD;
+II.1 Boolean functions:&#xD;
+II.1.1 &lt;And&gt;....&lt;/And&gt;&#xD;
+II.1.2 &lt;Or&gt;....&lt;/Or&gt;&#xD;
+II.1.3 &lt;Not&gt;....&lt;/Not&gt;&#xD;
+&#xD;
+II.2 Operands&#xD;
+II.2.1 &lt;Kind Is="..."/&gt;. Kinds are: class, struct, interface, enum, delegate, type, constructor, destructor, property, indexer, method, operator, field, constant, event, member&#xD;
+II.2.2 &lt;Name Is="..." [IgnoreCase="true/false"] /&gt;. The 'Is' attribute contains regular expression&#xD;
+II.2.3 &lt;HasAttribute CLRName="..." [Inherit="true/false"] /&gt;. The 'CLRName' attribute contains regular expression&#xD;
+II.2.4 &lt;Access Is="..."/&gt;. The 'Is' values are: public, protected, internal, protected internal, private&#xD;
+II.2.5 &lt;Static/&gt;&#xD;
+II.2.6 &lt;Abstract/&gt;&#xD;
+II.2.7 &lt;Virtual/&gt;&#xD;
+II.2.8 &lt;Override/&gt;&#xD;
+II.2.9 &lt;Sealed/&gt;&#xD;
+II.2.10 &lt;Readonly/&gt;&#xD;
+II.2.11 &lt;ImplementsInterface CLRName="..."/&gt;. The 'CLRName' attribute contains regular expression&#xD;
+II.2.12 &lt;HandlesEvent /&gt;&#xD;
+--&gt;&#xD;
+&#xD;
+&lt;Patterns xmlns="urn:shemas-jetbrains-com:member-reordering-patterns"&gt;&#xD;
+&#xD;
+    &lt;!--Do not reorder COM interfaces and structs marked by StructLayout attribute--&gt;&#xD;
+    &lt;Pattern&gt;&#xD;
+        &lt;Match&gt;&#xD;
+            &lt;Or Weight="100"&gt;&#xD;
+                &lt;And&gt;&#xD;
+                    &lt;Kind Is="interface"/&gt;&#xD;
+                    &lt;Or&gt;&#xD;
+                        &lt;HasAttribute CLRName="System.Runtime.InteropServices.InterfaceTypeAttribute"/&gt;&#xD;
+                        &lt;HasAttribute CLRName="System.Runtime.InteropServices.ComImport"/&gt;&#xD;
+                    &lt;/Or&gt;&#xD;
+                &lt;/And&gt;&#xD;
+                &lt;HasAttribute CLRName="System.Runtime.InteropServices.StructLayoutAttribute"/&gt;&#xD;
+            &lt;/Or&gt;&#xD;
+        &lt;/Match&gt;&#xD;
+    &lt;/Pattern&gt;&#xD;
+&#xD;
+    &lt;!--Special formatting of NUnit test fixture--&gt;&#xD;
+    &lt;Pattern RemoveAllRegions="true"&gt;&#xD;
+        &lt;Match&gt;&#xD;
+            &lt;And Weight="100"&gt;&#xD;
+                &lt;Kind Is="class"/&gt;&#xD;
+                &lt;HasAttribute CLRName="NUnit.Framework.TestFixtureAttribute" Inherit="true"/&gt;&#xD;
+            &lt;/And&gt;&#xD;
+        &lt;/Match&gt;&#xD;
+&#xD;
+        &lt;!--Setup/Teardow--&gt;&#xD;
+        &lt;Entry&gt;&#xD;
+            &lt;Match&gt;&#xD;
+                &lt;And&gt;&#xD;
+                    &lt;Kind Is="method"/&gt;&#xD;
+                    &lt;Or&gt;&#xD;
+                        &lt;HasAttribute CLRName="NUnit.Framework.SetUpAttribute" Inherit="true"/&gt;&#xD;
+                        &lt;HasAttribute CLRName="NUnit.Framework.TearDownAttribute" Inherit="true"/&gt;&#xD;
+                        &lt;HasAttribute CLRName="NUnit.Framework.FixtureSetUpAttribute" Inherit="true"/&gt;&#xD;
+                        &lt;HasAttribute CLRName="NUnit.Framework.FixtureTearDownAttribute" Inherit="true"/&gt;&#xD;
+                    &lt;/Or&gt;&#xD;
+                &lt;/And&gt;&#xD;
+            &lt;/Match&gt;&#xD;
+            &lt;Group Region="Setup/Teardown"/&gt;&#xD;
+        &lt;/Entry&gt;&#xD;
+&#xD;
+        &lt;!--All other members--&gt;&#xD;
+        &lt;Entry/&gt;&#xD;
+&#xD;
+        &lt;!--Test methods--&gt;&#xD;
+        &lt;Entry&gt;&#xD;
+            &lt;Match&gt;&#xD;
+                &lt;And Weight="100"&gt;&#xD;
+                    &lt;Kind Is="method"/&gt;&#xD;
+                    &lt;HasAttribute CLRName="NUnit.Framework.TestAttribute" Inherit="false"/&gt;&#xD;
+                &lt;/And&gt;&#xD;
+            &lt;/Match&gt;&#xD;
+            &lt;Sort&gt;&#xD;
+                &lt;Name/&gt;&#xD;
+            &lt;/Sort&gt;&#xD;
+        &lt;/Entry&gt;&#xD;
+    &lt;/Pattern&gt;&#xD;
+&#xD;
+    &lt;!--Default pattern--&gt;&#xD;
+    &lt;Pattern&gt;&#xD;
+&#xD;
+        &lt;!--fields and constants--&gt;&#xD;
+        &lt;Entry&gt;&#xD;
+            &lt;Match&gt;&#xD;
+                &lt;Or&gt;&#xD;
+                    &lt;Kind Is="constant"/&gt;&#xD;
+                    &lt;Kind Is="field"/&gt;&#xD;
+                &lt;/Or&gt;&#xD;
+            &lt;/Match&gt;&#xD;
+            &lt;Sort&gt;&#xD;
+                &lt;Kind Order="constant field"/&gt;&#xD;
+                &lt;Readonly/&gt;&#xD;
+                &lt;Static/&gt;&#xD;
+                &lt;Name/&gt;&#xD;
+            &lt;/Sort&gt;&#xD;
+        &lt;/Entry&gt;&#xD;
+&#xD;
+        &lt;!--Static constructors&#xD;
+This is needed as there is a bug in "Type Members Layout".   R# doesn't see a static constructor as public as there is no public keyword present (or allowed). &#xD;
+It takes the declaration of the static constructor [static MyClass( )] as private.  If I change this to the illegal declaration of [public static MyClass( )], then this &#xD;
+entry works (although obvisouly it doesn't compile).  A bug has been raised for this.&#xD;
+--&gt;&#xD;
+        &lt;Entry&gt;&#xD;
+            &lt;Match&gt;&#xD;
+                &lt;Kind Is="constructor"/&gt;&#xD;
+            &lt;/Match&gt;&#xD;
+            &lt;Sort&gt;&#xD;
+                &lt;Static/&gt;&#xD;
+            &lt;/Sort&gt;&#xD;
+        &lt;/Entry&gt;&#xD;
+&#xD;
+        &lt;!--Non static constructors--&gt;&#xD;
+        &lt;Entry&gt;&#xD;
+            &lt;Match&gt;&#xD;
+                &lt;Kind Is="constructor"/&gt;&#xD;
+            &lt;/Match&gt;&#xD;
+            &lt;Sort&gt;&#xD;
+                &lt;Access Order="public internal protected-internal protected private" /&gt;&#xD;
+                &lt;Static/&gt;&#xD;
+                &lt;Abstract/&gt;&#xD;
+                &lt;Virtual/&gt;&#xD;
+                &lt;Override/&gt;&#xD;
+                &lt;Name/&gt;&#xD;
+            &lt;/Sort&gt;&#xD;
+        &lt;/Entry&gt;&#xD;
+&#xD;
+        &lt;!--Destructors--&gt;&#xD;
+        &lt;Entry&gt;&#xD;
+            &lt;Match&gt;&#xD;
+                &lt;Kind Is="destructor"/&gt;&#xD;
+            &lt;/Match&gt;&#xD;
+        &lt;/Entry&gt;&#xD;
+&#xD;
+        &lt;!--Delegates--&gt;&#xD;
+        &lt;Entry&gt;&#xD;
+            &lt;Match&gt;&#xD;
+                &lt;Kind Is="delegate"/&gt;&#xD;
+            &lt;/Match&gt;&#xD;
+            &lt;Sort&gt;&#xD;
+                &lt;Access Order="public internal protected-internal protected private" /&gt;&#xD;
+                &lt;Name/&gt;&#xD;
+            &lt;/Sort&gt;&#xD;
+        &lt;/Entry&gt;&#xD;
+&#xD;
+        &lt;!--Events --&gt;&#xD;
+        &lt;Entry&gt;&#xD;
+            &lt;Match&gt;&#xD;
+                &lt;Kind Is="event"/&gt;&#xD;
+            &lt;/Match&gt;&#xD;
+            &lt;Sort&gt;&#xD;
+                &lt;Access Order="public internal protected-internal protected private" /&gt;&#xD;
+                &lt;Name/&gt;&#xD;
+            &lt;/Sort&gt;&#xD;
+        &lt;/Entry&gt;&#xD;
+&#xD;
+        &lt;!--Enums--&gt;&#xD;
+        &lt;Entry&gt;&#xD;
+            &lt;Match&gt;&#xD;
+                &lt;Kind Is="enum"/&gt;&#xD;
+            &lt;/Match&gt;&#xD;
+            &lt;Sort&gt;&#xD;
+                &lt;Access Order="public internal protected-internal protected private" /&gt;&#xD;
+                &lt;Name/&gt;&#xD;
+            &lt;/Sort&gt;&#xD;
+        &lt;/Entry&gt;&#xD;
+&#xD;
+        &lt;!--Interfaces--&gt;&#xD;
+        &lt;Entry&gt;&#xD;
+            &lt;Match&gt;&#xD;
+                &lt;Kind Is="interface"/&gt;&#xD;
+            &lt;/Match&gt;&#xD;
+            &lt;Sort&gt;&#xD;
+                &lt;Access Order="public internal protected-internal protected private" /&gt;&#xD;
+                &lt;Name/&gt;&#xD;
+            &lt;/Sort&gt;&#xD;
+        &lt;/Entry&gt;&#xD;
+&#xD;
+        &lt;!--properties, indexers--&gt;&#xD;
+        &lt;Entry&gt;&#xD;
+            &lt;Match&gt;&#xD;
+                &lt;Or&gt;&#xD;
+                    &lt;Kind Is="property"/&gt;&#xD;
+                    &lt;Kind Is="indexer"/&gt;&#xD;
+                &lt;/Or&gt;&#xD;
+            &lt;/Match&gt;&#xD;
+            &lt;Sort&gt;&#xD;
+                &lt;Access Order="public internal protected-internal protected private" /&gt;&#xD;
+                &lt;Static/&gt;&#xD;
+                &lt;Abstract/&gt;&#xD;
+                &lt;Virtual/&gt;&#xD;
+                &lt;Override/&gt;&#xD;
+                &lt;Name/&gt;&#xD;
+            &lt;/Sort&gt;&#xD;
+        &lt;/Entry&gt;&#xD;
+&#xD;
+        &lt;!--interface implementations--&gt;&#xD;
+        &lt;Entry&gt;&#xD;
+            &lt;Match&gt;&#xD;
+                &lt;And Weight="100"&gt;&#xD;
+                    &lt;Kind Is="member"/&gt;&#xD;
+                    &lt;ImplementsInterface/&gt;&#xD;
+                &lt;/And&gt;&#xD;
+            &lt;/Match&gt;&#xD;
+            &lt;Sort&gt;&#xD;
+                &lt;ImplementsInterface Immediate="true"/&gt;&#xD;
+            &lt;/Sort&gt;&#xD;
+            &lt;Group&gt;&#xD;
+                &lt;ImplementsInterface Immediate="true" Region="${ImplementsInterface} Members"/&gt;&#xD;
+            &lt;/Group&gt;&#xD;
+        &lt;/Entry&gt;&#xD;
+&#xD;
+        &lt;!-- Methods and operators --&gt;&#xD;
+        &lt;Entry&gt;&#xD;
+            &lt;Match&gt;&#xD;
+                &lt;And&gt;&#xD;
+                    &lt;Or&gt;&#xD;
+                        &lt;Kind Is="method"/&gt;&#xD;
+                        &lt;Kind Is="operator"/&gt;&#xD;
+                        &lt;HandlesEvent/&gt;&#xD;
+                    &lt;/Or&gt;&#xD;
+                    &lt;Not&gt;&#xD;
+                        &lt;Kind Is="destructor"/&gt;&#xD;
+                    &lt;/Not&gt;&#xD;
+                &lt;/And&gt;&#xD;
+            &lt;/Match&gt;&#xD;
+            &lt;Sort&gt;&#xD;
+                &lt;Access Order="public internal protected-internal protected private" /&gt;&#xD;
+                &lt;Static/&gt;&#xD;
+                &lt;Abstract/&gt;&#xD;
+                &lt;Virtual/&gt;&#xD;
+                &lt;Override/&gt;&#xD;
+                &lt;Name/&gt;&#xD;
+            &lt;/Sort&gt;&#xD;
+        &lt;/Entry&gt;&#xD;
+&#xD;
+        &lt;!--Structs--&gt;&#xD;
+        &lt;Entry&gt;&#xD;
+            &lt;Match&gt;&#xD;
+                &lt;Kind Is="struct"/&gt;&#xD;
+            &lt;/Match&gt;&#xD;
+            &lt;Sort&gt;&#xD;
+                &lt;Access Order="public internal protected-internal protected private" /&gt;&#xD;
+                &lt;Name/&gt;&#xD;
+            &lt;/Sort&gt;&#xD;
+        &lt;/Entry&gt;&#xD;
+&#xD;
+        &lt;!--Classes--&gt;&#xD;
+        &lt;Entry&gt;&#xD;
+            &lt;Match&gt;&#xD;
+                &lt;Kind Is="class"/&gt;&#xD;
+            &lt;/Match&gt;&#xD;
+            &lt;Sort&gt;&#xD;
+                &lt;Access Order="public internal protected-internal protected private" /&gt;&#xD;
+                &lt;Static/&gt;&#xD;
+                &lt;Name/&gt;&#xD;
+            &lt;/Sort&gt;&#xD;
+        &lt;/Entry&gt;&#xD;
+&#xD;
+&#xD;
+&#xD;
+        &lt;!--all other members--&gt;&#xD;
+        &lt;Entry/&gt;&#xD;
+&#xD;
+        &lt;!--nested types (SA1201 - All classes must be placed after all constructors.)--&gt;&#xD;
+        &lt;Entry&gt;&#xD;
+            &lt;Match&gt;&#xD;
+                &lt;Kind Is="type"/&gt;&#xD;
+            &lt;/Match&gt;&#xD;
+            &lt;Sort&gt;&#xD;
+                &lt;Name/&gt;&#xD;
+            &lt;/Sort&gt;&#xD;
+            &lt;Group&gt;&#xD;
+                &lt;Name Region="Nested type: ${Name}"/&gt;&#xD;
+            &lt;/Group&gt;&#xD;
+        &lt;/Entry&gt;&#xD;
+    &lt;/Pattern&gt;&#xD;
+&#xD;
+&lt;/Patterns&gt;&#xD;
+</s:String>
 	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/UserRules/=7fa1b5cc_002D0969_002D4fa6_002Dbab0_002Dba93f1df481d/@EntryIndexedValue">&lt;Policy&gt;&lt;Descriptor Staticness="Static, Instance" AccessRightKinds="Private" Description="Private method is camelCased"&gt;&lt;ElementKinds&gt;&lt;Kind Name="CLASS" /&gt;&lt;Kind Name="METHOD" /&gt;&lt;/ElementKinds&gt;&lt;/Descriptor&gt;&lt;Policy Inspect="True" Prefix="" Suffix="" Style="aaBb" /&gt;&lt;/Policy&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UserInterface/ShortcutSchemeName/@EntryValue">None</s:String>
 	<s:String x:Key="/Default/Environment/Hierarchy/PsiConfiguration/LocationType/@EntryValue">TEMP_FOLDER</s:String>
 	<s:String x:Key="/Default/CodeStyle/CSharpUsing/KeepImports/=System/@EntryIndexedValue">System</s:String>
-	<s:String x:Key="/Default/CodeStyle/CSharpUsing/MandatoryImports/=System/@EntryIndexedValue">System</s:String></wpf:ResourceDictionary>
+	<s:String x:Key="/Default/CodeStyle/CSharpUsing/MandatoryImports/=System/@EntryIndexedValue">System</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=15A824112A55B543A2EEA22B8F2B4C2A/@KeyIndexDefined">False</s:Boolean>
+	
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=15A824112A55B543A2EEA22B8F2B4C2A/CustomPatternPlaceholder/=someparams/Properties/=Maximal/@EntryIndexedValue"></s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=15A824112A55B543A2EEA22B8F2B4C2A/CustomPatternPlaceholder/=someparams/Properties/=Maximal/@EntryIndexRemoved">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=15A824112A55B543A2EEA22B8F2B4C2A/CustomPatternPlaceholder/=someparams/Properties/=Minimal/@EntryIndexedValue"></s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=15A824112A55B543A2EEA22B8F2B4C2A/CustomPatternPlaceholder/=someparams/Properties/=Minimal/@EntryIndexRemoved">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=15A824112A55B543A2EEA22B8F2B4C2A/CustomPatternPlaceholder/=someparams/Type/@EntryValue"></s:String>
+	
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=15A824112A55B543A2EEA22B8F2B4C2A/CustomPatternPlaceholder/=sometext/Properties/=ExactType/@EntryIndexedValue"></s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=15A824112A55B543A2EEA22B8F2B4C2A/CustomPatternPlaceholder/=sometext/Properties/=ExactType/@EntryIndexRemoved">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=15A824112A55B543A2EEA22B8F2B4C2A/CustomPatternPlaceholder/=sometext/Properties/=ExpressionType/@EntryIndexedValue"></s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=15A824112A55B543A2EEA22B8F2B4C2A/CustomPatternPlaceholder/=sometext/Properties/=ExpressionType/@EntryIndexRemoved">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=15A824112A55B543A2EEA22B8F2B4C2A/CustomPatternPlaceholder/=sometext/Properties/=Type/@EntryIndexedValue"></s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=15A824112A55B543A2EEA22B8F2B4C2A/CustomPatternPlaceholder/=sometext/Properties/=Type/@EntryIndexRemoved">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=15A824112A55B543A2EEA22B8F2B4C2A/CustomPatternPlaceholder/=sometext/Type/@EntryValue"></s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=15A824112A55B543A2EEA22B8F2B4C2A/IsReplacePattern/@EntryValue">False</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=15A824112A55B543A2EEA22B8F2B4C2A/LanguageName/@EntryValue"></s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=15A824112A55B543A2EEA22B8F2B4C2A/ReplaceComment/@EntryValue"></s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=15A824112A55B543A2EEA22B8F2B4C2A/ReplacePattern/@EntryValue"></s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=15A824112A55B543A2EEA22B8F2B4C2A/SearchPattern/@EntryValue"></s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=15A824112A55B543A2EEA22B8F2B4C2A/Severity/@EntryValue">DO_NOT_SHOW</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=2B3708785E10F041BEAE0110BDC06A0C/@KeyIndexDefined">False</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=2B3708785E10F041BEAE0110BDC06A0C/CustomPatternPlaceholder/=someparams/Properties/=Maximal/@EntryIndexedValue"></s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=2B3708785E10F041BEAE0110BDC06A0C/CustomPatternPlaceholder/=someparams/Properties/=Maximal/@EntryIndexRemoved">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=2B3708785E10F041BEAE0110BDC06A0C/CustomPatternPlaceholder/=someparams/Properties/=Minimal/@EntryIndexedValue"></s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=2B3708785E10F041BEAE0110BDC06A0C/CustomPatternPlaceholder/=someparams/Properties/=Minimal/@EntryIndexRemoved">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=2B3708785E10F041BEAE0110BDC06A0C/CustomPatternPlaceholder/=someparams/Type/@EntryValue"></s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=2B3708785E10F041BEAE0110BDC06A0C/CustomPatternPlaceholder/=sometext/Properties/=ExactType/@EntryIndexedValue"></s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=2B3708785E10F041BEAE0110BDC06A0C/CustomPatternPlaceholder/=sometext/Properties/=ExactType/@EntryIndexRemoved">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=2B3708785E10F041BEAE0110BDC06A0C/CustomPatternPlaceholder/=sometext/Properties/=ExpressionType/@EntryIndexedValue"></s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=2B3708785E10F041BEAE0110BDC06A0C/CustomPatternPlaceholder/=sometext/Properties/=ExpressionType/@EntryIndexRemoved">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=2B3708785E10F041BEAE0110BDC06A0C/CustomPatternPlaceholder/=sometext/Type/@EntryValue"></s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=2B3708785E10F041BEAE0110BDC06A0C/IsReplacePattern/@EntryValue">False</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=2B3708785E10F041BEAE0110BDC06A0C/LanguageName/@EntryValue"></s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=2B3708785E10F041BEAE0110BDC06A0C/ReplaceComment/@EntryValue"></s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=2B3708785E10F041BEAE0110BDC06A0C/ReplacePattern/@EntryValue"></s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=2B3708785E10F041BEAE0110BDC06A0C/SearchPattern/@EntryValue"></s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=2B3708785E10F041BEAE0110BDC06A0C/Severity/@EntryValue">DO_NOT_SHOW</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=B781FF092065BB4B9AF2BA64D623D9D0/SearchPattern/@EntryValue">string.Format($sometext$,$someparams$)</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=D3D6E894D02D634CA6266BDF2D16443E/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=D3D6E894D02D634CA6266BDF2D16443E/Comment/@EntryValue">Use extension method myList.ForEach</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=D3D6E894D02D634CA6266BDF2D16443E/CustomPatternPlaceholder/=act/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=D3D6E894D02D634CA6266BDF2D16443E/CustomPatternPlaceholder/=act/Properties/=Maximal/@EntryIndexedValue">-1</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=D3D6E894D02D634CA6266BDF2D16443E/CustomPatternPlaceholder/=act/Properties/=Minimal/@EntryIndexedValue">-1</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=D3D6E894D02D634CA6266BDF2D16443E/CustomPatternPlaceholder/=act/Type/@EntryValue">StatementPlaceholder</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=D3D6E894D02D634CA6266BDF2D16443E/CustomPatternPlaceholder/=list/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=D3D6E894D02D634CA6266BDF2D16443E/CustomPatternPlaceholder/=list/Properties/=ExactType/@EntryIndexedValue">False</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=D3D6E894D02D634CA6266BDF2D16443E/CustomPatternPlaceholder/=list/Properties/=Type/@EntryIndexedValue">System.Collections.IEnumerable</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=D3D6E894D02D634CA6266BDF2D16443E/CustomPatternPlaceholder/=list/Type/@EntryValue">TypePlaceholder</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=D3D6E894D02D634CA6266BDF2D16443E/CustomPatternPlaceholder/=name/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=D3D6E894D02D634CA6266BDF2D16443E/CustomPatternPlaceholder/=name/Properties/=ExactType/@EntryIndexedValue">True</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=D3D6E894D02D634CA6266BDF2D16443E/CustomPatternPlaceholder/=name/Properties/=ExpressionType/@EntryIndexedValue">System.Object</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=D3D6E894D02D634CA6266BDF2D16443E/CustomPatternPlaceholder/=name/Type/@EntryValue">ExpressionPlaceholder</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=D3D6E894D02D634CA6266BDF2D16443E/CustomPatternPlaceholder/=thing/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=D3D6E894D02D634CA6266BDF2D16443E/CustomPatternPlaceholder/=thing/Properties/=ExactType/@EntryIndexedValue">False</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=D3D6E894D02D634CA6266BDF2D16443E/CustomPatternPlaceholder/=thing/Properties/=Type/@EntryIndexedValue"></s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=D3D6E894D02D634CA6266BDF2D16443E/CustomPatternPlaceholder/=thing/Type/@EntryValue">TypePlaceholder</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=D3D6E894D02D634CA6266BDF2D16443E/IsReplacePattern/@EntryValue">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=D3D6E894D02D634CA6266BDF2D16443E/LanguageName/@EntryValue">CSHARP</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=D3D6E894D02D634CA6266BDF2D16443E/ReplacePattern/@EntryValue">$list$.ForEach($name$=&gt;{ $act$ } ) ;</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=D3D6E894D02D634CA6266BDF2D16443E/SearchPattern/@EntryValue">foreach( $thing$ $name$ in $list$ )&#xD;
+$act$</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=EDE6F2C0D52D464E9D1391DE406B6A57/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=EDE6F2C0D52D464E9D1391DE406B6A57/Comment/@EntryValue">Use Memento.Record</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=EDE6F2C0D52D464E9D1391DE406B6A57/CustomPatternPlaceholder/=description/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=EDE6F2C0D52D464E9D1391DE406B6A57/CustomPatternPlaceholder/=description/Properties/=ExactType/@EntryIndexedValue">False</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=EDE6F2C0D52D464E9D1391DE406B6A57/CustomPatternPlaceholder/=description/Properties/=ExpressionType/@EntryIndexedValue">String</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=EDE6F2C0D52D464E9D1391DE406B6A57/CustomPatternPlaceholder/=description/Type/@EntryValue">ExpressionPlaceholder</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=EDE6F2C0D52D464E9D1391DE406B6A57/CustomPatternPlaceholder/=memento/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=EDE6F2C0D52D464E9D1391DE406B6A57/CustomPatternPlaceholder/=memento/Properties/=ExactType/@EntryIndexedValue">False</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=EDE6F2C0D52D464E9D1391DE406B6A57/CustomPatternPlaceholder/=memento/Properties/=ExpressionType/@EntryIndexedValue">Gleed2D.Core.IMemento</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=EDE6F2C0D52D464E9D1391DE406B6A57/CustomPatternPlaceholder/=memento/Type/@EntryValue">ExpressionPlaceholder</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=EDE6F2C0D52D464E9D1391DE406B6A57/CustomPatternPlaceholder/=stuffInbetween/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=EDE6F2C0D52D464E9D1391DE406B6A57/CustomPatternPlaceholder/=stuffInbetween/Properties/=Maximal/@EntryIndexedValue">-1</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=EDE6F2C0D52D464E9D1391DE406B6A57/CustomPatternPlaceholder/=stuffInbetween/Properties/=Minimal/@EntryIndexedValue">1</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=EDE6F2C0D52D464E9D1391DE406B6A57/CustomPatternPlaceholder/=stuffInbetween/Type/@EntryValue">StatementPlaceholder</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=EDE6F2C0D52D464E9D1391DE406B6A57/IsReplacePattern/@EntryValue">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=EDE6F2C0D52D464E9D1391DE406B6A57/LanguageName/@EntryValue">CSHARP</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=EDE6F2C0D52D464E9D1391DE406B6A57/ReplacePattern/@EntryValue">$memento$.Record($description$, ()=&gt; { $stuffInbetween$ } ) ;</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=EDE6F2C0D52D464E9D1391DE406B6A57/SearchPattern/@EntryValue">$memento$.BeginCommand( $description$ ) ;&#xD;
+$stuffInbetween$&#xD;
+$memento$.EndCommand( ) ;&#xD;
+</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=EDE6F2C0D52D464E9D1391DE406B6A57/Severity/@EntryValue">SUGGESTION</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=F90295662079C04DBF3928C62B17791D/@KeyIndexDefined">False</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=F90295662079C04DBF3928C62B17791D/CustomPatternPlaceholder/=someparams/Properties/=Maximal/@EntryIndexedValue"></s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=F90295662079C04DBF3928C62B17791D/CustomPatternPlaceholder/=someparams/Properties/=Maximal/@EntryIndexRemoved">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=F90295662079C04DBF3928C62B17791D/CustomPatternPlaceholder/=someparams/Properties/=Minimal/@EntryIndexedValue"></s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=F90295662079C04DBF3928C62B17791D/CustomPatternPlaceholder/=someparams/Properties/=Minimal/@EntryIndexRemoved">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=F90295662079C04DBF3928C62B17791D/CustomPatternPlaceholder/=someparams/Type/@EntryValue"></s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=F90295662079C04DBF3928C62B17791D/CustomPatternPlaceholder/=sometext/Properties/=ExactType/@EntryIndexedValue"></s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=F90295662079C04DBF3928C62B17791D/CustomPatternPlaceholder/=sometext/Properties/=ExactType/@EntryIndexRemoved">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=F90295662079C04DBF3928C62B17791D/CustomPatternPlaceholder/=sometext/Properties/=ExpressionType/@EntryIndexedValue"></s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=F90295662079C04DBF3928C62B17791D/CustomPatternPlaceholder/=sometext/Properties/=ExpressionType/@EntryIndexRemoved">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=F90295662079C04DBF3928C62B17791D/CustomPatternPlaceholder/=sometext/Properties/=Type/@EntryIndexedValue"></s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=F90295662079C04DBF3928C62B17791D/CustomPatternPlaceholder/=sometext/Properties/=Type/@EntryIndexRemoved">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=F90295662079C04DBF3928C62B17791D/CustomPatternPlaceholder/=sometext/Type/@EntryValue"></s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=F90295662079C04DBF3928C62B17791D/IsReplacePattern/@EntryValue">False</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=F90295662079C04DBF3928C62B17791D/LanguageName/@EntryValue"></s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=F90295662079C04DBF3928C62B17791D/ReplaceComment/@EntryValue"></s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=F90295662079C04DBF3928C62B17791D/ReplacePattern/@EntryValue"></s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=F90295662079C04DBF3928C62B17791D/SearchPattern/@EntryValue"></s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=F90295662079C04DBF3928C62B17791D/Severity/@EntryValue">DO_NOT_SHOW</s:String></wpf:ResourceDictionary>

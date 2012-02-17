@@ -16,7 +16,14 @@ namespace Gleed2D.Core
 		public event EventHandler<CommandEndedArgs> OnCommandUndone ;
 		public event EventHandler<CommandEndedArgs> OnCommandRedone ;
 
-		public void BeginCommand( string description )
+	    public void Record(string description, Action action)
+	    {
+	        BeginCommand(description);
+	        action();
+            EndCommand();
+	    }
+
+	    public void BeginCommand( string description )
 		{
 			if( _commandInProgress )
 			{

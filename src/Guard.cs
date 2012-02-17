@@ -1,8 +1,13 @@
 using System ;
 using System.Collections ;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis ;
 using System.Linq ;
 using JetBrains.Annotations ;
+
+internal class CoverageExcludeAttribute : Attribute
+{
+}
 
 /// <summary>
 /// Guard class, used for guard clauses and argument validation.
@@ -14,6 +19,7 @@ using JetBrains.Annotations ;
 [CoverageExclude]
 static class Guard
 {
+	[DebuggerHidden]
 	[AssertionMethod]
 	public static void ArgumentNotNull< T >(
 		[InvokerParameterName] string argName,
@@ -25,6 +31,19 @@ static class Guard
 		}
 	}
 
+	[DebuggerHidden]
+	[AssertionMethod]
+	public static void GenericArgumentNotNull<T>([InvokerParameterName] string argName, T arg)
+		{
+			Type type = typeof(T);
+
+			if (!type.IsValueType || (type.IsGenericType && (type.GetGenericTypeDefinition() == typeof(Nullable<>))))
+			{
+				ArgumentNotNull(argName, (object) arg);
+			}
+		}
+
+	[DebuggerHidden]
 	[AssertionMethod]
 	public static void ArgumentsNotNull(
 		[InvokerParameterName] string argName,
@@ -38,6 +57,7 @@ static class Guard
 		}
 	}
 
+	[DebuggerHidden]
 	[AssertionMethod]
 	public static void StringArgumentNotEmpty(
 		[InvokerParameterName] string argName,
@@ -51,6 +71,7 @@ static class Guard
 		}
 	}
 
+	[DebuggerHidden]
 	[AssertionMethod]
 	public static void StringArgumentNotNullOrEmpty(
 		[InvokerParameterName] string argName,
@@ -60,6 +81,7 @@ static class Guard
 		StringArgumentNotEmpty( argName, argValue ) ;
 	}
 
+	[DebuggerHidden]
 	[SuppressMessage(
 		"Microsoft.Usage",
 		"CA2208:InstantiateArgumentExceptionsCorrectly",

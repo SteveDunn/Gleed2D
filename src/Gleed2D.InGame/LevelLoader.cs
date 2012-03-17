@@ -6,12 +6,14 @@ namespace Gleed2D.InGame
 	/// <summary>
 	/// A utility class to load levels from within the game.
 	/// </summary>
+// ReSharper disable UnusedMember.Global
 	public static class LevelLoader
 	{
-		public static Level Load(XElement e)
+		public static Level Load(XElement xml)
 		{
-			TypeLookup.Rehydrate( e );
-			return new Level( e ) ;
+			TypeLookup.Rehydrate( xml );
+			return new Level( xml ) ;
 		}
 	}
+// ReSharper restore UnusedMember.Global
 }

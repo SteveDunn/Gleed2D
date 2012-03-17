@@ -7,8 +7,6 @@ namespace Gleed2D.InGame
 	[DebuggerDisplay("AbsolutePath={AbsolutePath}, Exists={Exists}")]
 	public class PathToFolder
 	{
-//		public event EventHandler<PathToFolderChangedEventArgs> PathChanging ;
-
 		string _absolutePath ;
 
 		public PathToFolder( string path )

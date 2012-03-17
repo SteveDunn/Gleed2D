@@ -1,3 +1,15 @@
+Actions/Commands
+---------------
+No undo
+---
+Add Layer has no undo/redo
+
+HAS undo
+---
+Add shape (all)
+Add texture
+
+
 X Rename 'Editor' and IEditor to Canvas
 Have ITreeItem's handle the 'MoveUp' and 'MoveDown' functionality (and out of the MoveItemUp/DownAction)
 Better error trapping and continuation

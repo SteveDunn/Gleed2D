@@ -1,7 +1,6 @@
 using System ;
 using System.ComponentModel ;
 using System.Globalization ;
-using Gleed2D.InGame ;
 
 namespace Gleed2D.Core.CustomUITypeEditors
 {

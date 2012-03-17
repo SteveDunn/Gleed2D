@@ -63,10 +63,7 @@ namespace Gleed2D.Core
 				}
 			}
 
-			var newLevel = new LevelEditor
-				{
-					Version = ObjectFactory.GetInstance<IGetAssemblyInformation>( ).Version
-				} ;
+	        var newLevel = new LevelEditor();
 
 			LoadLevel( newLevel ) ;
 
@@ -361,31 +358,28 @@ The corresponding Custom Properties have been set to NULL, since the Item referr
 
 		public void MoveEditorUp( ItemEditor i )
 		{
-			_memento.BeginCommand( @"Move editor up '{0}'".FormatWith(i.Name) ) ;
+		    _memento.Record(@"Move editor up '{0}'".FormatWith(i.Name), () =>
+		        {
+		            int index = i.ParentLayer.Items.IndexOf( i ) ;
+		            i.ParentLayer.Items[ index ] = i.ParentLayer.Items[ index - 1 ] ;
+		            i.ParentLayer.Items[ index - 1 ] = i ;
+		        });
 
-			int index = i.ParentLayer.Items.IndexOf( i ) ;
-
-			i.ParentLayer.Items[ index ] = i.ParentLayer.Items[ index - 1 ] ;
-			i.ParentLayer.Items[ index - 1 ] = i ;
-
-			_memento.EndCommand( ) ;
-
-			SelectEditor( i ) ;
+		    SelectEditor( i ) ;
 
 			tryFire( ( ) => ItemsRearrangedInLayer, i ) ;
 		}
 
 		public void MoveEditorDown( ItemEditor editor )
 		{
-			_memento.BeginCommand( @"Move editor down'{0}'".FormatWith(editor.Name) ) ;
+		    _memento.Record(@"Move editor down'{0}'".FormatWith(editor.Name), () =>
+		        {
+		            int index = editor.ParentLayer.Items.IndexOf( editor ) ;
+		            editor.ParentLayer.Items[ index ] = editor.ParentLayer.Items[ index + 1 ] ;
+		            editor.ParentLayer.Items[ index + 1 ] = editor ;
+		        });
 
-			int index = editor.ParentLayer.Items.IndexOf( editor ) ;
-			editor.ParentLayer.Items[ index ] = editor.ParentLayer.Items[ index + 1 ] ;
-			editor.ParentLayer.Items[ index + 1 ] = editor ;
-
-			_memento.EndCommand( ) ;
-
-			SelectEditor( editor ) ;
+		    SelectEditor( editor ) ;
 
 			tryFire( ( ) => ItemsRearrangedInLayer, editor ) ;
 		}
@@ -453,91 +447,77 @@ The corresponding Custom Properties have been set to NULL, since the Item referr
 				return ;
 			}
 
-			_memento.BeginCommand( @"Copy Item(s) To Layer '{0}'".FormatWith(layer.Name) ) ;
+		    List<ItemEditor> clonedEditors = null;
+		   
+		    _memento.Record(@"Copy Item(s) To Layer '{0}'".FormatWith(layer.Name), () => { clonedEditors = Level.CopySelectedEditorsToLayer( layer ).ToList( ) ; });
 
-			var clonedEditors = Level.CopySelectedEditorsToLayer( layer ).ToList( ) ;
-
-			_memento.EndCommand( ) ;
-
-			Level.SelectEditors( new SelectedEditors( clonedEditors ) ) ;
+		    Level.SelectEditors( new SelectedEditors( clonedEditors ) ) ;
 
 			tryFire( ( ) => ItemsAddedOrRemoved, clonedEditors ) ;
 		}
 
 	    public void AlignHorizontally( )
-		{
-			_memento.BeginCommand( "Align Horizontally" ) ;
+	    {
+	        _memento.Record("Align Horizontally", () =>
+	            {
+	                IEnumerable<ItemEditor> selectedEditors = Level.SelectedEditors.ToList( ) ;
+	                foreach( ItemEditor eachEditor in selectedEditors )
+	                {
+	                    eachEditor.ItemProperties.Position = new Vector2(
+	                        eachEditor.ItemProperties.Position.X, selectedEditors.First( ).ItemProperties.Position.Y ) ;
+	                }
+	                tryFire( ( ) => SelectionChanged, selectedEditors ) ;
+	            });
+	    }
 
-			IEnumerable<ItemEditor> selectedEditors = Level.SelectedEditors.ToList( ) ;
+	    public void AlignVertically( )
+	    {
+	        _memento.Record("Align Vertically", () =>
+	            {
+	                IEnumerable<ItemEditor> selectedEditors = Level.SelectedEditors.ToList( ) ;
+	                foreach( ItemEditor eachEditor in selectedEditors )
+	                {
+	                    eachEditor.ItemProperties.Position = new Vector2(
+	                        selectedEditors.First( ).ItemProperties.Position.X, eachEditor.ItemProperties.Position.Y ) ;
+	                }
+	            });
+	    }
 
-			foreach( ItemEditor eachEditor in selectedEditors )
-			{
-				eachEditor.ItemProperties.Position = new Vector2(
-					eachEditor.ItemProperties.Position.X, selectedEditors.First( ).ItemProperties.Position.Y ) ;
-			}
+	    public void AlignRotation( )
+	    {
+	        _memento.Record(@"Align Rotation", () =>
+	            {
+	                var rotatables = ( from s in _level.SelectedEditors
+	                                   where s.ItemProperties is IRotatable
+	                                   select s.ItemProperties as IRotatable ).ToList( ) ;
+	                if( rotatables.Count <= 1 )
+	                {
+	                    return ;
+	                }
+	                for( int i = 1; i < rotatables.Count; i++ )
+	                {
+	                    rotatables[ i ].Rotation = rotatables[ 0 ].Rotation ;
+	                }
+	            });
+	    }
 
-			tryFire( ( ) => SelectionChanged, selectedEditors ) ;
-
-			_memento.EndCommand( ) ;
-		}
-
-		public void AlignVertically( )
-		{
-			_memento.BeginCommand( "Align Vertically" ) ;
-			IEnumerable<ItemEditor> selectedEditors = Level.SelectedEditors.ToList( ) ;
-
-			foreach( ItemEditor eachEditor in selectedEditors )
-			{
-				eachEditor.ItemProperties.Position = new Vector2(
-					selectedEditors.First( ).ItemProperties.Position.X, eachEditor.ItemProperties.Position.Y ) ;
-			}
-
-			_memento.EndCommand( ) ;
-		}
-
-		public void AlignRotation( )
-		{
-			_memento.BeginCommand( @"Align Rotation" ) ;
-
-			var rotatables = ( from s in _level.SelectedEditors
-			                   where s.ItemProperties is IRotatable
-			                   select s.ItemProperties as IRotatable ).ToList( ) ;
-
-
-			if( rotatables.Count <= 1 )
-			{
-				return ;
-			}
-
-			for( int i = 1; i < rotatables.Count; i++ )
-			{
-				rotatables[ i ].Rotation = rotatables[ 0 ].Rotation ;
-			}
-
-			_memento.EndCommand( ) ;
-		}
-
-		public void AlignScale( )
-		{
-			_memento.BeginCommand( @"Align scale" ) ;
-
-			var scalables = ( from s in _level.SelectedEditors
-			                  where s.ItemProperties is IScalable
-			                  select s.ItemProperties as IScalable ).ToList( ) ;
-
-
-			if( scalables.Count <= 1 )
-			{
-				return ;
-			}
-
-			for( int i = 1; i < scalables.Count; i++ )
-			{
-				scalables[ i ].Scale = scalables[ 0 ].Scale ;
-			}
-
-			_memento.EndCommand( ) ;
-		}
+	    public void AlignScale( )
+	    {
+	        _memento.Record(@"Align scale", () =>
+	            {
+	                var scalables = ( from s in _level.SelectedEditors
+	                                  where s.ItemProperties is IScalable
+	                                  select s.ItemProperties as IScalable ).ToList( ) ;
+	                if( scalables.Count <= 1 )
+	                {
+	                    return ;
+	                }
+	                for( int i = 1; i < scalables.Count; i++ )
+	                {
+	                    scalables[ i ].Scale = scalables[ 0 ].Scale ;
+	                }
+	            });
+	    }
 
 	    #endregion
 

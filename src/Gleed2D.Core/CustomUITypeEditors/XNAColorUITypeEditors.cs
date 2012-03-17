@@ -2,6 +2,7 @@
 using System.ComponentModel ;
 using System.Drawing ;
 using System.Drawing.Design ;
+using System.Globalization;
 using System.Reflection ;
 using System.Windows.Forms ;
 using System.Windows.Forms.Design ;
@@ -158,7 +159,7 @@ namespace Gleed2D.Core.CustomUITypeEditors
 
 			private void onTrackBarAlphaValueChanged( object sender, EventArgs e )
 			{
-				_lblAlpha.Text = _tbAlpha.Value.ToString( ) ;
+				_lblAlpha.Text = _tbAlpha.Value.ToString(CultureInfo.InvariantCulture) ;
 			}
 		}
 

@@ -1,5 +1,6 @@
 ﻿using System ;
 using System.Collections.Generic ;
+using System.Globalization;
 using System.IO ;
 using System.Drawing ;
 using System.Linq ;
@@ -204,7 +205,7 @@ namespace GLEED2D.Forms
 
 		void updateTitleBar()
 		{
-			Text = @"GLEED2D - {0}{1}".FormatWith(_levelFilename, ( _dirtyFlag ? @"*" : string.Empty )) ;
+			Text = @"Gleed 2D - {0}{1}".FormatWith(_levelFilename, ( _dirtyFlag ? @"*" : string.Empty )) ;
 		}
 
 		void mainFormLoad(object sender, EventArgs e)
@@ -233,7 +234,7 @@ namespace GLEED2D.Forms
 		{
 			for( int i = 25; i <= 200; i += 25 )
 			{
-				uiZoomCombo.Items.Add( i.ToString( ) + "%" ) ;
+				uiZoomCombo.Items.Add( @"{0}%".FormatWith(i)) ;
 			}
 		}
 
@@ -358,7 +359,6 @@ namespace GLEED2D.Forms
 			if( dragHandler != null )
 			{
 				dragHandler.DroppedOnCanvas( _canvas, e );
-				return ;
 			}
 		}
 
@@ -716,42 +716,6 @@ Level was saved."
 			}
 		}
 
-		public bool ShowGrid
-		{
-			get
-			{
-				return ViewGrid.Checked ;
-			}
-			set
-			{
-				ViewGrid.Checked = value ;
-			}
-		}
-
-		public bool SnapToGrid
-		{
-			get
-			{
-				return ViewSnapToGrid.Checked ;
-			}
-			set
-			{
-				ViewSnapToGrid.Checked = value ;
-			}
-		}
-
-		public bool ShowWorldOrigin
-		{
-			get
-			{
-				return ViewWorldOrigin.Checked ;
-			}
-			set
-			{
-				ViewWorldOrigin.Checked = value ;
-			}
-		}
-
 		public MenuStrip MenuStrip
 		{
 			get
@@ -815,12 +779,12 @@ Level was saved."
 			ObjectFactory.GetInstance<IHandleUserActions>().ProcessAction( new DeleteSelectedEditorsAction(  ) );
 		}
 
-		void uiImportAnOlderVersionOfAGleedFileToolStripMenuItem_Click(object sender, EventArgs e)
+		void whenImportOfOldGleedLevelIsClicked(object sender, EventArgs e)
 		{
 			var opendialog = new OpenFileDialog
 			                    {
 			                        Filter = Resources.fileDialogFilenameFilter,
-			                        Title = @"Open older versions of a Gleed file",
+			                        Title = @"Open older versions of a Gleed 2D file",
 			                    } ;
 
 			if (opendialog.ShowDialog() == DialogResult.OK)

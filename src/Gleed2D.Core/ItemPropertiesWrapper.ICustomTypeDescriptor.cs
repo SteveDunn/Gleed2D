@@ -1,6 +1,7 @@
 ﻿using System ;
 using System.Collections.Generic ;
 using System.ComponentModel ;
+using System.Drawing.Design;
 using System.Linq ;
 using System.Linq.Expressions ;
 using Gleed2D.InGame ;
@@ -8,13 +9,17 @@ using JetBrains.Annotations ;
 
 namespace Gleed2D.Core
 {
-	public class ItemPropertiesWrapper< T > : ICustomTypeDescriptor, IDataErrorInfo where T : ItemProperties
+	public class ItemPropertiesWrapper< T > : IDisposable, ICustomTypeDescriptor, IDataErrorInfo where T : ItemProperties
 	{
 		readonly T _itemProperties ;
 		readonly Dictionary<string, Func<T, ValidationError>> _validationFuncs ;
 		readonly Dictionary<string, PropertyCustomisation> _customisations ;
 
-		public ItemPropertiesWrapper( T itemProperties )
+	    readonly Dictionary<Type, Type> _editorOverrides = new Dictionary<Type, Type>();
+	    TypeDescriptionProvider _typeDescriptionProvider;
+
+
+	    public ItemPropertiesWrapper( T itemProperties )
 		{
 			_itemProperties = itemProperties ;
 			_validationFuncs = new Dictionary<string, Func<T, ValidationError>>( ) ;
@@ -30,7 +35,13 @@ namespace Gleed2D.Core
 				SetDescription( @"The item's position in world space." ) ;
 		}
 
-		AttributeCollection ICustomTypeDescriptor.GetAttributes( )
+        public void OverrideEditor<TType>(Type editorType)
+        {
+            _editorOverrides.Add(typeof (TType), editorType);
+            _typeDescriptionProvider = TypeDescriptor.AddAttributes(typeof (TType), new EditorAttribute(editorType, typeof (UITypeEditor)));
+        }
+
+	    AttributeCollection ICustomTypeDescriptor.GetAttributes( )
 		{
 			return TypeDescriptor.GetAttributes( this, true ) ;
 		}
@@ -171,5 +182,13 @@ namespace Gleed2D.Core
 			
 			return _customisations[ fieldName ] ;
 		}
+
+	    public void Dispose()
+	    {
+	        if (_typeDescriptionProvider != null)
+	        {
+	            _editorOverrides.ForEach(x => TypeDescriptor.RemoveProvider(_typeDescriptionProvider, x.Key));
+	        }
+	    }
 	}
 }

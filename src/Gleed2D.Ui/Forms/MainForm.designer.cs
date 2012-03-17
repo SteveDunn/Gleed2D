@@ -314,7 +314,7 @@ namespace GLEED2D.Forms
 			this.uiImportAnOlderVersionOfAGleedFileToolStripMenuItem.Name = "uiImportAnOlderVersionOfAGleedFileToolStripMenuItem";
 			this.uiImportAnOlderVersionOfAGleedFileToolStripMenuItem.Size = new System.Drawing.Size(272, 22);
 			this.uiImportAnOlderVersionOfAGleedFileToolStripMenuItem.Text = "&Import an older version of a Gleed file";
-			this.uiImportAnOlderVersionOfAGleedFileToolStripMenuItem.Click += new System.EventHandler(this.uiImportAnOlderVersionOfAGleedFileToolStripMenuItem_Click);
+			this.uiImportAnOlderVersionOfAGleedFileToolStripMenuItem.Click += new System.EventHandler(this.whenImportOfOldGleedLevelIsClicked);
 			// 
 			// toolStripSeparator1
 			// 

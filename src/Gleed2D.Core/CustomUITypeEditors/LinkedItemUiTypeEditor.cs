@@ -27,9 +27,11 @@ namespace Gleed2D.Core.CustomUITypeEditors
 				
 				editorService.DropDownControl( itemSelector ) ;
 
-				value = new LinkedItem
+			    ITreeItem itemEditor = itemSelector.ItemEditor;
+			    
+                value = new LinkedItem
 					{
-						Name=itemSelector.ItemEditor.Name
+						Name=itemEditor==null?string.Empty:itemEditor.Name
 					} ;// itemSelector.ItemEditor;
 
 				return value ;

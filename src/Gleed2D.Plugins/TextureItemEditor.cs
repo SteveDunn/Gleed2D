@@ -76,7 +76,7 @@ namespace Gleed2D.Plugins
 					@"The item's origin in texture space ([0,0] is upper left corner).");
 				wrapper.Customise(() => _properties.IsTemplate).SetDisplayName(@"Is a template?").SetDescription(
 					@"Can be used as template for various objects (chains, tracks, spawners), will not be drawn in this exact location");
-				wrapper.Customise(() => _properties.TexturePathRelativeToContentRoot).Hide();
+				//wrapper.Customise(() => _properties.TexturePathRelativeToContentRoot).Hide();
 				wrapper.Customise(() => _properties.AssetName).Hide();
 
 				return wrapper;

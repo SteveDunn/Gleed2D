@@ -6,6 +6,7 @@ using System.Linq ;
 using System.Windows.Forms ;
 using System.Xml.Linq ;
 using Gleed2D.Core.Behaviour ;
+using Gleed2D.Core.CustomUITypeEditors;
 using Gleed2D.InGame ;
 using Microsoft.Xna.Framework ;
 using StructureMap ;
@@ -32,7 +33,8 @@ namespace Gleed2D.Core
 					Name = "Root",
 					Visible = true,
 					CustomProperties = new CustomProperties(),
-					ContentRootFolder = contentRootFolder
+					ContentRootFolder = contentRootFolder,
+					Version = ObjectFactory.GetInstance<IGetAssemblyInformation>( ).Version
 				};
 
 			_previousContentRootFolder = contentRootFolder;
@@ -40,7 +42,6 @@ namespace Gleed2D.Core
 			var contentRootChanged = new ContentRootChanged(_previousContentRootFolder, contentRootFolder);
 			
 			ObjectFactory.GetInstance<IEventHub>().Publish(contentRootChanged);
-//			ObjectFactory.GetInstance<IModelEventHub>().Publish(contentRootChanged);
 
 			Layers = new List<LayerEditor>
 				{
@@ -154,8 +155,13 @@ Would you like to change it?".FormatWith( _properties.ContentRootFolder ) ;
 		{
 			get
 			{
-				var itemPropertiesWrapper = new ItemPropertiesWrapper<ItemProperties>( _properties ) ;
-				itemPropertiesWrapper.Customise(() => _properties.ContentRootFolder).SetDescription(@"When the level is saved, each texture is saved with a path relative to this folder. You should set this to the ""Content.RootDirectory"" of your game project.").SetDisplayName(@"Content root folder");
+				var itemPropertiesWrapper = new ItemPropertiesWrapper<ItemProperties>(_properties ) ;
+				
+				itemPropertiesWrapper.OverrideEditor<string>(typeof(PathToFolderUsingStringUiTypeEditor));
+
+				itemPropertiesWrapper.Customise(() => _properties.ContentRootFolder).SetDescription(
+					@"When the level is saved, each texture is saved with a path relative to this folder. You should set this to the ""Content.RootDirectory"" of your game project.")
+					.SetDisplayName(@"Content root folder");
 
 				itemPropertiesWrapper.Customise( ( ) => _properties.NextItemNumber ).SetCategory( @"Editor related" ).Hide( ).MakeReadOnly( ) ;
 
@@ -228,15 +234,6 @@ Would you like to change it?".FormatWith( _properties.ContentRootFolder ) ;
 			return Layers.SelectMany( layer => layer.Items ).FirstOrDefault( editor => editor.ItemProperties.Name == name ) ;
 		}
 
-		public LevelEditor Clone()
-		{
-			XElement xElement = ToXml();
-
-			var clonedLevel = new LevelEditor(xElement);
-
-			return clonedLevel;
-		}
-
 		public string ContentRootFolder
 		{
 			get
@@ -261,19 +258,7 @@ Would you like to change it?".FormatWith( _properties.ContentRootFolder ) ;
 			}
 		}
 
-		public string Version
-		{
-			get
-			{
-				return _properties.Version ;
-			}
-			set
-			{
-				_properties.Version = value ;
-			}
-		}
-
-		public int GetNextItemNumber( )
+	    public int GetNextItemNumber( )
 		{
 			return ( ++_properties.NextItemNumber ) ;
 		}
@@ -514,11 +499,6 @@ Would you like to change it?".FormatWith( _properties.ContentRootFolder ) ;
 		public void Update( GameTime gameTime )
 		{
 			Behaviours.ForEach( b => b.Update( gameTime ) ) ;
-		}
-
-		public LevelEditor Level
-		{
-			get { return this; }
 		}
 
 		public BehaviourCollection Behaviours

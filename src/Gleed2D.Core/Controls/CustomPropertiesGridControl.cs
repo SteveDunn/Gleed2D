@@ -51,7 +51,8 @@ namespace Gleed2D.Core.Controls
 				} ;
 
 			_grid.PropertyValueChanged += gridPropertyValueChanged ;
-
+		    _grid.SelectedObjectsChanged += gridSelectObjectsChanged;
+            
 			_label = new Label
 				{
 					Dock = DockStyle.Fill,
@@ -77,7 +78,12 @@ namespace Gleed2D.Core.Controls
 			_grid.Site = site ;
 		}
 
-		static void verifyDataErrorInfo(
+	    void gridSelectObjectsChanged(object sender, EventArgs e)
+	    {
+	        int n = 1;
+	    }
+
+	    static void verifyDataErrorInfo(
 			ITypeDescriptorContext context, PropertyDescriptor propDesc, ArrayList valueUiItemList )
 		{
 			IDataErrorInfo errInfo = context == null ? null : context.Instance as IDataErrorInfo ;
@@ -125,7 +131,12 @@ namespace Gleed2D.Core.Controls
 			_currentItem = treeItem ;
 			_grid.Visible = true ;
 			_label.Visible = false ;
-			_grid.SelectedObject = treeItem.ObjectForPropertyGrid ;
+		    var disposable = _grid.SelectedObject as IDisposable;
+		    if (disposable != null)
+		    {
+                disposable.Dispose();
+		    }
+		    _grid.SelectedObject = treeItem.ObjectForPropertyGrid ;
 		}
 
 		void gridPropertyValueChanged( object s, PropertyValueChangedEventArgs e )

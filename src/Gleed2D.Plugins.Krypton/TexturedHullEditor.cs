@@ -648,23 +648,21 @@ For now, a dummy texture will be used. Continue loading the level?".FormatWith(a
 			if( KeyboardStatus.IsNewKeyPress( Keys.H ) )
 			{
 				IMemento memento = IoC.Memento ;
-				memento.BeginCommand( "Flip Item(s) Horizontally" ) ;
-				
-				FlipHorizontally = !FlipHorizontally ;
-				IoC.Model.NotifyChanged( this ) ;
-				
-				memento.EndCommand(  );
+			    memento.Record("Flip Item(s) Horizontally", () =>
+			        {
+			            FlipHorizontally = !FlipHorizontally ;
+			            IoC.Model.NotifyChanged( this ) ;
+			        });
 			}
 			
 			if( KeyboardStatus.IsNewKeyPress( Keys.V ) )
 			{
 				IMemento memento = IoC.Memento ;
-				memento.BeginCommand( "Flip Item(s) Vertically" ) ;
-
-				FlipVertically = !FlipVertically ;
-				IoC.Model.NotifyChanged( this ) ;
-
-				memento.EndCommand(  );
+			    memento.Record("Flip Item(s) Vertically", () =>
+			        {
+			            FlipVertically = !FlipVertically ;
+			            IoC.Model.NotifyChanged( this ) ;
+			        });
 			}
 		}
 	}

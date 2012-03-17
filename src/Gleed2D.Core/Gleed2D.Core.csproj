@@ -109,6 +109,7 @@
     <Compile Include="Behaviour\TweeningFunction.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="ContentRootChanged.cs" />
+    <Compile Include="CustomUITypeEditors\PathToFolderUsingStringUiTypeEditor.cs" />
     <Compile Include="EventHub.cs" />
     <Compile Include="Controls\AssetsControl.cs">
       <SubType>UserControl</SubType>

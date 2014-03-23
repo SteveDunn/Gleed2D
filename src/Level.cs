@@ -10,6 +10,8 @@ using Gleed2D.Core.CustomUITypeEditors;
 using Gleed2D.InGame ;
 using Microsoft.Xna.Framework ;
 using StructureMap ;
+using System.Xml;
+using System.Text;
 
 namespace Gleed2D.Core
 {
@@ -269,9 +271,15 @@ Would you like to change it?".FormatWith( _properties.ContentRootFolder ) ;
 
 			_properties.CameraPosition = editor.Camera.Position ;
 
-			var document = ToXml( ) ;
+			XElement document = ToXml( ) ;
 
-			document.Save( filename ) ;
+            System.Xml.XmlWriterSettings settings = new System.Xml.XmlWriterSettings();
+            settings.Encoding = new UTF8Encoding(false); //This byte mark encoding isn't handled nicely by some programs
+            settings.Indent = true; //Keeping the previous indent
+
+            using (XmlWriter writer = XmlTextWriter.Create(filename,settings) ) {
+                document.Save(writer);
+            }
 		}
 
 		AttributeCollection ICustomTypeDescriptor.GetAttributes()

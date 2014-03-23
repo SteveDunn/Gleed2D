@@ -50,6 +50,7 @@ namespace Gleed2D.Core
 			GridLineThickness = 1 ;
 			GridNumberOfGridLines = 500 ;
 			GridSpacing = new Vector2( 64, 64 ) ;
+            PremultipliedAlpha = true;
 		}
 
 		[Editor( typeof( XnaColorUiTypeEditor ), typeof( System.Drawing.Design.UITypeEditor ) )]
@@ -205,6 +206,14 @@ namespace Gleed2D.Core
 			get ;
 			set ;
 		}
+
+        [Category("Image Handling"),
+         Description("If transparent images use premultiplied alpha transparency. Restart required.")]
+        public bool PremultipliedAlpha
+        {
+            get;
+            set;
+        }
 
 		public bool RunLevelStartApplication ;
 		public string RunLevelApplicationToStart ;

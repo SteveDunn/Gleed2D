@@ -3,6 +3,7 @@ using System.Collections.Generic ;
 using System.IO ;
 using System.Reflection ;
 using Gleed2D.InGame;
+using System.Text;
 
 namespace Gleed2D.Core
 {
@@ -36,17 +37,45 @@ namespace Gleed2D.Core
 		/// <param name="toPath">Contains the path that defines the endpoint of the relative path.</param>
 		/// <returns>The relative path from the start directory to the end path.</returns>
 		/// <exception cref="ArgumentNullException"></exception>
-		public string MakeRelativePath(string fromPath, string toPath)
-		{
-			var fromUri = new Uri(fromPath);
+        public string MakeRelativePath(string absolutePath, string relativeTo)
+        {
+            //Function borrowed from http://mrpmorris.blogspot.com/2007/05/convert-absolute-path-to-relative-path.html
+            string[] absoluteDirectories = absolutePath.Split('\\');
+            string[] relativeDirectories = relativeTo.Split('\\');
 
-			var toUri = new Uri(toPath);
+            //Get the shortest of the two paths
+            int length = absoluteDirectories.Length < relativeDirectories.Length ? absoluteDirectories.Length : relativeDirectories.Length;
 
-			Uri relativeUri = fromUri.MakeRelativeUri(toUri);
-			string relativePath = Uri.UnescapeDataString(relativeUri.ToString());
+            //Use to determine where in the loop we exited
+            int lastCommonRoot = -1;
+            int index;
 
-			return relativePath.Replace('/', Path.DirectorySeparatorChar);
-		}
+            //Find common root
+            for (index = 0; index < length; index++)
+                if (absoluteDirectories[index] == relativeDirectories[index])
+                    lastCommonRoot = index;
+                else
+                    break;
+
+            //If we didn't find a common prefix then throw
+            //if (lastCommonRoot == -1)
+            //    throw new ArgumentException("Paths do not have a common base");
+
+            //Build up the relative path
+            StringBuilder relativePath = new StringBuilder();
+
+            //Add on the ..
+            for (index = lastCommonRoot + 1; index < absoluteDirectories.Length; index++)
+                if (absoluteDirectories[index].Length > 0)
+                    relativePath.Append("..\\");
+
+            //Add on the folders
+            for (index = lastCommonRoot + 1; index < relativeDirectories.Length - 1; index++)
+                relativePath.Append(relativeDirectories[index] + "\\");
+            relativePath.Append(relativeDirectories[relativeDirectories.Length - 1]);
+
+            return relativePath.ToString();
+        }
 
 		public bool FolderExists(string pathToFolder)
 		{

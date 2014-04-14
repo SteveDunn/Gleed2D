@@ -240,7 +240,7 @@ namespace Gleed2D.Core
 
 			Vector2[ ] outputVertices ;
 			short[ ] outputIndicies ;
-			Vertices.Triangulate( worldPoints, Vertices.WindingOrder.Clockwise, out outputVertices, out outputIndicies ) ;
+			Vertices.Triangulate( worldPoints, Vertices.WindingOrder.CounterClockwise, out outputVertices, out outputIndicies ) ;
 
 			if (outputIndicies.Length > 0)
 			{

@@ -342,7 +342,7 @@ namespace Gleed2D.Plugins
 
 			var r =  _rectangle.RotateAroundPoint( _rectangle.Center.ToVector2(  ), Rotation ) ;
 			
-			ObjectFactory.GetInstance<IDrawing>().DrawPolygon(spriteBatch, r, fillColor, 2);
+			ObjectFactory.GetInstance<IDrawing>().DrawPolygonFilled(spriteBatch, r, fillColor);
 		}
 
 		public override void OnMouseButtonDown(Vector2 mouseWorldPos)

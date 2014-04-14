@@ -64,14 +64,6 @@ namespace Gleed2D.Core
 				drawSelectionBoxIfNeeded( rendererParams );
 			}
 
-			if( Constants.Instance.ShowGrid )
-			{
-				if(rendererParams.ItemsToRender.Has( ItemsToRender.Grid))
-				{
-					drawGrid( rendererParams.Camera ) ;
-				}
-			}
-
 			if( rendererParams.ItemsToRender.Has( ItemsToRender.Items ) )
 			{
 				drawAllItems( rendererParams ) ;
@@ -101,6 +93,14 @@ namespace Gleed2D.Core
 					drawWorldOrigin( rendererParams.Camera ) ;
 				}
 			}
+
+            if (Constants.Instance.ShowGrid)
+            {
+                if (rendererParams.ItemsToRender.Has(ItemsToRender.Grid))
+                {
+                    drawGrid(rendererParams.Camera);
+                }
+            }
 
 			if( _debugDrawActions.Any() )
 			{
